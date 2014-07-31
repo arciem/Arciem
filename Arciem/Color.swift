@@ -38,7 +38,7 @@ public extension UIColor {
         return UIColor(CGColor: CGColorCreateByBurning(color: self.CGColor, fraction: fraction))
     }
     
-    public func colorByInterpolating(toColor color2: UIColor, fraction: CGFloat) -> UIColor {
+    public func colorByInterpolating(color color2: UIColor, fraction: CGFloat) -> UIColor {
         let cgColor = CGColorCreateByInterpolating(color1: self.CGColor, color2: color2.CGColor, fraction: fraction)
         return UIColor(CGColor: cgColor)
     }
@@ -60,7 +60,7 @@ public func colorFromString(s: NSString) -> UIColor {
     if let tcr = textCheckingResult {
         for var i = 1; i < tcr.numberOfRanges; ++i {
             let range = tcr.rangeAtIndex(i)
-            if range.location != NSNotFound {
+            if range.location != Int(Foundation.NSNotFound) {
                 let matchText: NSString = s.substringWithRange(range)
                 if matchText.length > 0 {
                     if i == 1 {

@@ -7,37 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		030DC476194BB7D0000A6325 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030DC475194BB7D0000A6325 /* JSON.swift */; };
-		031063441945897800FDA79E /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031063431945897800FDA79E /* Array.swift */; };
-		031063461945A0A000FDA79E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031063451945A0A000FDA79E /* View.swift */; };
-		0323D23B1944D1BA00B49FD3 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D23A1944D1BA00B49FD3 /* String.swift */; };
-		0323D23D1944E21200B49FD3 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D23C1944E21200B49FD3 /* Color.swift */; };
-		0323D23F1944E23B00B49FD3 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D23E1944E23B00B49FD3 /* Image.swift */; };
-		0323D26B19451A8800B49FD3 /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D26A19451A8800B49FD3 /* CGColor.swift */; };
-		0349BA1E197E9C720030AB38 /* CGColorGlue.h in Headers */ = {isa = PBXBuildFile; fileRef = 0349BA1C197E9C720030AB38 /* CGColorGlue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0349BA1F197E9C720030AB38 /* CGColorGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA1D197E9C720030AB38 /* CGColorGlue.m */; };
-		0349BA21197E9D510030AB38 /* Arciem.h in Headers */ = {isa = PBXBuildFile; fileRef = 0349BA20197E9D510030AB38 /* Arciem.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0349BA22197EA75D0030AB38 /* CGGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03974CD21942BCC00021A1B9 /* CGGeometry.swift */; };
-		0349BA25197EB2B70030AB38 /* DeviceGlue.h in Headers */ = {isa = PBXBuildFile; fileRef = 0349BA23197EB2B70030AB38 /* DeviceGlue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0349BA26197EB2B70030AB38 /* DeviceGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA24197EB2B70030AB38 /* DeviceGlue.m */; };
-		0349BA29197EB4660030AB38 /* SerializerGlue.h in Headers */ = {isa = PBXBuildFile; fileRef = 0349BA27197EB4660030AB38 /* SerializerGlue.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0349BA2A197EB4660030AB38 /* SerializerGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA28197EB4660030AB38 /* SerializerGlue.m */; };
-		035CD6D4194556D000640425 /* CGContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035CD6D3194556D000640425 /* CGContext.swift */; };
-		035CD706194569ED00640425 /* CGDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035CD705194569ED00640425 /* CGDrawing.swift */; };
-		03882015194865DC0078C2B3 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03882014194865DC0078C2B3 /* Runtime.swift */; };
-		03C4342C194AB3B200463B1F /* Serializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4342B194AB3B200463B1F /* Serializer.swift */; };
-		03C4342F194AB9C900463B1F /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4342E194AB9C900463B1F /* Observer.swift */; };
-		03D093151949857C0015313C /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D093141949857C0015313C /* Regex.swift */; };
-		03D09329194A6B720015313C /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D09328194A6B720015313C /* Dispatch.swift */; };
-		03D9CC521946A9CB006463F7 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9CC511946A9CB006463F7 /* UserDefaults.swift */; };
-		03D9CC581946C2F1006463F7 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9CC571946C2F1006463F7 /* Device.swift */; };
-		03D9CC5A19470CD9006463F7 /* RectSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9CC5919470CD9006463F7 /* RectSetter.swift */; };
-		03D9CC5C19470F03006463F7 /* KVOObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9CC5B19470F03006463F7 /* KVOObserver.swift */; };
-		03EC33D21942897F0074BFFA /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D11942897F0074BFFA /* Math.swift */; };
-		03EC33D41942A1DE0074BFFA /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D31942A1DE0074BFFA /* Random.swift */; };
-		03EC33D61942AFBF0074BFFA /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D51942AFBF0074BFFA /* Time.swift */; };
-		03EC33D81942B2030074BFFA /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D71942B2030074BFFA /* Geometry.swift */; };
-		03EDC164194AA137008AAFFA /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EDC163194AA137008AAFFA /* Worker.swift */; };
+		036D8F761989BB51003FCB35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036D8F541989B0DB003FCB35 /* QuartzCore.framework */; };
+		036D8F771989BB52003FCB35 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036D8F521989B0CC003FCB35 /* UIKit.framework */; };
+		036D8F781989BB52003FCB35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036D8F501989B0B7003FCB35 /* Foundation.framework */; };
+		036D8F7A1989BC6C003FCB35 /* DeviceGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA24197EB2B70030AB38 /* DeviceGlue.m */; };
+		036D8F7B1989BC6C003FCB35 /* SerializerGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA28197EB4660030AB38 /* SerializerGlue.m */; };
+		036D8F7C1989BC6C003FCB35 /* CGColorGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA1D197E9C720030AB38 /* CGColorGlue.m */; };
+		036D8F7D1989BC74003FCB35 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D11942897F0074BFFA /* Math.swift */; };
+		036D8F7E1989BC74003FCB35 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D23A1944D1BA00B49FD3 /* String.swift */; };
+		036D8F7F1989BC74003FCB35 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D093141949857C0015313C /* Regex.swift */; };
+		036D8F801989BC74003FCB35 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D31942A1DE0074BFFA /* Random.swift */; };
+		036D8F811989BC74003FCB35 /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D51942AFBF0074BFFA /* Time.swift */; };
+		036D8F821989BC74003FCB35 /* Geometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D71942B2030074BFFA /* Geometry.swift */; };
+		036D8F831989BC74003FCB35 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D23C1944E21200B49FD3 /* Color.swift */; };
+		036D8F841989BC74003FCB35 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D23E1944E23B00B49FD3 /* Image.swift */; };
+		036D8F851989BC74003FCB35 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031063431945897800FDA79E /* Array.swift */; };
+		036D8F861989BC74003FCB35 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 031063451945A0A000FDA79E /* View.swift */; };
+		036D8F871989BC74003FCB35 /* RectSetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9CC5919470CD9006463F7 /* RectSetter.swift */; };
+		036D8F881989BC74003FCB35 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9CC511946A9CB006463F7 /* UserDefaults.swift */; };
+		036D8F891989BC74003FCB35 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9CC571946C2F1006463F7 /* Device.swift */; };
+		036D8F8A1989BC74003FCB35 /* KVOObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9CC5B19470F03006463F7 /* KVOObserver.swift */; };
+		036D8F8B1989BC74003FCB35 /* Observer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4342E194AB9C900463B1F /* Observer.swift */; };
+		036D8F8C1989BC74003FCB35 /* Runtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03882014194865DC0078C2B3 /* Runtime.swift */; };
+		036D8F8D1989BC74003FCB35 /* Dispatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D09328194A6B720015313C /* Dispatch.swift */; };
+		036D8F8E1989BC74003FCB35 /* Worker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EDC163194AA137008AAFFA /* Worker.swift */; };
+		036D8F8F1989BC74003FCB35 /* Serializer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C4342B194AB3B200463B1F /* Serializer.swift */; };
+		036D8F901989BC74003FCB35 /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030DC475194BB7D0000A6325 /* JSON.swift */; };
+		036D8F911989BC74003FCB35 /* CGGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03974CD21942BCC00021A1B9 /* CGGeometry.swift */; };
+		036D8F921989BC74003FCB35 /* CGColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D26A19451A8800B49FD3 /* CGColor.swift */; };
+		036D8F931989BC74003FCB35 /* CGContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035CD6D3194556D000640425 /* CGContext.swift */; };
+		036D8F941989BC74003FCB35 /* CGDrawing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035CD705194569ED00640425 /* CGDrawing.swift */; };
+		036D8F951989BC74003FCB35 /* SCNGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0344ECEC19524C1600C40ACC /* SCNGeometry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,13 +51,18 @@
 		0344ECEC19524C1600C40ACC /* SCNGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNGeometry.swift; sourceTree = "<group>"; };
 		0349BA1C197E9C720030AB38 /* CGColorGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGColorGlue.h; sourceTree = "<group>"; };
 		0349BA1D197E9C720030AB38 /* CGColorGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGColorGlue.m; sourceTree = "<group>"; };
-		0349BA20197E9D510030AB38 /* Arciem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Arciem.h; sourceTree = "<group>"; };
 		0349BA23197EB2B70030AB38 /* DeviceGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceGlue.h; sourceTree = "<group>"; };
 		0349BA24197EB2B70030AB38 /* DeviceGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceGlue.m; sourceTree = "<group>"; };
 		0349BA27197EB4660030AB38 /* SerializerGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SerializerGlue.h; sourceTree = "<group>"; };
 		0349BA28197EB4660030AB38 /* SerializerGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SerializerGlue.m; sourceTree = "<group>"; };
 		035CD6D3194556D000640425 /* CGContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGContext.swift; sourceTree = "<group>"; };
 		035CD705194569ED00640425 /* CGDrawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGDrawing.swift; sourceTree = "<group>"; };
+		036D8EF61989AE99003FCB35 /* Arciem-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Arciem-Bridging-Header.h"; sourceTree = "<group>"; };
+		036D8F041989AE99003FCB35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		036D8F501989B0B7003FCB35 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		036D8F521989B0CC003FCB35 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		036D8F541989B0DB003FCB35 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
+		036D8F5D1989BA70003FCB35 /* Arciem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arciem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03882014194865DC0078C2B3 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
 		03974CD21942BCC00021A1B9 /* CGGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGGeometry.swift; sourceTree = "<group>"; };
 		03C4342B194AB3B200463B1F /* Serializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializer.swift; sourceTree = "<group>"; };
@@ -68,7 +73,6 @@
 		03D9CC571946C2F1006463F7 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		03D9CC5919470CD9006463F7 /* RectSetter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectSetter.swift; sourceTree = "<group>"; };
 		03D9CC5B19470F03006463F7 /* KVOObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVOObserver.swift; sourceTree = "<group>"; };
-		03EC33B5194289200074BFFA /* Arciem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arciem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03EC33B9194289200074BFFA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03EC33D11942897F0074BFFA /* Math.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Math.swift; sourceTree = "<group>"; };
 		03EC33D31942A1DE0074BFFA /* Random.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Random.swift; sourceTree = "<group>"; };
@@ -78,20 +82,64 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		03EC33B1194289200074BFFA /* Frameworks */ = {
+		036D8F591989BA70003FCB35 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				036D8F761989BB51003FCB35 /* QuartzCore.framework in Frameworks */,
+				036D8F781989BB52003FCB35 /* Foundation.framework in Frameworks */,
+				036D8F771989BB52003FCB35 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		036D8F021989AE99003FCB35 /* ArciemTests */ = {
+			isa = PBXGroup;
+			children = (
+				036D8F031989AE99003FCB35 /* Supporting Files */,
+			);
+			path = ArciemTests;
+			sourceTree = "<group>";
+		};
+		036D8F031989AE99003FCB35 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				036D8F041989AE99003FCB35 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		036D8F561989B0FD003FCB35 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				036D8F501989B0B7003FCB35 /* Foundation.framework */,
+				036D8F521989B0CC003FCB35 /* UIKit.framework */,
+				036D8F541989B0DB003FCB35 /* QuartzCore.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		036D8F571989B645003FCB35 /* Glue */ = {
+			isa = PBXGroup;
+			children = (
+				0349BA23197EB2B70030AB38 /* DeviceGlue.h */,
+				0349BA24197EB2B70030AB38 /* DeviceGlue.m */,
+				0349BA27197EB4660030AB38 /* SerializerGlue.h */,
+				0349BA28197EB4660030AB38 /* SerializerGlue.m */,
+				0349BA1C197E9C720030AB38 /* CGColorGlue.h */,
+				0349BA1D197E9C720030AB38 /* CGColorGlue.m */,
+			);
+			name = Glue;
+			sourceTree = "<group>";
+		};
 		03EC33AB194289200074BFFA = {
 			isa = PBXGroup;
 			children = (
 				03EC33B7194289200074BFFA /* Arciem */,
+				036D8F561989B0FD003FCB35 /* Frameworks */,
+				036D8F021989AE99003FCB35 /* ArciemTests */,
 				03EC33B6194289200074BFFA /* Products */,
 			);
 			sourceTree = "<group>";
@@ -99,7 +147,7 @@
 		03EC33B6194289200074BFFA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				03EC33B5194289200074BFFA /* Arciem.framework */,
+				036D8F5D1989BA70003FCB35 /* Arciem.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -107,7 +155,8 @@
 		03EC33B7194289200074BFFA /* Arciem */ = {
 			isa = PBXGroup;
 			children = (
-				0349BA20197E9D510030AB38 /* Arciem.h */,
+				036D8EF61989AE99003FCB35 /* Arciem-Bridging-Header.h */,
+				036D8F571989B645003FCB35 /* Glue */,
 				03EC33D11942897F0074BFFA /* Math.swift */,
 				0323D23A1944D1BA00B49FD3 /* String.swift */,
 				03D093141949857C0015313C /* Regex.swift */,
@@ -121,21 +170,15 @@
 				03D9CC5919470CD9006463F7 /* RectSetter.swift */,
 				03D9CC511946A9CB006463F7 /* UserDefaults.swift */,
 				03D9CC571946C2F1006463F7 /* Device.swift */,
-				0349BA23197EB2B70030AB38 /* DeviceGlue.h */,
-				0349BA24197EB2B70030AB38 /* DeviceGlue.m */,
 				03D9CC5B19470F03006463F7 /* KVOObserver.swift */,
 				03C4342E194AB9C900463B1F /* Observer.swift */,
 				03882014194865DC0078C2B3 /* Runtime.swift */,
 				03D09328194A6B720015313C /* Dispatch.swift */,
 				03EDC163194AA137008AAFFA /* Worker.swift */,
 				03C4342B194AB3B200463B1F /* Serializer.swift */,
-				0349BA27197EB4660030AB38 /* SerializerGlue.h */,
-				0349BA28197EB4660030AB38 /* SerializerGlue.m */,
 				030DC475194BB7D0000A6325 /* JSON.swift */,
 				03974CD21942BCC00021A1B9 /* CGGeometry.swift */,
 				0323D26A19451A8800B49FD3 /* CGColor.swift */,
-				0349BA1C197E9C720030AB38 /* CGColorGlue.h */,
-				0349BA1D197E9C720030AB38 /* CGColorGlue.m */,
 				035CD6D3194556D000640425 /* CGContext.swift */,
 				035CD705194569ED00640425 /* CGDrawing.swift */,
 				0344ECEC19524C1600C40ACC /* SCNGeometry.swift */,
@@ -155,36 +198,32 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		03EC33B2194289200074BFFA /* Headers */ = {
+		036D8F5A1989BA70003FCB35 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0349BA25197EB2B70030AB38 /* DeviceGlue.h in Headers */,
-				0349BA29197EB4660030AB38 /* SerializerGlue.h in Headers */,
-				0349BA1E197E9C720030AB38 /* CGColorGlue.h in Headers */,
-				0349BA21197E9D510030AB38 /* Arciem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		03EC33B4194289200074BFFA /* Arciem-iOS */ = {
+		036D8F5C1989BA70003FCB35 /* Arciem */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 03EC33CB194289200074BFFA /* Build configuration list for PBXNativeTarget "Arciem-iOS" */;
+			buildConfigurationList = 036D8F701989BA71003FCB35 /* Build configuration list for PBXNativeTarget "Arciem" */;
 			buildPhases = (
-				03EC33B0194289200074BFFA /* Sources */,
-				03EC33B1194289200074BFFA /* Frameworks */,
-				03EC33B2194289200074BFFA /* Headers */,
-				03EC33B3194289200074BFFA /* Resources */,
+				036D8F581989BA70003FCB35 /* Sources */,
+				036D8F591989BA70003FCB35 /* Frameworks */,
+				036D8F5A1989BA70003FCB35 /* Headers */,
+				036D8F5B1989BA70003FCB35 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = "Arciem-iOS";
+			name = Arciem;
 			productName = Arciem;
-			productReference = 03EC33B5194289200074BFFA /* Arciem.framework */;
+			productReference = 036D8F5D1989BA70003FCB35 /* Arciem.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -196,7 +235,7 @@
 				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Arciem LLC";
 				TargetAttributes = {
-					03EC33B4194289200074BFFA = {
+					036D8F5C1989BA70003FCB35 = {
 						CreatedOnToolsVersion = 6.0;
 					};
 				};
@@ -213,13 +252,13 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				03EC33B4194289200074BFFA /* Arciem-iOS */,
+				036D8F5C1989BA70003FCB35 /* Arciem */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		03EC33B3194289200074BFFA /* Resources */ = {
+		036D8F5B1989BA70003FCB35 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -229,43 +268,85 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		03EC33B0194289200074BFFA /* Sources */ = {
+		036D8F581989BA70003FCB35 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				031063461945A0A000FDA79E /* View.swift in Sources */,
-				0323D23B1944D1BA00B49FD3 /* String.swift in Sources */,
-				035CD706194569ED00640425 /* CGDrawing.swift in Sources */,
-				0323D23F1944E23B00B49FD3 /* Image.swift in Sources */,
-				03EC33D61942AFBF0074BFFA /* Time.swift in Sources */,
-				03C4342C194AB3B200463B1F /* Serializer.swift in Sources */,
-				03D093151949857C0015313C /* Regex.swift in Sources */,
-				03D9CC5A19470CD9006463F7 /* RectSetter.swift in Sources */,
-				03D9CC5C19470F03006463F7 /* KVOObserver.swift in Sources */,
-				0349BA1F197E9C720030AB38 /* CGColorGlue.m in Sources */,
-				035CD6D4194556D000640425 /* CGContext.swift in Sources */,
-				0323D26B19451A8800B49FD3 /* CGColor.swift in Sources */,
-				0349BA2A197EB4660030AB38 /* SerializerGlue.m in Sources */,
-				0323D23D1944E21200B49FD3 /* Color.swift in Sources */,
-				03D09329194A6B720015313C /* Dispatch.swift in Sources */,
-				03EC33D21942897F0074BFFA /* Math.swift in Sources */,
-				03EDC164194AA137008AAFFA /* Worker.swift in Sources */,
-				0349BA26197EB2B70030AB38 /* DeviceGlue.m in Sources */,
-				030DC476194BB7D0000A6325 /* JSON.swift in Sources */,
-				03D9CC581946C2F1006463F7 /* Device.swift in Sources */,
-				03EC33D81942B2030074BFFA /* Geometry.swift in Sources */,
-				0349BA22197EA75D0030AB38 /* CGGeometry.swift in Sources */,
-				031063441945897800FDA79E /* Array.swift in Sources */,
-				03882015194865DC0078C2B3 /* Runtime.swift in Sources */,
-				03D9CC521946A9CB006463F7 /* UserDefaults.swift in Sources */,
-				03EC33D41942A1DE0074BFFA /* Random.swift in Sources */,
-				03C4342F194AB9C900463B1F /* Observer.swift in Sources */,
+				036D8F861989BC74003FCB35 /* View.swift in Sources */,
+				036D8F8B1989BC74003FCB35 /* Observer.swift in Sources */,
+				036D8F7C1989BC6C003FCB35 /* CGColorGlue.m in Sources */,
+				036D8F7B1989BC6C003FCB35 /* SerializerGlue.m in Sources */,
+				036D8F7E1989BC74003FCB35 /* String.swift in Sources */,
+				036D8F8F1989BC74003FCB35 /* Serializer.swift in Sources */,
+				036D8F871989BC74003FCB35 /* RectSetter.swift in Sources */,
+				036D8F921989BC74003FCB35 /* CGColor.swift in Sources */,
+				036D8F831989BC74003FCB35 /* Color.swift in Sources */,
+				036D8F7A1989BC6C003FCB35 /* DeviceGlue.m in Sources */,
+				036D8F891989BC74003FCB35 /* Device.swift in Sources */,
+				036D8F811989BC74003FCB35 /* Time.swift in Sources */,
+				036D8F7D1989BC74003FCB35 /* Math.swift in Sources */,
+				036D8F8A1989BC74003FCB35 /* KVOObserver.swift in Sources */,
+				036D8F901989BC74003FCB35 /* JSON.swift in Sources */,
+				036D8F931989BC74003FCB35 /* CGContext.swift in Sources */,
+				036D8F7F1989BC74003FCB35 /* Regex.swift in Sources */,
+				036D8F8E1989BC74003FCB35 /* Worker.swift in Sources */,
+				036D8F941989BC74003FCB35 /* CGDrawing.swift in Sources */,
+				036D8F821989BC74003FCB35 /* Geometry.swift in Sources */,
+				036D8F911989BC74003FCB35 /* CGGeometry.swift in Sources */,
+				036D8F8C1989BC74003FCB35 /* Runtime.swift in Sources */,
+				036D8F881989BC74003FCB35 /* UserDefaults.swift in Sources */,
+				036D8F851989BC74003FCB35 /* Array.swift in Sources */,
+				036D8F951989BC74003FCB35 /* SCNGeometry.swift in Sources */,
+				036D8F8D1989BC74003FCB35 /* Dispatch.swift in Sources */,
+				036D8F841989BC74003FCB35 /* Image.swift in Sources */,
+				036D8F801989BC74003FCB35 /* Random.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
+		036D8F711989BA71003FCB35 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = Arciem/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Arciem/Arciem-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		036D8F721989BA71003FCB35 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = Arciem/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "Arciem/Arciem-Bridging-Header.h";
+			};
+			name = Release;
+		};
 		03EC33C9194289200074BFFA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -283,7 +364,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -291,10 +371,6 @@
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
@@ -303,11 +379,8 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				METAL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_MODULE_NAME = Arciem;
-				PRODUCT_NAME = Arciem;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -331,7 +404,6 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -345,9 +417,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
-				METAL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_MODULE_NAME = Arciem;
-				PRODUCT_NAME = Arciem;
+				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -355,56 +425,23 @@
 			};
 			name = Release;
 		};
-		03EC33CC194289200074BFFA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Arciem/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-			};
-			name = Debug;
-		};
-		03EC33CD194289200074BFFA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = Arciem/Info.plist;
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		036D8F701989BA71003FCB35 /* Build configuration list for PBXNativeTarget "Arciem" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				036D8F711989BA71003FCB35 /* Debug */,
+				036D8F721989BA71003FCB35 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		03EC33AF194289200074BFFA /* Build configuration list for PBXProject "Arciem" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				03EC33C9194289200074BFFA /* Debug */,
 				03EC33CA194289200074BFFA /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		03EC33CB194289200074BFFA /* Build configuration list for PBXNativeTarget "Arciem-iOS" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				03EC33CC194289200074BFFA /* Debug */,
-				03EC33CD194289200074BFFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

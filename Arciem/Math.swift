@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 // Double-based versions of these are not needed, as they are provided by the standard library
 public func fmin(n1: Float, n2: Float) -> Float { return fminf(n1, n2) }

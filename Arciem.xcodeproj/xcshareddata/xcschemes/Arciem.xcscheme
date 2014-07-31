@@ -3,8 +3,8 @@
    LastUpgradeVersion = "0600"
    version = "2.0">
    <BuildAction
-      parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      parallelizeBuildables = "NO"
+      buildImplicitDependencies = "NO">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03EC33B4194289200074BFFA"
+               BlueprintIdentifier = "036D8F5C1989BA70003FCB35"
                BuildableName = "Arciem.framework"
-               BlueprintName = "Arciem-iOS"
+               BlueprintName = "Arciem"
                ReferencedContainer = "container:Arciem.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -28,16 +28,6 @@
       shouldUseLaunchSchemeArgsEnv = "YES"
       buildConfiguration = "Debug">
       <Testables>
-         <TestableReference
-            skipped = "NO">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03EC33BF194289200074BFFA"
-               BuildableName = "Arciem-iOSTests.xctest"
-               BlueprintName = "Arciem-iOSTests"
-               ReferencedContainer = "container:Arciem.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
@@ -53,9 +43,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03EC33B4194289200074BFFA"
+            BlueprintIdentifier = "036D8F5C1989BA70003FCB35"
             BuildableName = "Arciem.framework"
-            BlueprintName = "Arciem-iOS"
+            BlueprintName = "Arciem"
             ReferencedContainer = "container:Arciem.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -68,6 +58,15 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "036D8F5C1989BA70003FCB35"
+            BuildableName = "Arciem.framework"
+            BlueprintName = "Arciem"
+            ReferencedContainer = "container:Arciem.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

@@ -9,7 +9,7 @@
 import Foundation
 
 public class Canceler {
-    var canceled = false
+    public var canceled = false
 }
 
 public typealias DispatchBlock = dispatch_block_t
