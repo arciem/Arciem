@@ -59,14 +59,35 @@ public class Random {
         return denormalize(randomFlat(), min, max)
     }
     
-    // returns an integer in the half-open range min..max
+    // returns an integer in the half-open range min..<max
     public func randomInt(#min:Int, max:Int) -> Int {
         return Int(randomRange(min: Double(min), max: Double(max)))
+    }
+    
+    // returns a random boolean
+    public func randomBoolean() -> Bool {
+        return randomInt(min:0, max:2) > 0
     }
     
     // "Generating Gaussian Random Numbers"
     // http://www.taygeta.com/random/gaussian.html
     public func randomGaussian() -> Double {
         return sqrt( -2.0 * log(randomFlat()) ) * cos( 2.0 * M_PI * randomFlat() )
+    }
+    
+    public class func randomFlat() -> Double {
+        return Arciem.random.randomFlat()
+    }
+    
+    public class func randomRange(#min:Double, max:Double) -> Double {
+        return Arciem.random.randomRange(min:min, max:max)
+    }
+    
+    public class func randomInt(#min:Int, max:Int) -> Int {
+        return Arciem.random.randomInt(min:min, max:max)
+    }
+    
+    public class func randomBoolean() -> Bool {
+        return Arciem.random.randomBoolean()
     }
 }
