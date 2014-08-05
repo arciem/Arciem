@@ -148,10 +148,10 @@ public func CGColorCreate(#gray: CGFloat, #a: CGFloat) -> CGColor! {
     return CGColorCreate(sharedColorSpaceGray, [gray, a])
 }
 
-public func CGColorCreateRandom() -> CGColor! {
+public func CGColorCreateRandom(random: Random = Random.sharedInstance) -> CGColor! {
     var components = Array(count: 4, repeatedValue: CGFloat(0))
     for var i = 0; i < 3; ++i {
-        components[i] = CGFloat(random.randomFlat())
+        components[i] = random.randomCGFloat()
     }
     components[3] = 1
     return CGColorCreate(sharedColorSpaceRGB, components)

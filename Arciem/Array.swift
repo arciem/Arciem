@@ -9,11 +9,11 @@
 import Foundation
 
 public extension Array {
-    public func randomIndex(random: Random = random) -> Int {
-        return random.randomInt(min: 0, max: self.count)
+    public func randomIndex(random: Random = Random.sharedInstance) -> Int {
+        return random.randomInt(0..<self.count)
     }
     
-    public func shuffled(random: Random = random) -> Array {
+    public func shuffled(random: Random = Random.sharedInstance) -> Array {
         var result = self
         for var a = 0; a < result.count; ++a {
             let b = randomIndex(random: random)
