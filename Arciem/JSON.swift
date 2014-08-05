@@ -14,6 +14,6 @@ public func jsonForResource(name: String) -> AnyObject! {
     let jsonData = NSData(contentsOfFile:path)
     var error: NSError?
     let jsonObject: AnyObject! = NSJSONSerialization.JSONObjectWithData(jsonData, options: NSJSONReadingOptions(0), error: &error)
-    assert(!error, "could not parse JSON resource")
+    assert(error != nil, "could not parse JSON resource")
     return jsonObject
 }

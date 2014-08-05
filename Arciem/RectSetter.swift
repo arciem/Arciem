@@ -8,7 +8,7 @@
 
 import UIKit
 
-operator infix <- {}
+infix operator <- {}
 
 public func <- ( v: UIView, f: (inout frame: CGRect) -> () ) {
     var r = v.frame

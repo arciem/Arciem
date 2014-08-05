@@ -22,12 +22,12 @@ public extension UIView {
 }
 
 public class CView : UIView {
-    public init(coder aDecoder: NSCoder!)  {
+    public required init(coder aDecoder: NSCoder!)  {
         super.init(coder: aDecoder)
         _setup()
     }
     
-    public init(frame: CGRect) {
+    override public init(frame: CGRect) {
         super.init(frame: frame)
         _setup()
     }
@@ -43,22 +43,22 @@ public class CView : UIView {
 }
 
 public class CImageView : UIImageView {
-    public init(coder aDecoder: NSCoder!)  {
+    public required init(coder aDecoder: NSCoder!)  {
         super.init(coder: aDecoder)
         _setup()
     }
     
-    public init(frame: CGRect) {
+    public override init(frame: CGRect) {
         super.init(frame: frame)
         _setup()
     }
 
-    init(image: UIImage!) {
+    override init(image: UIImage!) {
         super.init(image: image)
         _setup()
     }
     
-    init(image: UIImage!, highlightedImage: UIImage!) {
+    override init(image: UIImage!, highlightedImage: UIImage!) {
         super.init(image: image, highlightedImage: highlightedImage)
         _setup()
     }

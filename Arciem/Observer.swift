@@ -103,18 +103,18 @@ public class Observable<T> {
     }
 }
 
-operator infix =^ { }
-operator postfix ^ { }
+infix operator =^ { }
+postfix operator ^ { }
 
-@infix @assignment public func =^ <T> (inout left: Observable<T>, right: T) {
+public func =^ <T> (inout left: Observable<T>, right: T) {
     left.value = right
 }
 
-@infix @assignment public func =^ <T> (inout left: T, right: Observable<T>) {
+public func =^ <T> (inout left: T, right: Observable<T>) {
     left = right.value
 }
 
-@postfix public func ^ <T> (left: Observable<T>) -> T {
+public postfix func ^ <T> (left: Observable<T>) -> T {
     return left.value
 }
 

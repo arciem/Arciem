@@ -96,7 +96,7 @@ public class WorkerManager {
 public class DummyWorker : Worker {
 //    let delay: NSTimeInterval
     
-    public init() {
+    public override init() {
         super.init()
         task = { [unowned self] (unowned manager) in
             _ = dispatchOnBackground(afterDelay: 1.0) {

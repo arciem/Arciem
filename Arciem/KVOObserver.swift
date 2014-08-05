@@ -32,42 +32,41 @@ public extension NSKeyValueChange {
 }
 
 public class KVOObserver : NSObject {
-    let object: Unmanaged<NSObject>
+    let object: COpaquePointer
     let keyPath: String
     let didChange: KVOObserverCallback?
     let willChange: KVOObserverCallback?
     let initial: KVOObserverCallback?
     
     public init(object: NSObject, keyPath: String, didChange: KVOObserverCallback?, willChange: KVOObserverCallback? = nil, initial: KVOObserverCallback? = nil) {
-        let o: NSObject = object
-        self.object = Unmanaged.passUnretained(object)
+        self.object = Unmanaged.passUnretained(object).toOpaque()
         self.keyPath = keyPath
         self.didChange = didChange
         self.willChange = willChange
         self.initial = initial
-        
-        super.init()
-        
-        var options = NSKeyValueObservingOptions(0)
-        if didChange { options = options | .New }
-        if willChange { options = options | .Prior; options = options | .Old }
-        if initial { options = options | .Initial; options = options | .New }
 
-        o.addObserver(self, forKeyPath: keyPath, options: options, context: nil)
+        super.init()
+
+        var options = NSKeyValueObservingOptions(0)
+        if didChange != nil { options = options | .New }
+        if willChange != nil { options = options | .Prior; options = options | .Old }
+        if initial != nil { options = options | .Initial; options = options | .New }
+
+        object.addObserver(self, forKeyPath: keyPath, options: options, context: nil)
     }
-    
+
     deinit {
-        object.takeUnretainedValue().removeObserver(self, forKeyPath: keyPath, context: nil)
+        Unmanaged<NSObject>.fromOpaque(object).takeUnretainedValue().removeObserver(self, forKeyPath: keyPath, context: nil)
     }
-    
+
     public class func indexesForChangeDictionary(changeDict: NSDictionary) -> NSIndexSet? {
         return changeDict[NSKeyValueChangeIndexesKey] as? NSIndexSet
     }
-    
-    override public func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: KVOChangeDictionary!, context: UnsafePointer<()>) {
+
+    override public func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: KVOChangeDictionary!, context: UnsafeMutablePointer<()>) {
         if NSKeyValueChange.isPriorForChange(change) {
             willChange?(value: change[NSKeyValueChangeOldKey], object: object, change: change)
-        } else if !NSKeyValueChange.oldValueForChange(change) && NSKeyValueChange.kindForChange(change) == .Setting {
+        } else if NSKeyValueChange.oldValueForChange(change) != nil && NSKeyValueChange.kindForChange(change) == .Setting {
             initial?(value: NSKeyValueChange.newValueForChange(change), object: object, change: change)
         } else {
             didChange?(value: NSKeyValueChange.newValueForChange(change), object: object, change: change)

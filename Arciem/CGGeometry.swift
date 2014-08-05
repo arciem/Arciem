@@ -139,163 +139,163 @@ extension CGVector {
 }
 
 // Point + Vector -> Point
-@infix public func + (left: CGPoint, right: CGVector) -> CGPoint {
+public func + (left: CGPoint, right: CGVector) -> CGPoint {
     return CGPoint(x: left.x + right.dx, y: left.y + right.dy)
 }
 
 // Point - Vector -> Point
-@infix public func - (left: CGPoint, right: CGVector) -> CGPoint {
+public func - (left: CGPoint, right: CGVector) -> CGPoint {
     return CGPoint(x: left.x - right.dx, y: left.y - right.dy)
 }
 
 
 // Point - Point -> Vector
-@infix public func - (left: CGPoint, right: CGPoint) -> CGVector {
+public func - (left: CGPoint, right: CGPoint) -> CGVector {
     return CGVector(dx: left.x - right.x, dy: left.y - right.y)
 }
 
 
 // Point + Float -> Point
-@infix public func + (left: CGPoint, right: CGFloat) -> CGPoint {
+public func + (left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x + right, y: left.y + right)
 }
 
 // Point - Float -> Point
-@infix public func - (left: CGPoint, right: CGFloat) -> CGPoint {
+public func - (left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x - right, y: left.y - right)
 }
 
 // Point * Float -> Point
-@infix public func * (left: CGPoint, right: CGFloat) -> CGPoint {
+public func * (left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x * right, y: left.y * right)
 }
 
 // Point / Float -> Point
-@infix public func / (left: CGPoint, right: CGFloat) -> CGPoint {
+public func / (left: CGPoint, right: CGFloat) -> CGPoint {
     return CGPoint(x: left.x / right, y: left.y / right)
 }
 
 // -Point -> Point
-@prefix public func - (p: CGPoint) -> CGPoint {
+prefix public func - (p: CGPoint) -> CGPoint {
     return CGPoint(x: -p.x, y: -p.y)
 }
 
 
 // Point += Vector
-@assignment public func += (inout left: CGPoint, right: CGVector) {
+public func += (inout left: CGPoint, right: CGVector) {
     left.x += right.dx
     left.y += right.dy
 }
 
 // Point -= Vector
-@assignment public func -= (inout left: CGPoint, right: CGVector) {
+public func -= (inout left: CGPoint, right: CGVector) {
     left.x -= right.dx
     left.y -= right.dy
 }
 
 
 // Point += Float
-@assignment public func += (inout left: CGPoint, right: CGFloat) {
+public func += (inout left: CGPoint, right: CGFloat) {
     left.x += right
     left.y += right
 }
 
 // Point -= Float
-@assignment public func -= (inout left: CGPoint, right: CGFloat) {
+public func -= (inout left: CGPoint, right: CGFloat) {
     left.x -= right
     left.y -= right
 }
 
 // Point *= Float
-@assignment public func *= (inout left: CGPoint, right: CGFloat) {
+public func *= (inout left: CGPoint, right: CGFloat) {
     left.x *= right
     left.y *= right
 }
 
 // Point /= Float
-@assignment public func /= (inout left: CGPoint, right: CGFloat) {
+public func /= (inout left: CGPoint, right: CGFloat) {
     left.x /= right
     left.y /= right
 }
 
 
 // Vector + Vector -> Vector
-@infix public func + (left: CGVector, right: CGVector) -> CGVector {
+public func + (left: CGVector, right: CGVector) -> CGVector {
     return CGVector(dx: left.dx + right.dx, dy: left.dy + right.dy)
 }
 
 // Vector - Vector -> Vector
-@infix public func - (left: CGVector, right: CGVector) -> CGVector {
+public func - (left: CGVector, right: CGVector) -> CGVector {
     return CGVector(dx: left.dx - right.dx, dy: left.dy - right.dy)
 }
 
 // Vector . Vector -> Float
-operator infix .. {}
-@infix public func .. (left: CGVector, right: CGVector) -> CGFloat {
+infix operator .. {}
+public func .. (left: CGVector, right: CGVector) -> CGFloat {
     return left.dot(right);
 }
 
 
 // Vector + Float -> Vector
-@infix public func + (left: CGVector, right: CGFloat) -> CGVector {
+public func + (left: CGVector, right: CGFloat) -> CGVector {
     return CGVector(dx: left.dx + right, dy: left.dy + right)
 }
 
 // Vector - Float -> Vector
-@infix public func - (left: CGVector, right: CGFloat) -> CGVector {
+public func - (left: CGVector, right: CGFloat) -> CGVector {
     return CGVector(dx: left.dx - right, dy: left.dy - right)
 }
 
 // Vector * Float -> Vector
-@infix public func * (left: CGVector, right: CGFloat) -> CGVector {
+public func * (left: CGVector, right: CGFloat) -> CGVector {
     return CGVector(dx: left.dx * right, dy: left.dy * right)
 }
 
 // Vector / Float -> Vector
-@infix public func / (left: CGVector, right: CGFloat) -> CGVector {
+public func / (left: CGVector, right: CGFloat) -> CGVector {
     return CGVector(dx: left.dx / right, dy: left.dy / right)
 }
 
 
 // -Vector -> Vector
-@prefix public func - (v: CGVector) -> CGVector {
+prefix public func - (v: CGVector) -> CGVector {
     return CGVector(dx: -v.dx, dy: -v.dy)
 }
 
 
 // Vector += Vector
-@assignment public func += (inout left: CGVector, right: CGVector) {
+public func += (inout left: CGVector, right: CGVector) {
     left.dx += right.dx
     left.dy += right.dy
 }
 
 // Vector -= Vector
-@assignment public func -= (inout left: CGVector, right: CGVector) {
+public func -= (inout left: CGVector, right: CGVector) {
     left.dx -= right.dx
     left.dy -= right.dy
 }
 
 
 // Vector += Float
-@assignment public func += (inout left: CGVector, right: CGFloat) {
+public func += (inout left: CGVector, right: CGFloat) {
     left.dx += right
     left.dy += right
 }
 
 // Vector -= Float
-@assignment public func -= (inout left: CGVector, right: CGFloat) {
+public func -= (inout left: CGVector, right: CGFloat) {
     left.dx -= right
     left.dy -= right
 }
 
 // Vector *= Float
-@assignment public func *= (inout left: CGVector, right: CGFloat) {
+public func *= (inout left: CGVector, right: CGFloat) {
     left.dx *= right
     left.dy *= right
 }
 
 // Vector /= Float
-@assignment public func /= (inout left: CGVector, right: CGFloat) {
+public func /= (inout left: CGVector, right: CGFloat) {
     left.dx /= right
     left.dy /= right
 }

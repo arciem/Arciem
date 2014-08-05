@@ -52,63 +52,63 @@ public extension SCNVector3 {
 
 
 // Vector + Vector -> Vector
-@infix public func + (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
+public func + (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
     return SCNVector3(x: left.x + right.x, y: left.y + right.y, z: left.z + right.z)
 }
 
 // Vector - Vector -> Vector
-@infix public func - (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
+public func - (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
     return SCNVector3(x: left.x - right.x, y: left.y - right.y, z: left.z - right.z)
 }
 
 // Vector . Vector -> Float
-operator infix .. {}
-@infix public func .. (left: SCNVector3, right: SCNVector3) -> CFloat {
+infix operator .. {}
+public func .. (left: SCNVector3, right: SCNVector3) -> CFloat {
     return left.dot(right);
 }
 
 // Vector X Vector -> Vector
-operator infix ** {}
-@infix public func ** (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
+infix operator ** {}
+public func ** (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
     return left.cross(right);
 }
 
 // Vector + Float -> Vector
-@infix public func + (left: SCNVector3, right: CFloat) -> SCNVector3 {
+public func + (left: SCNVector3, right: CFloat) -> SCNVector3 {
     return SCNVector3(x: left.x + right, y: left.y + right, z: left.z + right)
 }
 
 // Vector - Float -> Vector
-@infix public func - (left: SCNVector3, right: CFloat) -> SCNVector3 {
+public func - (left: SCNVector3, right: CFloat) -> SCNVector3 {
     return SCNVector3(x: left.x - right, y: left.y - right, z: left.z - right)
 }
 
 // Vector * Float -> Vector
-@infix public func * (left: SCNVector3, right: CFloat) -> SCNVector3 {
+public func * (left: SCNVector3, right: CFloat) -> SCNVector3 {
     return SCNVector3(x: left.x * right, y: left.y * right, z: left.z * right)
 }
 
 // Vector / Float -> Vector
-@infix public func / (left: SCNVector3, right: CFloat) -> SCNVector3 {
+public func / (left: SCNVector3, right: CFloat) -> SCNVector3 {
     return SCNVector3(x: left.x / right, y: left.y / right, z: left.z / right)
 }
 
 
 // -Vector -> Vector
-@prefix public func - (v: SCNVector3) -> SCNVector3 {
+prefix public func - (v: SCNVector3) -> SCNVector3 {
     return SCNVector3(x: -v.x, y: -v.y, z: -v.z)
 }
 
 
 // Vector += Vector
-@assignment public func += (inout left: SCNVector3, right: SCNVector3) {
+public func += (inout left: SCNVector3, right: SCNVector3) {
     left.x += right.x
     left.y += right.y
     left.z += right.z
 }
 
 // Vector -= Vector
-@assignment public func -= (inout left: SCNVector3, right: SCNVector3) {
+public func -= (inout left: SCNVector3, right: SCNVector3) {
     left.x -= right.x
     left.y -= right.y
     left.z -= right.z
@@ -116,28 +116,28 @@ operator infix ** {}
 
 
 // Vector += Float
-@assignment public func += (inout left: SCNVector3, right: CFloat) {
+public func += (inout left: SCNVector3, right: CFloat) {
     left.x += right
     left.y += right
     left.z += right
 }
 
 // Vector -= Float
-@assignment public func -= (inout left: SCNVector3, right: CFloat) {
+public func -= (inout left: SCNVector3, right: CFloat) {
     left.x -= right
     left.y -= right
     left.z -= right
 }
 
 // Vector *= Float
-@assignment public func *= (inout left: SCNVector3, right: CFloat) {
+public func *= (inout left: SCNVector3, right: CFloat) {
     left.x *= right
     left.y *= right
     left.z *= right
 }
 
 // Vector /= Float
-@assignment public func /= (inout left: SCNVector3, right: CFloat) {
+public func /= (inout left: SCNVector3, right: CFloat) {
     left.x /= right
     left.y /= right
     left.z /= right

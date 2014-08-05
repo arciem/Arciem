@@ -20,9 +20,9 @@ public func ~= (str: String, pattern: NSRegularExpression) -> Bool {
 
 // Regex creation operator
 
-operator prefix ~/ {}
+prefix operator ~/ {}
 
-@prefix func ~/ (pattern: String) -> NSRegularExpression {
+prefix func ~/ (pattern: String) -> NSRegularExpression {
     return NSRegularExpression(pattern: pattern, options: nil, error: nil)
 }
 
