@@ -43,8 +43,8 @@ public extension CGPoint {
     
     public func clampInside(r: CGRect) -> CGPoint {
         return CGPoint(
-            x: clamp(x, min: r.minX, max: r.maxX),
-            y: clamp(y, min: r.minY, max: r.maxY)
+            x: clamp(x, r.minX...r.maxX),
+            y: clamp(y, r.minY...r.maxY)
         )
     }
     

@@ -38,6 +38,7 @@
 		036D8F7B1989BC6C003FCB35 /* SerializerGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA28197EB4660030AB38 /* SerializerGlue.m */; };
 		036D8F7C1989BC6C003FCB35 /* CGColorGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA1D197E9C720030AB38 /* CGColorGlue.m */; };
 		036D8F7D1989BC74003FCB35 /* Math.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D11942897F0074BFFA /* Math.swift */; };
+		039FC42219922C5900C5211A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 039FC42119922C5900C5211A /* CoreGraphics.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +66,7 @@
 		036D8F5D1989BA70003FCB35 /* Arciem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arciem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		03882014194865DC0078C2B3 /* Runtime.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Runtime.swift; sourceTree = "<group>"; };
 		03974CD21942BCC00021A1B9 /* CGGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGGeometry.swift; sourceTree = "<group>"; };
+		039FC42119922C5900C5211A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		03C4342B194AB3B200463B1F /* Serializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializer.swift; sourceTree = "<group>"; };
 		03C4342E194AB9C900463B1F /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		03D093141949857C0015313C /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				039FC42219922C5900C5211A /* CoreGraphics.framework in Frameworks */,
 				036D8F761989BB51003FCB35 /* QuartzCore.framework in Frameworks */,
 				036D8F781989BB52003FCB35 /* Foundation.framework in Frameworks */,
 				036D8F771989BB52003FCB35 /* UIKit.framework in Frameworks */,
@@ -114,6 +117,7 @@
 		036D8F561989B0FD003FCB35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				039FC42119922C5900C5211A /* CoreGraphics.framework */,
 				036D8F501989B0B7003FCB35 /* Foundation.framework */,
 				036D8F521989B0CC003FCB35 /* UIKit.framework */,
 				036D8F541989B0DB003FCB35 /* QuartzCore.framework */,
