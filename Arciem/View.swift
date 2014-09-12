@@ -14,15 +14,20 @@ public extension UIView {
     }
     
     public func constrainToSuperview() {
-        var constraints = [NSLayoutConstraint]()
-        constraints += NSLayoutConstraint.constraintsWithVisualFormat("H:|[self]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["self": self]) as [NSLayoutConstraint]
-        constraints += NSLayoutConstraint.constraintsWithVisualFormat("V:|[self]|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["self": self]) as [NSLayoutConstraint]
+        assert(self.superview != nil, "View must have a superview.")
+        let superview = self.superview!
+        var constraints = [
+            self.layoutLeft ==⦿ superview.layoutLeft,
+            self.layoutRight ==⦿ superview.layoutRight,
+            self.layoutTop ==⦿ superview.layoutTop,
+            self.layoutBottom ==⦿ superview.layoutBottom
+        ]
         NSLayoutConstraint.activateConstraints(constraints)
     }
 }
 
 public class CView : UIView {
-    public required init(coder aDecoder: NSCoder!)  {
+    public required init(coder aDecoder: NSCoder)  {
         super.init(coder: aDecoder)
         _setup()
     }
@@ -43,7 +48,7 @@ public class CView : UIView {
 }
 
 public class CImageView : UIImageView {
-    public required init(coder aDecoder: NSCoder!)  {
+    public required init(coder aDecoder: NSCoder)  {
         super.init(coder: aDecoder)
         _setup()
     }

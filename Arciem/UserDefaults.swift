@@ -12,7 +12,13 @@ public var defaults = NSUserDefaults.standardUserDefaults()
 
 public extension NSUserDefaults {
     public subscript (key: String) -> AnyObject? {
-        get { return self.objectForKey(key) }
-        set { self.setObject(newValue, forKey: key) }
+    get { return self.objectForKey(key) }
+    set {
+        if let val: AnyObject = newValue {
+            self.setObject(val, forKey: key)
+        } else {
+            self.removeObjectForKey(key)
+        }
+    }
     }
 }

@@ -10,19 +10,19 @@
 import SceneKit
 
 public extension SCNVector3 {
-    public var distanceSquared: CFloat {
+    public var distanceSquared: Float {
     get {
         return Arciem.distanceSquared(x: x, y: y, z: z)
     }
     }
     
-    public var distance: CFloat {
+    public var distance: Float {
     get {
         return Arciem.distance(x: x, y: y, z: z)
     }
     }
     
-    public var volume: CFloat {
+    public var volume: Float {
     get {
         return Arciem.volume(x: x, y: y, z: z)
     }
@@ -35,7 +35,7 @@ public extension SCNVector3 {
 //    }
 //    }
     
-    public func dot(d: SCNVector3) -> CFloat {
+    public func dot(d: SCNVector3) -> Float {
         return Arciem.dot(x1: x, y1: y, z1: z, x2: d.x, y2: d.y, z2: d.z)
     }
     
@@ -44,7 +44,7 @@ public extension SCNVector3 {
         return SCNVector3(x: t.x, y: t.y, z: t.z)
     }
 
-    public func scale(#sx: CFloat, sy: CFloat, sz: CFloat) -> SCNVector3 {
+    public func scale(#sx: Float, sy: Float, sz: Float) -> SCNVector3 {
         let t = Arciem.scale(x: x, y: y, z: z, sx: sx, sy: sy, sz: sz)
         return SCNVector3(x: t.x, y: t.y, z: t.z)
     }
@@ -63,7 +63,7 @@ public func - (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
 
 // Vector . Vector -> Float
 infix operator .. {}
-public func .. (left: SCNVector3, right: SCNVector3) -> CFloat {
+public func .. (left: SCNVector3, right: SCNVector3) -> Float {
     return left.dot(right);
 }
 
@@ -74,22 +74,22 @@ public func ** (left: SCNVector3, right: SCNVector3) -> SCNVector3 {
 }
 
 // Vector + Float -> Vector
-public func + (left: SCNVector3, right: CFloat) -> SCNVector3 {
+public func + (left: SCNVector3, right: Float) -> SCNVector3 {
     return SCNVector3(x: left.x + right, y: left.y + right, z: left.z + right)
 }
 
 // Vector - Float -> Vector
-public func - (left: SCNVector3, right: CFloat) -> SCNVector3 {
+public func - (left: SCNVector3, right: Float) -> SCNVector3 {
     return SCNVector3(x: left.x - right, y: left.y - right, z: left.z - right)
 }
 
 // Vector * Float -> Vector
-public func * (left: SCNVector3, right: CFloat) -> SCNVector3 {
+public func * (left: SCNVector3, right: Float) -> SCNVector3 {
     return SCNVector3(x: left.x * right, y: left.y * right, z: left.z * right)
 }
 
 // Vector / Float -> Vector
-public func / (left: SCNVector3, right: CFloat) -> SCNVector3 {
+public func / (left: SCNVector3, right: Float) -> SCNVector3 {
     return SCNVector3(x: left.x / right, y: left.y / right, z: left.z / right)
 }
 
@@ -116,28 +116,28 @@ public func -= (inout left: SCNVector3, right: SCNVector3) {
 
 
 // Vector += Float
-public func += (inout left: SCNVector3, right: CFloat) {
+public func += (inout left: SCNVector3, right: Float) {
     left.x += right
     left.y += right
     left.z += right
 }
 
 // Vector -= Float
-public func -= (inout left: SCNVector3, right: CFloat) {
+public func -= (inout left: SCNVector3, right: Float) {
     left.x -= right
     left.y -= right
     left.z -= right
 }
 
 // Vector *= Float
-public func *= (inout left: SCNVector3, right: CFloat) {
+public func *= (inout left: SCNVector3, right: Float) {
     left.x *= right
     left.y *= right
     left.z *= right
 }
 
 // Vector /= Float
-public func /= (inout left: SCNVector3, right: CFloat) {
+public func /= (inout left: SCNVector3, right: Float) {
     left.x /= right
     left.y /= right
     left.z /= right

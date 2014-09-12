@@ -19,7 +19,7 @@ public class Serializer {
     
     public init(name: String) {
         self.queue = dispatch_queue_create((name as NSString).UTF8String, DISPATCH_QUEUE_SERIAL)
-        self.queueContext = NSNumber.numberWithInteger(++nextQueueContext)
+        self.queueContext = NSNumber(integer: ++nextQueueContext)
         dispatch_queue_set_specific_glue(self.queue, serializerKey, self.queueContext)
     }
 
@@ -38,7 +38,7 @@ public class Serializer {
         }
     }
     
-    public func dispatch(f: SerializerBlock) -> Any? {
+    public func dispatchWithReturn(f: SerializerBlock) -> Any? {
         var result: Any?
         
         if(self.isExecutingOnMyQueue) {
@@ -56,7 +56,7 @@ public class Serializer {
         dispatchSyncOnMain(f)
     }
     
-    public func dispatchOnMain(f: SerializerBlock) -> Any? {
+    public func dispatchOnMainWithReturn(f: SerializerBlock) -> Any? {
         var result: Any?
         
         dispatchSyncOnMain() {

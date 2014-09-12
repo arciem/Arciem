@@ -8,9 +8,6 @@
 
 import UIKit
 
-public typealias CGAngle = CGFloat    // Radians
-public typealias CGDegrees = CGFloat  // Degrees
-
 public extension NSString {
 //    var cgFloatValue: CGFloat {
 //    get {
@@ -32,8 +29,8 @@ public extension CGPoint {
     get { return Arciem.distance(x: x, y: y) }
     }
     
-    public var angle: CGAngle {
-    get { return Arciem.angle(x: x, y: y) }
+    public var radians: CGRadians {
+    get { return Arciem.radians(x: x, y: y) }
     }
     
     public func interpolate(p: CGPoint, t: CGFloat) -> CGPoint {
@@ -68,12 +65,12 @@ public extension CGPoint {
         return CGPoint(x: x, y: r.height - y + 2 * r.minY)
     }
     
-    public func rotateRelativeToPoint(p: CGPoint, angle: CGAngle) -> CGPoint {
+    public func rotateRelativeToPoint(p: CGPoint, radians: CGRadians) -> CGPoint {
         let ox = p.x
         let oy = p.y
         
-        let v1 = sin(angle)
-        let v2 = cos(angle)
+        let v1 = radians.sin
+        let v2 = radians.cos
         let v3 = -oy + y
         let v4 = -ox + x
         return CGPoint(x: ox - v1*v3 + v2*v4, y: oy + v2*v3 + v1*v4)
@@ -101,8 +98,8 @@ extension CGVector {
     get { return Arciem.distance(x: dx, y: dy) }
     }
     
-    public var angle: CGAngle {
-    get { return Arciem.angle(x: dx, y: dy) }
+    public var radians: CGRadians {
+    get { return Arciem.radians(x: dx, y: dy) }
     }
     
     public var area: CGFloat {
@@ -122,13 +119,13 @@ extension CGVector {
     public func subtractQuarterRotation() -> CGVector { return CGVector(dx: dy, dy: -dx) }
     public func halfRotation() -> CGVector { return CGVector(dx: -dx, dy: -dy) }
     
-    public func rotate(#angle: CGAngle) -> CGVector {
-        let t = Arciem.rotate(x: dx, y: dy, angle: angle);
+    public func rotate(#radians: CGRadians) -> CGVector {
+        let t = Arciem.rotate(x: dx, y: dy, angle: radians);
         return CGVector(dx: t.x, dy: t.y)
     }
     
-    public func fromPolar(#radius: CGFloat, angle: CGFloat) -> CGVector {
-        let t = Arciem.fromPolar(radius: radius, angle: angle)
+    public func fromPolar(#radius: CGFloat, radians: CGRadians) -> CGVector {
+        let t = Arciem.fromPolar(radius: radius, angle: radians)
         return CGVector(dx: t.x, dy: t.y)
     }
     
