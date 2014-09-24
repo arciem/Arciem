@@ -26,7 +26,7 @@ public extension UIColor {
         return UIColor(CGColor: CGColorCreateByDarkening(color: self.CGColor, fraction: fraction))
     }
 
-    public func colorByLighting(#fraction: CGFloat) -> UIColor {
+    public func colorByLightening(#fraction: CGFloat) -> UIColor {
         return UIColor(CGColor: CGColorCreateByLightening(color: self.CGColor, fraction: fraction))
     }
     

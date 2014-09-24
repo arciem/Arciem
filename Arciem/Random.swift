@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 private var _instance = Random()
 
@@ -74,17 +75,17 @@ public class Random {
     
     // returns a random Double in the half-open interval start..<end
     public func randomDouble(i: HalfOpenInterval<Double>) -> Double {
-        return denormalize(randomDouble(), i.start, i.end)
+        return Math.denormalize(randomDouble(), i.start, i.end)
     }
     
     // returns a random Float in the half-open interval start..<end
     public func randomFloat(i: HalfOpenInterval<Float>) -> Float {
-        return denormalize(randomFloat(), i.start, i.end)
+        return Math.denormalize(randomFloat(), i.start, i.end)
     }
     
     // returns a random CGFloat in the half-open interval start..<end
     public func randomCGFloat(i: HalfOpenInterval<CGFloat>) -> CGFloat {
-        return denormalize(randomCGFloat(), i.start, i.end)
+        return Math.denormalize(randomCGFloat(), i.start, i.end)
     }
     
     // returns an integer in the half-open interval start..<end

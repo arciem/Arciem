@@ -128,41 +128,43 @@ extension Float : Floatable { }
 extension Double : Floatable { }
 extension CGFloat : Floatable { }
 
-// The value normalized from the interval i1...i2 into the interval 0...1. (i1 may be greater than i2)
-public func normalize<T: Floatable>(value: T, i1: T, i2: T) -> T { return (value - i1) / (i2 - i1) }
+public class Math {
+    // The value normalized from the interval i1...i2 into the interval 0...1. (i1 may be greater than i2)
+    public class func normalize<T: Floatable>(value: T, _ i1: T, _ i2: T) -> T { return (value - i1) / (i2 - i1) }
 
-// The value denormalized from the interval 0...1 to the interval i1...i2. (i1 may be greater than i2)
-public func denormalize<T: Floatable>(value: T, i1: T, i2: T) -> T { return value * (i2 - i1) + i1 }
+    // The value denormalized from the interval 0...1 to the interval i1...i2. (i1 may be greater than i2)
+    public class func denormalize<T: Floatable>(value: T, _ i1: T, _ i2: T) -> T { return value * (i2 - i1) + i1 }
 
-// The value interpolated from the interval 0...1 to the interval i1...i2. (i1 my be greater than i2)
-public func interpolate<T: Floatable>(value: T, i1: T, i2: T) -> T { return value * (i2 - i1) + i1 }
+    // The value interpolated from the interval 0...1 to the interval i1...i2. (i1 my be greater than i2)
+    public class func interpolate<T: Floatable>(value: T, _ i1: T, _ i2: T) -> T { return value * (i2 - i1) + i1 }
 
-// The value mapped from the interval a1...a2 to the interval b1...b2. (the a's may be greater than the b's)
-public func map<T: Floatable>(value: T, a1: T, a2: T, b1: T, b2: T) -> T { return b1 + ((b2 - b1) * (value - a1)) / (a2 - a1) }
+    // The value mapped from the interval a1...a2 to the interval b1...b2. (the a's may be greater than the b's)
+    public class func map<T: Floatable>(value: T, _ a1: T, _ a2: T, _ b1: T, _ b2: T) -> T { return b1 + ((b2 - b1) * (value - a1)) / (a2 - a1) }
 
-// The value clamped into the given interval (default 0...1)
-public func clamp<T: Floatable>(value: T, _ i: ClosedInterval<T> = 0...1) -> T { if value < i.start { return i.start }; if value > i.end { return i.end }; return value }
+    // The value clamped into the given interval (default 0...1)
+    public class func clamp<T: Floatable>(value: T, _ i: ClosedInterval<T> = 0...1) -> T { if value < i.start { return i.start }; if value > i.end { return i.end }; return value }
 
-// return -1 for negative, 1 for positive, and 0 for zero values
-public func sign<T: Floatable>(value: T) -> Int { if value < 0 { return -1 }; if value > 0 { return 1 }; return 0 }
+    // return -1 for negative, 1 for positive, and 0 for zero values
+    public class func sign<T: Floatable>(value: T) -> Int { if value < 0 { return -1 }; if value > 0 { return 1 }; return 0 }
 
-// returns fractional part
-public func fract<T: Floatable>(value: T) -> T { return value - T.floor(value) }
+    // returns fractional part
+    public class func fract<T: Floatable>(value: T) -> T { return value - T.floor(value) }
 
-public func circularInterpolate<T: Floatable>(value: T, i1: T, i2: T) -> T
-{
-    let c = T.abs(i2 - i1)
-    if c <= 0.5 {
-        return denormalize(value, i1, i2)
-    } else {
-        var s: T
-        if i1 <= i2 {
-            s = denormalize(value, i1, i2 - 1.0)
-            if s < 0.0 { s += 1.0 }
+    public class func circularInterpolate<T: Floatable>(value: T, _ i1: T, _ i2: T) -> T
+    {
+        let c = T.abs(i2 - i1)
+        if c <= 0.5 {
+            return denormalize(value, i1, i2)
         } else {
-            s = denormalize(value, i1, i2 + 1.0)
-            if s >= 1.0 { s -= 1.0 }
+            var s: T
+            if i1 <= i2 {
+                s = denormalize(value, i1, i2 - 1.0)
+                if s < 0.0 { s += 1.0 }
+            } else {
+                s = denormalize(value, i1, i2 + 1.0)
+                if s >= 1.0 { s -= 1.0 }
+            }
+            return s
         }
-        return s
     }
 }

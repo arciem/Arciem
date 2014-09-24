@@ -22,13 +22,13 @@ public func CGColorCreateByDarkening(#color: CGColor, #fraction: CGFloat) -> CGC
 
     switch colorSpaceModelValue_glue(CGColorSpaceGetModel(CGColorGetColorSpace(color))) {
     case colorSpaceModelValue_glue(kCGColorSpaceModelMonochrome):
-        let gray = denormalize(fraction, oldc[0], 0)
+        let gray = Math.denormalize(fraction, oldc[0], 0)
         let a = oldc[1]
         result = CGColorCreate(sharedColorSpaceGray, [gray, a])
     case colorSpaceModelValue_glue(kCGColorSpaceModelRGB):
-        let r = denormalize(fraction, oldc[0], 0)
-        let g = denormalize(fraction, oldc[1], 0)
-        let b = denormalize(fraction, oldc[2], 0)
+        let r = Math.denormalize(fraction, oldc[0], 0)
+        let g = Math.denormalize(fraction, oldc[1], 0)
+        let b = Math.denormalize(fraction, oldc[2], 0)
         let a = oldc[3]
         result = CGColorCreate(sharedColorSpaceRGB, [r, g, b, a])
     default:
@@ -45,13 +45,13 @@ public func CGColorCreateByLightening(#color: CGColor, #fraction: CGFloat) -> CG
     
     switch colorSpaceModelValue_glue(CGColorSpaceGetModel(CGColorGetColorSpace(color))) {
     case colorSpaceModelValue_glue(kCGColorSpaceModelMonochrome):
-        let gray = denormalize(fraction, oldc[0], 1)
+        let gray = Math.denormalize(fraction, oldc[0], 1)
         let a = oldc[1]
         result = CGColorCreate(sharedColorSpaceGray, [gray, a])
     case colorSpaceModelValue_glue(kCGColorSpaceModelRGB):
-        let r = denormalize(fraction, oldc[0], 1)
-        let g = denormalize(fraction, oldc[1], 1)
-        let b = denormalize(fraction, oldc[2], 1)
+        let r = Math.denormalize(fraction, oldc[0], 1)
+        let g = Math.denormalize(fraction, oldc[1], 1)
+        let b = Math.denormalize(fraction, oldc[2], 1)
         let a = oldc[3]
         result = CGColorCreate(sharedColorSpaceRGB, [r, g, b, a])
     default:
@@ -68,7 +68,7 @@ public func CGColorCreateByDodging(#color: CGColor, #fraction: CGFloat) -> CGCol
 
     switch colorSpaceModelValue_glue(CGColorSpaceGetModel(CGColorGetColorSpace(color))) {
     case colorSpaceModelValue_glue(kCGColorSpaceModelMonochrome):
-        let gray = denormalize(fraction, oldc[0], 1)
+        let gray = Math.denormalize(fraction, oldc[0], 1)
         let a = oldc[1]
         result = CGColorCreate(sharedColorSpaceGray, [gray, a])
     case colorSpaceModelValue_glue(kCGColorSpaceModelRGB):
@@ -92,7 +92,7 @@ public func CGColorCreateByBurning(#color: CGColor, #fraction: CGFloat) -> CGCol
     
     switch colorSpaceModelValue_glue(CGColorSpaceGetModel(CGColorGetColorSpace(color))) {
     case colorSpaceModelValue_glue(kCGColorSpaceModelMonochrome):
-        let gray = denormalize(fraction, oldc[0], 0)
+        let gray = Math.denormalize(fraction, oldc[0], 0)
         let a = oldc[1]
         result = CGColorCreate(sharedColorSpaceGray, [gray, a])
     case colorSpaceModelValue_glue(kCGColorSpaceModelRGB):
@@ -121,13 +121,13 @@ public func CGColorCreateByInterpolating(#color1: CGColor, #color2: CGColor, #fr
     if colorSpaceModelValue_glue1 == colorSpaceModelValue_glue2 {
         switch colorSpaceModelValue_glue1 {
         case colorSpaceModelValue_glue(kCGColorSpaceModelMonochrome):
-            let gray = interpolate(fraction, oldc1[0], oldc2[0])
+            let gray = Math.interpolate(fraction, oldc1[0], oldc2[0])
             let a = oldc1[1]
             result = CGColorCreate(sharedColorSpaceGray, [gray, a])
         case colorSpaceModelValue_glue(kCGColorSpaceModelRGB):
-            let r = interpolate(fraction, oldc1[0], oldc2[0])
-            let g = interpolate(fraction, oldc1[1], oldc2[1])
-            let b = interpolate(fraction, oldc1[2], oldc2[2])
+            let r = Math.interpolate(fraction, oldc1[0], oldc2[0])
+            let g = Math.interpolate(fraction, oldc1[1], oldc2[1])
+            let b = Math.interpolate(fraction, oldc1[2], oldc2[2])
             let a = oldc1[3]
             result = CGColorCreate(sharedColorSpaceRGB, [r, g, b, a])
         default:

@@ -12,40 +12,40 @@ import SceneKit
 public extension SCNVector3 {
     public var distanceSquared: Float {
     get {
-        return Arciem.distanceSquared(x: x, y: y, z: z)
+        return Geometry.distanceSquared(x: x, y: y, z: z)
     }
     }
     
     public var distance: Float {
     get {
-        return Arciem.distance(x: x, y: y, z: z)
+        return Geometry.distance(x: x, y: y, z: z)
     }
     }
     
     public var volume: Float {
     get {
-        return Arciem.volume(x: x, y: y, z: z)
+        return Geometry.volume(x: x, y: y, z: z)
     }
     }
     
 //    public var normalize: SCNVector3 {
 //    get {
-//        let t = Arciem.normalize(x: x, y: y, z: z)
+//        let t = normalize(x: x, y: y, z: z)
 //        return SCNVector3(x: t.x, y: t.y, z: t.z)
 //    }
 //    }
     
     public func dot(d: SCNVector3) -> Float {
-        return Arciem.dot(x1: x, y1: y, z1: z, x2: d.x, y2: d.y, z2: d.z)
+        return Geometry.dot(x1: x, y1: y, z1: z, x2: d.x, y2: d.y, z2: d.z)
     }
     
     public func cross(d: SCNVector3) -> SCNVector3 {
-        let t = Arciem.cross(x1: x, y1: y, z1: z, x2: d.x, y2: d.y, z2: d.z)
+        let t = Geometry.cross(x1: x, y1: y, z1: z, x2: d.x, y2: d.y, z2: d.z)
         return SCNVector3(x: t.x, y: t.y, z: t.z)
     }
 
     public func scale(#sx: Float, sy: Float, sz: Float) -> SCNVector3 {
-        let t = Arciem.scale(x: x, y: y, z: z, sx: sx, sy: sy, sz: sz)
+        let t = Geometry.scale(x: x, y: y, z: z, sx: sx, sy: sy, sz: sz)
         return SCNVector3(x: t.x, y: t.y, z: t.z)
     }
 }

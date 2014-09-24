@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-public func saveContextState(context: CGContext, drawing: () -> ()) {
+public func drawRestoringStateForContext(context: CGContext, drawing: () -> ()) {
     CGContextSaveGState(context)
     drawing()
     CGContextRestoreGState(context)

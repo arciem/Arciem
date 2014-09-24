@@ -22,7 +22,7 @@ public extension UIView {
             self.layoutTop ==⦿ superview.layoutTop,
             self.layoutBottom ==⦿ superview.layoutBottom
         ]
-        NSLayoutConstraint.activateConstraints(constraints)
+        NSLayoutConstraint.activateConstraintsGlue(constraints, targetView:superview)
     }
 }
 

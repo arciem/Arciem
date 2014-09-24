@@ -137,6 +137,18 @@ public func <=⦿ (left: ProtoLayoutConstraint, right: CGFloat) -> NSLayoutConst
     return left.lessThanOrEqualTo(right)
 }
 
+public extension NSLayoutConstraint {
+    public class func activateConstraintsGlue(constraints: [NSLayoutConstraint], targetView: UIView) {
+        if isOSVersionAtLeast8 {
+            NSLayoutConstraint.activateConstraints(constraints)
+        } else {
+            for constraint in constraints {
+                targetView.addConstraint(constraint)
+            }
+        }
+    }
+}
+
 public extension UIView {
 
     func layoutAttribute(attribute: NSLayoutAttribute) -> ProtoLayoutConstraint {

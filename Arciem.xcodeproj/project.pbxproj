@@ -47,6 +47,7 @@
 		039FC4241992E83400C5211A /* Angles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 039FC4231992E83400C5211A /* Angles.swift */; };
 		03A3D8B119A4006C002C67AF /* Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A3D8B019A4006C002C67AF /* Autolayout.swift */; };
 		03A61A4A199C42270090F57D /* BigNum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A61A49199C42270090F57D /* BigNum.swift */; };
+		03B106B619D0E76A004EB814 /* CalculatedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B106B519D0E76A004EB814 /* CalculatedValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -80,6 +81,7 @@
 		039FC4231992E83400C5211A /* Angles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Angles.swift; sourceTree = "<group>"; };
 		03A3D8B019A4006C002C67AF /* Autolayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Autolayout.swift; sourceTree = "<group>"; };
 		03A61A49199C42270090F57D /* BigNum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigNum.swift; sourceTree = "<group>"; };
+		03B106B519D0E76A004EB814 /* CalculatedValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatedValue.swift; sourceTree = "<group>"; };
 		03C4342B194AB3B200463B1F /* Serializer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Serializer.swift; sourceTree = "<group>"; };
 		03C4342E194AB9C900463B1F /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		03D093141949857C0015313C /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				03D9CC571946C2F1006463F7 /* Device.swift */,
 				03D9CC5B19470F03006463F7 /* KVOObserver.swift */,
 				03C4342E194AB9C900463B1F /* Observer.swift */,
+				03B106B519D0E76A004EB814 /* CalculatedValue.swift */,
 				03882014194865DC0078C2B3 /* Runtime.swift */,
 				03D09328194A6B720015313C /* Dispatch.swift */,
 				03EDC163194AA137008AAFFA /* Worker.swift */,
@@ -298,6 +301,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03B106B619D0E76A004EB814 /* CalculatedValue.swift in Sources */,
 				035FE3371990A6CF00421433 /* KVOObserver.swift in Sources */,
 				036D8F7C1989BC6C003FCB35 /* CGColorGlue.m in Sources */,
 				03A3D8B119A4006C002C67AF /* Autolayout.swift in Sources */,

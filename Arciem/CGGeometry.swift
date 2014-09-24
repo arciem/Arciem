@@ -22,35 +22,35 @@ public extension NSString {
 
 public extension CGPoint {
     public var distanceSquared: CGFloat {
-    get { return Arciem.distanceSquared(x: x, y: y) }
+    get { return Geometry.distanceSquared(x: x, y: y) }
     }
     
     public var distance: CGFloat {
-    get { return Arciem.distance(x: x, y: y) }
+    get { return Geometry.distance(x: x, y: y) }
     }
     
     public var radians: CGRadians {
-    get { return Arciem.radians(x: x, y: y) }
+    get { return Geometry.radians(x: x, y: y) }
     }
     
     public func interpolate(p: CGPoint, t: CGFloat) -> CGPoint {
-        let tu = Arciem.interpolate(x1: x, y1: y, x2: p.x, y2: p.y, t: t)
+        let tu = Geometry.interpolate(x1: x, y1: y, x2: p.x, y2: p.y, t: t)
         return CGPoint(x: tu.x, y:tu.y)
     }
     
     public func clampInside(r: CGRect) -> CGPoint {
         return CGPoint(
-            x: clamp(x, r.minX...r.maxX),
-            y: clamp(y, r.minY...r.maxY)
+            x: Math.clamp(x, r.minX...r.maxX),
+            y: Math.clamp(y, r.minY...r.maxY)
         )
     }
     
     public func distance(p: CGPoint) -> CGFloat {
-        return Arciem.distance(x1: x, y1: y, x2: p.x, y2: p.y)
+        return Geometry.distance(x1: x, y1: y, x2: p.x, y2: p.y)
     }
     
     public func distanceSquared(p: CGPoint) -> CGFloat {
-        return Arciem.distanceSquared(x1: x, y1: y, x2: p.x, y2: p.y)
+        return Geometry.distanceSquared(x1: x, y1: y, x2: p.x, y2: p.y)
     }
     
     public func distance(r: CGRect) -> CGFloat {
@@ -77,7 +77,7 @@ public extension CGPoint {
     }
     
     public func scale(#sx: CGFloat, sy: CGFloat) -> CGPoint {
-        let t = Arciem.scale(x: x, y: y, sx: sx, sy: sy)
+        let t = Geometry.scale(x: x, y: y, sx: sx, sy: sy)
         return CGPoint(x: t.x, y: t.y)
     }
     
@@ -91,28 +91,28 @@ public extension CGPoint {
 
 extension CGVector {
     public var distanceSquared: CGFloat {
-    get { return Arciem.distanceSquared(x: dx, y: dy) }
+    get { return Geometry.distanceSquared(x: dx, y: dy) }
     }
     
     public var distance: CGFloat {
-    get { return Arciem.distance(x: dx, y: dy) }
+    get { return Geometry.distance(x: dx, y: dy) }
     }
     
     public var radians: CGRadians {
-    get { return Arciem.radians(x: dx, y: dy) }
+    get { return Geometry.radians(x: dx, y: dy) }
     }
     
     public var area: CGFloat {
-    get { return Arciem.area(x: dx, y: dy) }
+    get { return Geometry.area(x: dx, y: dy) }
     }
     
     public var normalize: CGVector {
-    get { let t = Arciem.normalize(x: dx, y: dy)
+    get { let t = Geometry.normalize(x: dx, y: dy)
         return CGVector(dx: t.x, dy: t.y) }
     }
     
     public func dot(d: CGVector) -> CGFloat {
-        return Arciem.dot(x1: dx, y1: dy, x2: d.dx, y2: d.dy)
+        return Geometry.dot(x1: dx, y1: dy, x2: d.dx, y2: d.dy)
     }
 
     public func addQuarterRotation() -> CGVector { return CGVector(dx: -dy, dy: dx) }
@@ -120,17 +120,17 @@ extension CGVector {
     public func halfRotation() -> CGVector { return CGVector(dx: -dx, dy: -dy) }
     
     public func rotate(#radians: CGRadians) -> CGVector {
-        let t = Arciem.rotate(x: dx, y: dy, angle: radians);
+        let t = Geometry.rotate(x: dx, y: dy, angle: radians);
         return CGVector(dx: t.x, dy: t.y)
     }
     
     public func fromPolar(#radius: CGFloat, radians: CGRadians) -> CGVector {
-        let t = Arciem.fromPolar(radius: radius, angle: radians)
+        let t = Geometry.fromPolar(radius: radius, angle: radians)
         return CGVector(dx: t.x, dy: t.y)
     }
     
     public func scale(#sx: CGFloat, sy: CGFloat) -> CGVector {
-        let t = Arciem.scale(x: dx, y: dy, sx: sx, sy: sy)
+        let t = Geometry.scale(x: dx, y: dy, sx: sx, sy: sy)
         return CGVector(dx: t.x, dy: t.y)
     }
 }
@@ -299,33 +299,45 @@ public func /= (inout left: CGVector, right: CGFloat) {
 
 extension CGSize {
     public func scaleForAspectFitWithin(#size:CGSize) -> CGFloat {
-        return scaleForAspectFit(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
+        return Geometry.scaleForAspectFit(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
     }
 
     public func scaleForAspectFillWithin(#size:CGSize) -> CGFloat {
-        return scaleForAspectFill(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
+        return Geometry.scaleForAspectFill(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
     }
     
     public func aspectFitWithin(#size:CGSize) -> CGSize {
-        let t = aspectFit(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
+        let t = Geometry.aspectFit(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
         return CGSize(width: t.x, height: t.y)
     }
     
     public func aspectFillWithin(#size:CGSize) -> CGSize {
-        let t = aspectFill(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
+        let t = Geometry.aspectFill(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
         return CGSize(width: t.x, height: t.y)
     }
     
     public func scale(#sx: CGFloat, sy: CGFloat) -> CGSize {
-        let t = Arciem.scale(x: width, y: height, sx: sx, sy: sy);
+        let t = Geometry.scale(x: width, y: height, sx: sx, sy: sy);
         return CGSize(width: t.x, height: t.y)
     }
 }
 
 protocol CGRectLike {
+    
     //
     // These are properties and methods defined by standard CGRect
     //
+    
+    var width  : CGFloat { get }
+    var height : CGFloat { get }
+    
+    var minX     : CGFloat { get }
+    var midX     : CGFloat { get }
+    var maxX     : CGFloat { get }
+    
+    var minY     : CGFloat { get }
+    var midY     : CGFloat { get }
+    var maxY     : CGFloat { get }
 
     var isNull: Bool { get }
     var isEmpty: Bool { get }
@@ -355,255 +367,268 @@ protocol CGRectLike {
     func contains(point: CGPoint) -> Bool
     
     func intersects(rect: CGRect) -> Bool
-    
-    //
-    // The setters on these attributes will never change the rectangle's size
-    //
-    
-    var minX     : CGFloat { get set }
-    var left     : CGFloat { get set }
-    var leading  : CGFloat { get set }
-    var midX     : CGFloat { get set }
-    var maxX     : CGFloat { get set }
-    var right    : CGFloat { get set }
-    var trailing : CGFloat { get set }
-    var minY     : CGFloat { get set }
-    var top      : CGFloat { get set }
-    var midY     : CGFloat { get set }
-    var maxY     : CGFloat { get set }
-    var bottom   : CGFloat { get set }
-    
-    var minXminY : CGPoint { get set }
-    var midXminY : CGPoint { get set }
-    var maxXminY : CGPoint { get set }
-    var minXmidY : CGPoint { get set }
-    var midXmidY : CGPoint { get set }
-    var mid      : CGPoint { get set }
-    var maxXmidY : CGPoint { get set }
-    var minXmaxY : CGPoint { get set }
-    var midXmaxY : CGPoint { get set }
-    var maxXmaxY : CGPoint { get set }
-    
-    //
-    // The setters on these attributes will generally change the rectangle's size
-    //
-    
-    var width  : CGFloat { get set }
-    var height : CGFloat { get set }
-    
-    //
-    // These functions return a rectangle that can be a different size than the original
-    //
-    
-    func insetMinX(dx: CGFloat) -> CGRect
-    func insetLeft(dx: CGFloat) -> CGRect
-    func insetLeading(dx: CGFloat) -> CGRect
-    
-    func insetMaxX(dx: CGFloat) -> CGRect
-    func insetRight(dx: CGFloat) -> CGRect
-    func insetTrailing(dx: CGFloat) -> CGRect
-    
-    func insetMinY(dx: CGFloat) -> CGRect
-    func insetTop(dx: CGFloat) -> CGRect
-    
-    func insetMaxY(dx: CGFloat) -> CGRect
-    func insetBottom(dx: CGFloat) -> CGRect
-    
-    func setMinX(dx: CGFloat) -> CGRect
-    func setLeft(dx: CGFloat) -> CGRect
-    func setLeading(dx: CGFloat) -> CGRect
 
-    func setMaxX(dx: CGFloat) -> CGRect
-    func setRight(dx: CGFloat) -> CGRect
-    func setTrailing(dx: CGFloat) -> CGRect
+    var left     : CGFloat { get }
+    var leading  : CGFloat { get }
+    var right    : CGFloat { get }
+    var trailing : CGFloat { get }
+    var top      : CGFloat { get }
+    var bottom   : CGFloat { get }
     
-    func setMinY(dx: CGFloat) -> CGRect
-    func setTop(dx: CGFloat) -> CGRect
+    var minXminY : CGPoint { get }
+    var midXminY : CGPoint { get }
+    var maxXminY : CGPoint { get }
+    var minXmidY : CGPoint { get }
+    var midXmidY : CGPoint { get }
+    var mid      : CGPoint { get }
+    var maxXmidY : CGPoint { get }
+    var minXmaxY : CGPoint { get }
+    var midXmaxY : CGPoint { get }
+    var maxXmaxY : CGPoint { get }
     
-    func setMaxY(dx: CGFloat) -> CGRect
-    func setBottom(dx: CGFloat) -> CGRect
+    //
+    // The functions below will never change the rectangle's size
+    //
     
-    func scaleRelativeToPoint(p: CGPoint, sx: CGFloat, sy: CGFloat) -> CGRect
+    mutating func setMinX(newValue: CGFloat)
+    mutating func setLeft(newValue: CGFloat)
+    mutating func setLeading(newValue: CGFloat)
+    mutating func setMidX(newValue: CGFloat)
+    mutating func setMaxX(newValue: CGFloat)
+    mutating func setRight(newValue: CGFloat)
+    mutating func setTrailing(newValue: CGFloat)
+    mutating func setMinY(newValue: CGFloat)
+    mutating func setTop(newValue: CGFloat)
+    mutating func setMidY(newValue: CGFloat)
+    mutating func setMaxY(newValue: CGFloat)
+    mutating func setBottom(newValue: CGFloat)
+    
+    func rectBySettingMinX(newValue: CGFloat) -> CGRect
+    func rectBySettingLeft(newValue: CGFloat) -> CGRect
+    func rectBySettingLeading(newValue: CGFloat) -> CGRect
+    func rectBySettingMidX(newValue: CGFloat) -> CGRect
+    func rectBySettingMaxX(newValue: CGFloat) -> CGRect
+    func rectBySettingRight(newValue: CGFloat) -> CGRect
+    func rectBySettingTrailing(newValue: CGFloat) -> CGRect
+    func rectBySettingMinY(newValue: CGFloat) -> CGRect
+    func rectBySettingTop(newValue: CGFloat) -> CGRect
+    func rectBySettingMidY(newValue: CGFloat) -> CGRect
+    func rectBySettingMaxY(newValue: CGFloat) -> CGRect
+    func rectBySettingBottom(newValue: CGFloat) -> CGRect
+    
+    mutating func setMinXminY(newValue: CGPoint)
+    mutating func setMidXminY(newValue: CGPoint)
+    mutating func setMaxXminY(newValue: CGPoint)
+    mutating func setMinXmidY(newValue: CGPoint)
+    mutating func setMidXmidY(newValue: CGPoint)
+    mutating func setMid     (newValue: CGPoint)
+    mutating func setMaxXmidY(newValue: CGPoint)
+    mutating func setMinXmaxY(newValue: CGPoint)
+    mutating func setMidXmaxY(newValue: CGPoint)
+    mutating func setMaxXmaxY(newValue: CGPoint)
+    
+    func rectBySettingMinXminY(newValue: CGPoint) -> CGRect
+    func rectBySettingMidXminY(newValue: CGPoint) -> CGRect
+    func rectBySettingMaxXminY(newValue: CGPoint) -> CGRect
+    func rectBySettingMinXmidY(newValue: CGPoint) -> CGRect
+    func rectBySettingMidXmidY(newValue: CGPoint) -> CGRect
+    func rectBySettingMid     (newValue: CGPoint) -> CGRect
+    func rectBySettingMaxXmidY(newValue: CGPoint) -> CGRect
+    func rectBySettingMinXmaxY(newValue: CGPoint) -> CGRect
+    func rectBySettingMidXmaxY(newValue: CGPoint) -> CGRect
+    func rectBySettingMaxXmaxY(newValue: CGPoint) -> CGRect
+    
+    //
+    // The functions below generally change the rectangle's size
+    //
+    
+    mutating func setWidth(newValue: CGFloat)
+    mutating func setHeight(newValue: CGFloat)
+    
+    func rectBySettingWidth(newValue: CGFloat) -> CGRect
+    func rectBySettingHeight(newValue: CGFloat) -> CGRect
+    
+    func rectByInsettingMinX(dx: CGFloat) -> CGRect
+    func rectByInsettingLeft(dx: CGFloat) -> CGRect
+    func rectByInsettingLeading(dx: CGFloat) -> CGRect
+    func rectByInsettingMaxX(dx: CGFloat) -> CGRect
+    func rectByInsettingRight(dx: CGFloat) -> CGRect
+    func rectByInsettingTrailing(dx: CGFloat) -> CGRect
+    func rectByInsettingMinY(dy: CGFloat) -> CGRect
+    func rectByInsettingTop(dy: CGFloat) -> CGRect
+    func rectByInsettingMaxY(dy: CGFloat) -> CGRect
+    func rectByInsettingBottom(dy: CGFloat) -> CGRect
+    
+    mutating func insetMinX(dx: CGFloat)
+    mutating func insetLeft(dx: CGFloat)
+    mutating func insetLeading(dx: CGFloat)
+    mutating func insetMaxX(dx: CGFloat)
+    mutating func insetRight(dx: CGFloat)
+    mutating func insetTrailing(dx: CGFloat)
+    mutating func insetMinY(dy: CGFloat)
+    mutating func insetTop(dy: CGFloat)
+    mutating func insetMaxY(dy: CGFloat)
+    mutating func insetBottom(dy: CGFloat)
+    
+    func rectBySettingMinXIndependent(newValue: CGFloat) -> CGRect
+    func rectBySettingLeftIndependent(newValue: CGFloat) -> CGRect
+    func rectBySettingLeadingIndependent(newValue: CGFloat) -> CGRect
+    func rectBySettingMaxXIndependent(newValue: CGFloat) -> CGRect
+    func rectBySettingRightIndependent(newValue: CGFloat) -> CGRect
+    func rectBySettingTrailingIndependent(newValue: CGFloat) -> CGRect
+    func rectBySettingMinYIndependent(newValue: CGFloat) -> CGRect
+    func rectBySettingTopIndependent(newValue: CGFloat) -> CGRect
+    func rectBySettingMaxYIndependent(newValue: CGFloat) -> CGRect
+    func rectBySettingBottomIndependent(newValue: CGFloat) -> CGRect
+    
+    mutating func setMinXIndependent(newValue: CGFloat)
+    mutating func setLeftIndependent(newValue: CGFloat)
+    mutating func setLeadingIndependent(newValue: CGFloat)
+    mutating func setMaxXIndependent(newValue: CGFloat)
+    mutating func setRightIndependent(newValue: CGFloat)
+    mutating func setTrailingIndependent(newValue: CGFloat)
+    mutating func setMinYIndependent(newValue: CGFloat)
+    mutating func setTopIndependent(newValue: CGFloat)
+    mutating func setMaxYIndependent(newValue: CGFloat)
+    mutating func setBottomIndependent(newValue: CGFloat)
+    
+    func rectByScalingRelativeToPoint(p: CGPoint, scaling s: CGVector) -> CGRect
+    mutating func scaleRelativeToPoint(p: CGPoint, scaling s: CGVector)
 }
 
 extension CGRect : CGRectLike {
+    public var left: CGFloat { get { return minX } }
+    public var leading: CGFloat { get { return minX } }
+    public var right: CGFloat { get { return maxX } }
+    public var trailing: CGFloat { get { return maxX } }
+    public var top: CGFloat { get { return minY } }
+    public var bottom: CGFloat { get { return maxY } }
+
+    public var minXminY : CGPoint { get { return CGPoint(x: minX, y: minY) } }
+    public var midXminY : CGPoint { get { return CGPoint(x: midX, y: minY) } }
+    public var maxXminY : CGPoint { get { return CGPoint(x: maxX, y: minY) } }
+    public var minXmidY : CGPoint { get { return CGPoint(x: minX, y: midY) } }
+    public var midXmidY : CGPoint { get { return CGPoint(x: midX, y: midY) } }
+    public var mid      : CGPoint { get { return CGPoint(x: midX, y: midY) } }
+    public var maxXmidY : CGPoint { get { return CGPoint(x: maxX, y: midY) } }
+    public var minXmaxY : CGPoint { get { return CGPoint(x: minX, y: maxY) } }
+    public var midXmaxY : CGPoint { get { return CGPoint(x: midX, y: maxY) } }
+    public var maxXmaxY : CGPoint { get { return CGPoint(x: maxX, y: maxY) } }
+
     //
-    // The setters on these attributes will never change the rectangle's size
+    // The functions below will never change the rectangle's size
     //
 
-    public var minX : CGFloat {
-    get { return origin.x }
-    set { origin.x = newValue }
-    }
-    
-    public var left : CGFloat {
-    get { return origin.x }
-    set { origin.x = newValue }
-    }
-    
-    public var leading : CGFloat {
-    get { return origin.x }
-    set { origin.x = newValue }
-    }
-    
-    public var midX : CGFloat {
-    get { return denormalize(0.5, minX, maxX) }
-    set { origin.x = newValue - size.width / 2 }
-    }
-    
-    public var maxX : CGFloat {
-    get { return origin.x + size.width }
-    set { origin.x = newValue - size.width }
-    }
-    
-    public var right : CGFloat {
-    get { return origin.x + size.width }
-    set { origin.x = newValue - size.width }
-    }
-    
-    public var trailing : CGFloat {
-    get { return origin.x + size.width }
-    set { origin.x = newValue - size.width }
-    }
-    
-    public var minY : CGFloat {
-    get { return origin.y }
-    set { origin.y = newValue }
-    }
-    
-    public var top : CGFloat {
-    get { return origin.y }
-    set { origin.y = newValue }
-    }
-    
-    public var midY : CGFloat {
-    get { return denormalize(0.5, minY, maxY) }
-    set { origin.y = newValue - size.height / 2 }
-    }
-    
-    public var maxY : CGFloat {
-    get { return origin.y + size.height }
-    set { origin.y = newValue - size.height }
-    }
-    
-    public var bottom : CGFloat {
-    get { return maxY }
-    set { size.height = size.height - newValue; standardize() }
-    }
-    
-    public var minXminY : CGPoint {
-    get { return CGPoint(x: minX, y: minY) }
-    set { minX = newValue.x; minY = newValue.y }
-    }
+    public mutating func setMinX(newValue: CGFloat) { origin.x = newValue }
+    public mutating func setLeft(newValue: CGFloat) { origin.x = newValue }
+    public mutating func setLeading(newValue: CGFloat) { origin.x = newValue }
+    public mutating func setMidX(newValue: CGFloat) { origin.x = newValue - size.width / 2 }
+    public mutating func setMaxX(newValue: CGFloat) { origin.x = newValue - size.width }
+    public mutating func setRight(newValue: CGFloat) { origin.x = newValue - size.width }
+    public mutating func setTrailing(newValue: CGFloat) { origin.x = newValue - size.width }
+    public mutating func setMinY(newValue: CGFloat) { origin.y = newValue }
+    public mutating func setTop(newValue: CGFloat) { origin.y = newValue }
+    public mutating func setMidY(newValue: CGFloat) { origin.y = newValue - size.height / 2 }
+    public mutating func setMaxY(newValue: CGFloat) { origin.y = newValue - size.height }
+    public mutating func setBottom(newValue: CGFloat) { origin.y = newValue - size.height }
 
-    public var midXminY : CGPoint {
-    get { return CGPoint(x: midX, y: minY) }
-    set { midX = newValue.x; minY = newValue.y }
-    }
-    
-    public var maxXminY : CGPoint {
-    get { return CGPoint(x: maxX, y: minY) }
-    set { maxX = newValue.x; minY = newValue.y }
-    }
-    
-    public var minXmidY : CGPoint {
-    get { return CGPoint(x: minX, y: midY) }
-    set { minX = newValue.x; midY = newValue.y }
-    }
-    
-    public var midXmidY : CGPoint {
-    get { return CGPoint(x: midX, y: midY) }
-    set { midX = newValue.x; midY = newValue.y }
-    }
-    
-    public var mid : CGPoint {
-    get { return CGPoint(x: midX, y: midY) }
-    set { midX = newValue.x; midY = newValue.y }
-    }
-    
-    public var maxXmidY : CGPoint {
-    get { return CGPoint(x: maxX, y: midY) }
-    set { maxX = newValue.x; midY = newValue.y }
-    }
-    
-    public var minXmaxY : CGPoint {
-    get { return CGPoint(x: minX, y: maxY) }
-    set { minX = newValue.x; maxY = newValue.y }
-    }
-    
-    public var midXmaxY : CGPoint {
-    get { return CGPoint(x: midX, y: maxY) }
-    set { midX = newValue.x; maxY = newValue.y }
-    }
-    
-    public var maxXmaxY : CGPoint {
-    get { return CGPoint(x: maxX, y: maxY) }
-    set { maxX = newValue.x; maxY = newValue.y }
-    }
+    public func rectBySettingMinX(newValue: CGFloat) -> CGRect { var r = self; r.setMinX(newValue); return r }
+    public func rectBySettingLeft(newValue: CGFloat) -> CGRect { var r = self; r.setLeft(newValue); return r }
+    public func rectBySettingLeading(newValue: CGFloat) -> CGRect { var r = self; r.setLeading(newValue); return r }
+    public func rectBySettingMidX(newValue: CGFloat) -> CGRect { var r = self; r.setMidX(newValue); return r }
+    public func rectBySettingMaxX(newValue: CGFloat) -> CGRect { var r = self; r.setMaxX(newValue); return r }
+    public func rectBySettingRight(newValue: CGFloat) -> CGRect { var r = self; r.setRight(newValue); return r }
+    public func rectBySettingTrailing(newValue: CGFloat) -> CGRect { var r = self; r.setTrailing(newValue); return r }
+    public func rectBySettingMinY(newValue: CGFloat) -> CGRect { var r = self; r.setMinY(newValue); return r }
+    public func rectBySettingTop(newValue: CGFloat) -> CGRect { var r = self; r.setTop(newValue); return r }
+    public func rectBySettingMidY(newValue: CGFloat) -> CGRect { var r = self; r.setMidY(newValue); return r }
+    public func rectBySettingMaxY(newValue: CGFloat) -> CGRect { var r = self; r.setMaxY(newValue); return r }
+    public func rectBySettingBottom(newValue: CGFloat) -> CGRect { var r = self; r.setBottom(newValue); return r }
+
+    public mutating func setMinXminY(newValue: CGPoint) { self.setMinX(newValue.x); self.setMinY(newValue.y) }
+    public mutating func setMidXminY(newValue: CGPoint) { self.setMidX(newValue.x); self.setMinY(newValue.y) }
+    public mutating func setMaxXminY(newValue: CGPoint) { self.setMaxX(newValue.x); self.setMinY(newValue.y) }
+    public mutating func setMinXmidY(newValue: CGPoint) { self.setMinX(newValue.x); self.setMidY(newValue.y) }
+    public mutating func setMidXmidY(newValue: CGPoint) { self.setMidX(newValue.x); self.setMidY(newValue.y) }
+    public mutating func setMid     (newValue: CGPoint) { self.setMidX(newValue.x); self.setMidY(newValue.y) }
+    public mutating func setMaxXmidY(newValue: CGPoint) { self.setMaxX(newValue.x); self.setMidY(newValue.y) }
+    public mutating func setMinXmaxY(newValue: CGPoint) { self.setMinX(newValue.x); self.setMaxY(newValue.y) }
+    public mutating func setMidXmaxY(newValue: CGPoint) { self.setMidX(newValue.x); self.setMaxY(newValue.y) }
+    public mutating func setMaxXmaxY(newValue: CGPoint) { self.setMaxX(newValue.x); self.setMaxY(newValue.y) }
+
+    public func rectBySettingMinXminY(newValue: CGPoint) -> CGRect { var r = self; r.setMinXminY(newValue); return r }
+    public func rectBySettingMidXminY(newValue: CGPoint) -> CGRect { var r = self; r.setMidXminY(newValue); return r }
+    public func rectBySettingMaxXminY(newValue: CGPoint) -> CGRect { var r = self; r.setMaxXminY(newValue); return r }
+    public func rectBySettingMinXmidY(newValue: CGPoint) -> CGRect { var r = self; r.setMinXmidY(newValue); return r }
+    public func rectBySettingMidXmidY(newValue: CGPoint) -> CGRect { var r = self; r.setMidXmidY(newValue); return r }
+    public func rectBySettingMid     (newValue: CGPoint) -> CGRect { var r = self; r.setMidXmidY(newValue); return r }
+    public func rectBySettingMaxXmidY(newValue: CGPoint) -> CGRect { var r = self; r.setMaxXmidY(newValue); return r }
+    public func rectBySettingMinXmaxY(newValue: CGPoint) -> CGRect { var r = self; r.setMinXmaxY(newValue); return r }
+    public func rectBySettingMidXmaxY(newValue: CGPoint) -> CGRect { var r = self; r.setMidXmaxY(newValue); return r }
+    public func rectBySettingMaxXmaxY(newValue: CGPoint) -> CGRect { var r = self; r.setMaxXmaxY(newValue); return r }
     
     //
-    // The setters on these attributes will generally change the rectangle's size
+    // The functions below generally change the rectangle's size
     //
     
-    public var width : CGFloat {
-    get { return size.width }
-    set { size.width = newValue }
-    }
+    public mutating func setWidth(newValue: CGFloat) { size.width = newValue }
+    public mutating func setHeight(newValue: CGFloat) { size.height = newValue }
     
-    public var height : CGFloat {
-    get { return size.height }
-    set { size.height = newValue }
-    }
+    public func rectBySettingWidth(newValue: CGFloat) -> CGRect { var r = self; r.setWidth(newValue); return r }
+    public func rectBySettingHeight(newValue: CGFloat) -> CGRect { var r = self; r.setHeight(newValue); return r }
     
-    //
-    // These functions return a rectangle that can be a different size than the original
-    //
+    public func rectByInsettingMinX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x + dx, y: origin.y, width: size.width - dx, height: size.height).standardizedRect }
+    public func rectByInsettingLeft(dx: CGFloat) -> CGRect { return rectByInsettingMinX(dx) }
+    public func rectByInsettingLeading(dx: CGFloat) -> CGRect { return rectByInsettingMinX(dx) }
+    public func rectByInsettingMaxX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width - dx, height: size.height).standardizedRect }
+    public func rectByInsettingRight(dx: CGFloat) -> CGRect { return rectByInsettingMaxX(dx) }
+    public func rectByInsettingTrailing(dx: CGFloat) -> CGRect { return rectByInsettingMaxX(dx) }
+    public func rectByInsettingMinY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y + dy, width: size.width, height: size.height - dy).standardizedRect }
+    public func rectByInsettingTop(dy: CGFloat) -> CGRect { return rectByInsettingMinY(dy) }
+    public func rectByInsettingMaxY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height - dy).standardizedRect }
+    public func rectByInsettingBottom(dy: CGFloat) -> CGRect { return rectByInsettingMaxY(dy) }
+
+    public mutating func insetMinX(dx: CGFloat) { self = rectByInsettingMinX(dx) }
+    public mutating func insetLeft(dx: CGFloat) { self = rectByInsettingLeft(dx) }
+    public mutating func insetLeading(dx: CGFloat) { self = rectByInsettingLeading(dx) }
+    public mutating func insetMaxX(dx: CGFloat) { self = rectByInsettingMaxX(dx) }
+    public mutating func insetRight(dx: CGFloat) { self = rectByInsettingRight(dx) }
+    public mutating func insetTrailing(dx: CGFloat) { self = rectByInsettingTrailing(dx) }
+    public mutating func insetMinY(dy: CGFloat) { self = rectByInsettingMinY(dy) }
+    public mutating func insetTop(dy: CGFloat) { self = rectByInsettingTop(dy) }
+    public mutating func insetMaxY(dy: CGFloat) { self = rectByInsettingMaxY(dy) }
+    public mutating func insetBottom(dy: CGFloat) { self = rectByInsettingBottom(dy) }
+
+    public func rectBySettingMinXIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingMinX(newValue - self.minX) }
+    public func rectBySettingLeftIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingLeft(newValue - self.left) }
+    public func rectBySettingLeadingIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingLeading(newValue - self.leading) }
+    public func rectBySettingMaxXIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingRight(newValue - self.maxX) }
+    public func rectBySettingRightIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingRight(newValue - self.right) }
+    public func rectBySettingTrailingIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingTrailing(newValue - self.trailing) }
+    public func rectBySettingMinYIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingMinY(newValue - self.minY) }
+    public func rectBySettingTopIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingTop(newValue - self.top) }
+    public func rectBySettingMaxYIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingMaxY(newValue - self.maxY) }
+    public func rectBySettingBottomIndependent(newValue: CGFloat) -> CGRect { return rectByInsettingBottom(newValue - self.bottom) }
+
+    public mutating func setMinXIndependent(newValue: CGFloat) { self = rectBySettingMinXIndependent(newValue) }
+    public mutating func setLeftIndependent(newValue: CGFloat) { self = rectBySettingLeftIndependent(newValue) }
+    public mutating func setLeadingIndependent(newValue: CGFloat) { self = rectBySettingLeadingIndependent(newValue) }
+    public mutating func setMaxXIndependent(newValue: CGFloat) { self = rectBySettingMaxXIndependent(newValue) }
+    public mutating func setRightIndependent(newValue: CGFloat) { self = rectBySettingRightIndependent(newValue) }
+    public mutating func setTrailingIndependent(newValue: CGFloat) { self = rectBySettingTrailingIndependent(newValue) }
+    public mutating func setMinYIndependent(newValue: CGFloat) { self = rectBySettingMinYIndependent(newValue) }
+    public mutating func setTopIndependent(newValue: CGFloat) { self = rectBySettingTopIndependent(newValue) }
+    public mutating func setMaxYIndependent(newValue: CGFloat) { self = rectBySettingMaxYIndependent(newValue) }
+    public mutating func setBottomIndependent(newValue: CGFloat) { self = rectBySettingBottomIndependent(newValue) }
     
-    public func insetMinX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x + dx, y: origin.y, width: size.width - dx, height: size.height).standardizedRect }
-    
-    public func insetLeft(dx: CGFloat) -> CGRect { return insetMinX(dx) }
-    
-    public func insetLeading(dx: CGFloat) -> CGRect { return insetMinX(dx) }
-    
-    public func insetMaxX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width - dx, height: size.height).standardizedRect }
-    
-    public func insetRight(dx: CGFloat) -> CGRect { return insetMaxX(dx) }
-    
-    public func insetTrailing(dx: CGFloat) -> CGRect { return insetMaxX(dx) }
-    
-    public func insetMinY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y + dy, width: size.width, height: size.height - dy).standardizedRect }
-    
-    public func insetTop(dy: CGFloat) -> CGRect { return insetMinY(dy) }
-    
-    public func insetMaxY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height - dy).standardizedRect }
-    
-    public func insetBottom(dy: CGFloat) -> CGRect { return insetMaxY(dy) }
-    
-    public func setMinX(x: CGFloat) -> CGRect { let dx = x - origin.x; return CGRect(x: x, y: origin.y, width: size.width - dx, height: size.height).standardizedRect }
-    
-    public func setLeft(x: CGFloat) -> CGRect { return setMinX(x) }
-    
-    public func setLeading(x: CGFloat) -> CGRect { return setMinX(x) }
-    
-    public func setMaxX(x: CGFloat) -> CGRect { let dx = x - maxX; return CGRect(x: origin.x, y: origin.y, width: size.width + dx, height: size.height).standardizedRect }
-    
-    public func setRight(x: CGFloat) -> CGRect { return setMaxX(x) }
-    
-    public func setTrailing(x: CGFloat) -> CGRect { return setMaxX(x) }
-    
-    public func setMinY(y: CGFloat) -> CGRect { let dy = y - origin.y; return CGRect(x: origin.x, y: y, width: size.width, height: size.height - dy).standardizedRect }
-    
-    public func setTop(x: CGFloat) -> CGRect { return setMinY(x) }
-    
-    public func setMaxY(y: CGFloat) -> CGRect {
-        let dy = y - maxY; return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height + dy).standardizedRect }
-    
-    public func setBottom(x: CGFloat) -> CGRect { return setMaxY(x) }
-    
-    public func scaleRelativeToPoint(p: CGPoint, sx: CGFloat, sy: CGFloat) -> CGRect {
+    public func rectByScalingRelativeToPoint(p: CGPoint, scaling s: CGVector) -> CGRect {
         return CGRect(
-            origin: origin.scaleRelativeToPoint(p, sx: sx, sy: sy),
-            size: size.scale(sx: sx, sy: sy)
+            origin: origin.scaleRelativeToPoint(p, sx: s.dx, sy: s.dy),
+            size: size.scale(sx: s.dx, sy: s.dy)
         )
+    }
+    
+    public mutating func scaleRelativeToPoint(p: CGPoint, scaling s: CGVector) {
+        self = rectByScalingRelativeToPoint(p, scaling: s)
     }
 }

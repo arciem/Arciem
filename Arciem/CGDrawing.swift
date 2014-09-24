@@ -40,7 +40,7 @@ public func drawCrossedBoxInContext(context: CGContext, #rect: CGRect, #color: C
         CGPathAddLineToPoint(path, nil, midX, midY)
     }
     
-    saveContextState(context) {
+    drawRestoringStateForContext(context) {
         CGContextSetStrokeColorWithColor(context, color)
         CGContextSetLineWidth(context, lineWidth)
         CGContextAddPath(context, path)
