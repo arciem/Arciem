@@ -22,7 +22,7 @@ public func ~= (str: String, pattern: NSRegularExpression) -> Bool {
 
 prefix operator ~/ {}
 
-prefix func ~/ (pattern: String) -> NSRegularExpression {
+prefix func ~/ (pattern: String) -> NSRegularExpression? {
     return NSRegularExpression(pattern: pattern, options: nil, error: nil)
 }
 
@@ -30,5 +30,5 @@ public func testRegex() {
     var regex = ~/"\\wpple"
     var str = "Foo"
     
-    var b: Bool = regex ~= str
+    var b: Bool = regex! ~= str
 }

@@ -77,8 +77,8 @@ public extension CGPoint {
     }
     
     public func scale(#sx: CGFloat, sy: CGFloat) -> CGPoint {
-        let t = Geometry.scale(x: x, y: y, sx: sx, sy: sy)
-        return CGPoint(x: t.x, y: t.y)
+        let t = Geometry.scale(dx: x, dy: y, sx: sx, sy: sy)
+        return CGPoint(x: t.dx, y: t.dy)
     }
     
     public func scaleRelativeToPoint(p: CGPoint, sx: CGFloat, sy: CGFloat) -> CGPoint {
@@ -130,8 +130,8 @@ extension CGVector {
     }
     
     public func scale(#sx: CGFloat, sy: CGFloat) -> CGVector {
-        let t = Geometry.scale(x: dx, y: dy, sx: sx, sy: sy)
-        return CGVector(dx: t.x, dy: t.y)
+        let t = Geometry.scale(dx: dx, dy: dy, sx: sx, sy: sy)
+        return CGVector(dx: t.dx, dy: t.dy)
     }
 }
 
@@ -308,17 +308,17 @@ extension CGSize {
     
     public func aspectFitWithin(#size:CGSize) -> CGSize {
         let t = Geometry.aspectFit(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
-        return CGSize(width: t.x, height: t.y)
+        return CGSize(width: t.dx, height: t.dy)
     }
     
     public func aspectFillWithin(#size:CGSize) -> CGSize {
         let t = Geometry.aspectFill(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
-        return CGSize(width: t.x, height: t.y)
+        return CGSize(width: t.dx, height: t.dy)
     }
     
     public func scale(#sx: CGFloat, sy: CGFloat) -> CGSize {
-        let t = Geometry.scale(x: width, y: height, sx: sx, sy: sy);
-        return CGSize(width: t.x, height: t.y)
+        let t = Geometry.scale(dx: width, dy: height, sx: sx, sy: sy);
+        return CGSize(width: t.dx, height: t.dy)
     }
 }
 

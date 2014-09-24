@@ -41,10 +41,10 @@ public class Geometry {
         return (x:z2 * y1 - y2 * z1, y:x2 * z1 - z2 * x1, z:y2 * x1 - x2 * y1)
     }
     
-    public class func scale<T: Floatable>(#x: T, y: T, s: T) -> (x: T, y: T) { return (x: x * s, y: y * s) }
-    public class func scale<T: Floatable>(#x: T, y: T, z: T, s: T) -> (x: T, y: T, z: T) { return (x: x * s, y: y * s, z: z * s) }
-    public class func scale<T: Floatable>(#x: T, y: T, sx: T, sy: T) -> (x: T, y: T) { return (x: x * sx, y: y * sy) }
-    public class func scale<T: Floatable>(#x: T, y: T, z: T, sx: T, sy: T, sz: T) -> (x: T, y: T, z: T) { return (x: x * sx, y: y * sy, z: z * sz) }
+    public class func scale<T: Floatable>(#dx: T, dy: T, s: T) -> (dx: T, dy: T) { return (dx: dx * s, dy: dy * s) }
+    public class func scale<T: Floatable>(#dx: T, dy: T, dz: T, s: T) -> (dx: T, dy: T, dz: T) { return (dx: dx * s, dy: dy * s, dz: dz * s) }
+    public class func scale<T: Floatable>(#dx: T, dy: T, sx: T, sy: T) -> (dx: T, dy: T) { return (dx: dx * sx, dy: dy * sy) }
+    public class func scale<T: Floatable>(#dx: T, dy: T, dz: T, sx: T, sy: T, sz: T) -> (dx: T, dy: T, dz: T) { return (dx: dx * sx, dy: dy * sy, dz: dz * sz) }
     
     public class func normalize<T: Floatable>(#x: T, y: T) -> (x: T, y: T) {
         let d = distance(x: x, y: y); return (x: x / d, y: y / d)
@@ -97,14 +97,14 @@ public class Geometry {
         return T.fmax(dxArea / dxContent, dyArea / dyContent)
     }
     
-    public class func aspectFit<T: Floatable>(#dxContent: T, dyContent: T, dxArea: T, dyArea: T) -> (x: T, y: T) {
+    public class func aspectFit<T: Floatable>(#dxContent: T, dyContent: T, dxArea: T, dyArea: T) -> (dx: T, dy: T) {
         let s = scaleForAspectFit(dxContent: dxContent, dyContent: dyContent, dxArea: dxArea, dyArea: dyArea)
-        return scale(x: dxContent, y: dyContent, s: s)
+        return scale(dx: dxContent, dy: dyContent, s: s)
     }
     
-    public class func aspectFill<T: Floatable>(#dxContent: T, dyContent: T, dxArea: T, dyArea: T) -> (x: T, y: T) {
+    public class func aspectFill<T: Floatable>(#dxContent: T, dyContent: T, dxArea: T, dyArea: T) -> (dx: T, dy: T) {
         let s = scaleForAspectFill(dxContent: dxContent, dyContent: dyContent, dxArea: dxArea, dyArea: dyArea)
-        return scale(x: dxContent, y: dyContent, s: s)
+        return scale(dx: dxContent, dy: dyContent, s: s)
     }
     
     // These versions use parabola segments (hermite curves)

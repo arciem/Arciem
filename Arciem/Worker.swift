@@ -21,7 +21,7 @@ public enum WorkerState : String, Printable {
     
     public var description: String {
     get {
-        return self.toRaw()
+        return self.rawValue
     }
     }
 }

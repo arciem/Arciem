@@ -14,7 +14,7 @@ public typealias KVOObserverCallback = (value: AnyObject?, object: AnyObject, ch
 public extension NSKeyValueChange {
     public static func kindForChange(changeDict: KVOChangeDictionary) -> NSKeyValueChange {
         let raw = UInt(changeDict[NSKeyValueChangeKindKey]!.integerValue)
-        return fromRaw(raw)!
+        return NSKeyValueChange(rawValue: raw)!
     }
     
     public static func isPriorForChange(changeDict: KVOChangeDictionary) -> Bool {
