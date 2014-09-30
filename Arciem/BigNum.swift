@@ -168,8 +168,8 @@ extension BigNum : Printable {
 
 extension BigNum : IntegerLiteralConvertible {
     public typealias IntegerLiteralType = Int64
-    public static func convertFromIntegerLiteral(value: IntegerLiteralType) -> BigNum {
-        return BigNum(value, radix: 10)
+    public init(integerLiteral value: IntegerLiteralType) {
+        self.init(Int64(value))
     }
 }
 

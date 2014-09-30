@@ -63,7 +63,7 @@ public class KVOObserver : NSObject {
         return changeDict[NSKeyValueChangeIndexesKey] as? NSIndexSet
     }
 
-    override public func observeValueForKeyPath(keyPath: String!, ofObject object: AnyObject!, change: KVOChangeDictionary!, context: UnsafeMutablePointer<()>) {
+    override public func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: KVOChangeDictionary, context: UnsafeMutablePointer<()>) {
         if NSKeyValueChange.isPriorForChange(change) {
             willChange?(value: change[NSKeyValueChangeOldKey], object: object, change: change)
         } else if NSKeyValueChange.oldValueForChange(change) != nil && NSKeyValueChange.kindForChange(change) == .Setting {

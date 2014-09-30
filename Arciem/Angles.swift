@@ -64,14 +64,14 @@ public struct Degrees<T: Floatable> : Angle {
 }
 
 extension Degrees : IntegerLiteralConvertible {
-    public static func convertFromIntegerLiteral(value: IntegerLiteralType) -> Degrees<T> {
-        return Degrees(degrees:T(value))
+    public init(integerLiteral value: IntegerLiteralType) {
+        self.init(degrees: T(value))
     }
 }
 
 extension Degrees : FloatLiteralConvertible {
-    public static func convertFromFloatLiteral(value: FloatLiteralType) -> Degrees<T> {
-        return Degrees(degrees:T(value))
+    public init(floatLiteral value: FloatLiteralType) {
+        self.init(degrees: T(value))
     }
 }
 
@@ -160,14 +160,14 @@ public struct Radians<T: Floatable> : Angle {
 }
 
 extension Radians : IntegerLiteralConvertible {
-    public static func convertFromIntegerLiteral(value: IntegerLiteralType) -> Radians<T> {
-        return Radians(radians: T(value))
+    public init(integerLiteral value: IntegerLiteralType) {
+        self.init(radians: T(value))
     }
 }
 
 extension Radians : FloatLiteralConvertible {
-    public static func convertFromFloatLiteral(value: FloatLiteralType) -> Radians<T> {
-        return Radians(radians: T(value))
+    public init(floatLiteral value: FloatLiteralType) {
+        self.init(radians: T(value))
     }
 }
 
