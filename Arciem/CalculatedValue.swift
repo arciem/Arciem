@@ -9,7 +9,7 @@
 import Foundation
 import CoreGraphics
 
-public class CalculatedValue<T> {
+public class CalculatedValue<T> : Valuable {
     var _value : T? = nil
     var i : () -> T
     
@@ -17,6 +17,7 @@ public class CalculatedValue<T> {
         self.i = i
     }
     
+    // conformance to Valuable
     public var value : T {
         get {
             if _value == nil {
@@ -24,6 +25,9 @@ public class CalculatedValue<T> {
             }
 
             return _value!
+        }
+        set {
+            _value = newValue
         }
     }
     

@@ -9,13 +9,15 @@
 import Foundation
 
 public extension String {
+    // String already provides func toInt() -> Int?
+    
     public func toFloat() -> Float? {
         let scanner = NSScanner(string: self)
         scanner.charactersToBeSkipped = NSCharacterSet.whitespaceCharacterSet()
         var val:Float = 0.0
         return scanner.scanFloat(&val) ? val : nil
     }
-
+    
     public func toDouble() -> Double? {
         let scanner = NSScanner(string: self)
         scanner.charactersToBeSkipped = NSCharacterSet.whitespaceCharacterSet()
@@ -28,5 +30,21 @@ public extension String {
         let scanner = NSScanner(string: self)
         scanner.charactersToBeSkipped = NSCharacterSet.whitespaceCharacterSet()
         return scanner.scanCharactersFromSet(String._tChars, intoString: nil)
+    }
+    
+    public func toUTF8Bytes() -> [Byte] {
+        var a = [Byte]()
+        for c in self.utf8 {
+            a.append(c)
+        }
+        return a
+    }
+    
+    public static func fromUTF8Bytes(bytes: [Byte]) -> String? {
+        return NSString(bytes: bytes, length: bytes.count, encoding: NSUTF8StringEncoding)
+    }
+    
+    public static func fromUTF8Data(data: NSData) -> String? {
+        return NSString(data: data, encoding: NSUTF8StringEncoding)
     }
 }

@@ -48,6 +48,11 @@
 		03A3D8B119A4006C002C67AF /* Autolayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A3D8B019A4006C002C67AF /* Autolayout.swift */; };
 		03A61A4A199C42270090F57D /* BigNum.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03A61A49199C42270090F57D /* BigNum.swift */; };
 		03B106B619D0E76A004EB814 /* CalculatedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B106B519D0E76A004EB814 /* CalculatedValue.swift */; };
+		03D79CD119EF12B9002AFF01 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D79CD019EF12B9002AFF01 /* Data.swift */; };
+		03D79CD319EFA882002AFF01 /* Base64.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D79CD219EFA882002AFF01 /* Base64.swift */; };
+		03D79CD519F04B76002AFF01 /* WorkerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D79CD419F04B76002AFF01 /* WorkerManager.swift */; };
+		03D79CD719F07071002AFF01 /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D79CD619F07071002AFF01 /* ObservableValue.swift */; };
+		03D79CD919F07153002AFF01 /* Valuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D79CD819F07153002AFF01 /* Valuable.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -86,6 +91,11 @@
 		03C4342E194AB9C900463B1F /* Observer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observer.swift; sourceTree = "<group>"; };
 		03D093141949857C0015313C /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		03D09328194A6B720015313C /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
+		03D79CD019EF12B9002AFF01 /* Data.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
+		03D79CD219EFA882002AFF01 /* Base64.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Base64.swift; sourceTree = "<group>"; };
+		03D79CD419F04B76002AFF01 /* WorkerManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkerManager.swift; sourceTree = "<group>"; };
+		03D79CD619F07071002AFF01 /* ObservableValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableValue.swift; sourceTree = "<group>"; };
+		03D79CD819F07153002AFF01 /* Valuable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Valuable.swift; sourceTree = "<group>"; };
 		03D9CC511946A9CB006463F7 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		03D9CC571946C2F1006463F7 /* Device.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Device.swift; sourceTree = "<group>"; };
 		03D9CC5919470CD9006463F7 /* RectSetter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RectSetter.swift; sourceTree = "<group>"; };
@@ -180,7 +190,9 @@
 				036D8F571989B645003FCB35 /* Glue */,
 				03EC33D11942897F0074BFFA /* Math.swift */,
 				0323D23A1944D1BA00B49FD3 /* String.swift */,
+				03D79CD019EF12B9002AFF01 /* Data.swift */,
 				03D093141949857C0015313C /* Regex.swift */,
+				03D79CD219EFA882002AFF01 /* Base64.swift */,
 				03EC33D31942A1DE0074BFFA /* Random.swift */,
 				03EC33D51942AFBF0074BFFA /* Time.swift */,
 				039FC4231992E83400C5211A /* Angles.swift */,
@@ -195,10 +207,13 @@
 				03D9CC571946C2F1006463F7 /* Device.swift */,
 				03D9CC5B19470F03006463F7 /* KVOObserver.swift */,
 				03C4342E194AB9C900463B1F /* Observer.swift */,
+				03D79CD619F07071002AFF01 /* ObservableValue.swift */,
+				03D79CD819F07153002AFF01 /* Valuable.swift */,
 				03B106B519D0E76A004EB814 /* CalculatedValue.swift */,
 				03882014194865DC0078C2B3 /* Runtime.swift */,
 				03D09328194A6B720015313C /* Dispatch.swift */,
 				03EDC163194AA137008AAFFA /* Worker.swift */,
+				03D79CD419F04B76002AFF01 /* WorkerManager.swift */,
 				03C4342B194AB3B200463B1F /* Serializer.swift */,
 				03A61A49199C42270090F57D /* BigNum.swift */,
 				030DC475194BB7D0000A6325 /* JSON.swift */,
@@ -308,12 +323,15 @@
 				035FE3321990A6BD00421433 /* Serializer.swift in Sources */,
 				035FE32A1990A69300421433 /* CGColor.swift in Sources */,
 				036D8F7B1989BC6C003FCB35 /* SerializerGlue.m in Sources */,
+				03D79CD919F07153002AFF01 /* Valuable.swift in Sources */,
 				035FE32C1990A6A700421433 /* Device.swift in Sources */,
 				035FE32F1990A6BD00421433 /* Runtime.swift in Sources */,
 				03A61A4A199C42270090F57D /* BigNum.swift in Sources */,
 				039FC4241992E83400C5211A /* Angles.swift in Sources */,
+				03D79CD519F04B76002AFF01 /* WorkerManager.swift in Sources */,
 				035FE31E1990A65A00421433 /* String.swift in Sources */,
 				036A67A119A305F800CD98D0 /* RuntimeGlue.m in Sources */,
+				03D79CD119EF12B9002AFF01 /* Data.swift in Sources */,
 				035FE3301990A6BD00421433 /* Dispatch.swift in Sources */,
 				036D8F7A1989BC6C003FCB35 /* DeviceGlue.m in Sources */,
 				035FE32B1990A6A200421433 /* UserDefaults.swift in Sources */,
@@ -323,6 +341,7 @@
 				035FE3211990A66000421433 /* Time.swift in Sources */,
 				035FE3281990A68A00421433 /* CGGeometry.swift in Sources */,
 				035FE3341990A6BD00421433 /* CGContext.swift in Sources */,
+				03D79CD319EFA882002AFF01 /* Base64.swift in Sources */,
 				035FE32E1990A6BD00421433 /* Observer.swift in Sources */,
 				036D8F7D1989BC74003FCB35 /* Math.swift in Sources */,
 				035FE3331990A6BD00421433 /* JSON.swift in Sources */,
@@ -331,6 +350,7 @@
 				035FE31F1990A65A00421433 /* Regex.swift in Sources */,
 				035FE3261990A66E00421433 /* View.swift in Sources */,
 				035FE3221990A66000421433 /* Geometry.swift in Sources */,
+				03D79CD719F07071002AFF01 /* ObservableValue.swift in Sources */,
 				035FE3201990A65A00421433 /* Random.swift in Sources */,
 				035FE3271990A67800421433 /* RectSetter.swift in Sources */,
 				035FE3241990A66E00421433 /* Image.swift in Sources */,
