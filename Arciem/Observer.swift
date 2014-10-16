@@ -35,7 +35,7 @@ public class ObserverTestObject {
     
     public init(_ s: String) {
         self.s =^ s
-        println("\(self) \(self.s.value) init")
+        println("\(self) \(self.s^) init")
         
         let observance = Observer<String?>(
             didChange: { newValue in
@@ -59,7 +59,7 @@ public class ObserverTestObject {
     }
     
     deinit {
-        println("\(self) \(s.value) deinit")
+        println("\(self) \(s^) deinit")
     }
 }
 
