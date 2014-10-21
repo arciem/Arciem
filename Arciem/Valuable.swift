@@ -27,3 +27,11 @@ public func =^ <V: Valuable> (inout left: V.ValueType, right: V) {
 public postfix func ^ <V: Valuable> (left: V) -> V.ValueType {
     return left.value
 }
+
+public func == <V: Valuable where V.ValueType: Equatable> (left: V, right: V.ValueType) -> Bool {
+    return left^ == right
+}
+
+public func != <V: Valuable where V.ValueType: Equatable> (left: V, right: V.ValueType) -> Bool {
+    return !(left == right)
+}

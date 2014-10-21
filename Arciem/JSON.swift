@@ -8,6 +8,8 @@
 
 import Foundation
 
+public let jsonMIMEType = "application/json"
+
 public func jsonForResource(name: String) -> AnyObject! {
     let path = NSBundle.mainBundle().pathForResource(name, ofType: "json")
     assert(path != nil, "could not find JSON resource")

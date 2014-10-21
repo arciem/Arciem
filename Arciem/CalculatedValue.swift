@@ -7,18 +7,18 @@
 //
 
 import Foundation
-import CoreGraphics
 
 public class CalculatedValue<T> : Valuable {
-    var _value : T? = nil
-    var i : () -> T
+    typealias ValueType = T
+    var _value : ValueType? = nil
+    var i : () -> ValueType
     
-    public init(i: () -> T) {
+    public init(i: () -> ValueType) {
         self.i = i
     }
     
     // conformance to Valuable
-    public var value : T {
+    public var value : ValueType {
         get {
             if _value == nil {
                 _value = i()

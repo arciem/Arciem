@@ -8,58 +8,80 @@
 
 import Foundation
 
+var workerManagerLogger : Logger? = Logger(tag: "WORKER_MANAGER", enabled: true)
+
 public class WorkerManager {
-    let queue: DispatchQueue
-    var workers = NSMutableSet()
+    let workQueue: DispatchQueue
+    let callbackQueue: DispatchQueue
+    var workers = Set<Worker>()
     let serializer = Serializer(name: "WorkerManager Serializer")
     
-    public init(queue: DispatchQueue) {
-        self.queue = queue
-        println("\(self) init")
+    var log: Logger? { get { return workerManagerLogger } }
+    
+    public init(workQueue: DispatchQueue, callbackQueue: DispatchQueue) {
+        self.workQueue = workQueue
+        self.callbackQueue = callbackQueue
+        log?.trace("\(identifierOf(self)) init")
+    }
+    
+    public convenience init() {
+        self.init(workQueue: backgroundQueue, callbackQueue: mainQueue)
     }
     
     deinit {
-        println("\(self) deinit")
+        log?.trace("\(identifierOf(self)) deinit")
     }
     
     public func addWorker(worker: Worker) {
-        serializer.dispatch { [weak self] in
-            assert(worker.state^ == WorkerState.Ready, "worker is not ready")
-            self?.workers.addObject(worker)
+        serializer.dispatch { [unowned self] in
+            assert(worker.state == .Ready, "worker is not ready")
+            self.workers.add(worker)
             worker.state =^ .Queueing
-            dispatchOn(queue: self!.queue) {
-                if(worker.state^ != .Canceled) {
+            dispatchOn(queue: self.workQueue) {
+                if(worker.state != .Canceled) {
                     worker.state =^ .Executing
-                    worker.task?(manager: self!)
+                    worker.task?(manager: self)
                 }
             }
         }
     }
     
-    func done(worker: Worker, error: NSError? = nil) {
+    public func cancelWorker(worker: Worker) {
+        serializer.dispatch {
+            worker.state =^ .Canceled
+            self.workers.remove(worker)
+        }
+    }
+    
+    func workerDone(worker: Worker, error: NSError? = nil) {
         serializer.dispatch { [unowned self] in
-            if let err = error {
-                worker.state =^ .Failure
-                worker.error = err
-                worker.failure?(error: err)
-            } else {
-                worker.state =^ .Success
-                worker.success?()
+            self.workers.remove(worker)
+            if(worker.state != .Canceled) {
+                dispatchOn(queue: self.callbackQueue) {
+                    if(worker.state != .Canceled) {
+                        if let err = error {
+                            worker.state =^ .Failure
+                            worker.error = err
+                            worker.failure?(error: err)
+                        } else {
+                            worker.state =^ .Success
+                            worker.success?()
+                        }
+                        worker.finally?()
+                    }
+                }
             }
-            worker.finally?()
-            self.workers.removeObject(worker)
         }
     }
 }
 
 public class DummyWorker : Worker {
-    //    let delay: NSTimeInterval
-    
+
     public override init() {
         super.init()
         task = { [unowned self] (unowned manager) in
             _ = dispatchOnBackground(afterDelay: 1.0) {
-                manager.done(self, error: nil)
+                manager.workerDone(self, error: nil)
             }
         }
     }
@@ -67,13 +89,13 @@ public class DummyWorker : Worker {
 
 var workerManager: WorkerManager!
 public func testWorker() {
-    workerManager = WorkerManager(queue: backgroundQueue)
+    workerManager = WorkerManager()
     
     let worker = DummyWorker()
-    
-    worker.state.addObservance(Observer(didChange: { newValue in
+
+    worker.state.addObserver(Observer(didChange: { newValue in
         println("\(worker) \(newValue)")
-        }, willChange: nil, didInitialize: nil))
+        }))
     workerManager.addWorker(worker)
     
     dispatchOnMain(afterDelay: 5) {

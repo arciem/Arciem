@@ -15,3 +15,18 @@ public func setAssociatedObject(#object: NSObject, #key: NSString, #value: NSObj
 public func getAssociatedObject(#object: NSObject, #key: NSString) -> NSObject? {
     return getAssociatedObject_glue(object, key)
 }
+
+public func typeNameOf(value: AnyObject) -> String {
+    let typeLongName = _stdlib_getDemangledTypeName(value)
+    return typeLongName
+}
+
+public func pointerStringOf(obj: AnyObject) -> String {
+    let ptr: COpaquePointer =
+    Unmanaged<AnyObject>.passUnretained(obj).toOpaque()
+    return "\(ptr)"
+}
+
+public func identifierOf(value: AnyObject) -> String {
+    return "\(typeNameOf(value)) <\(pointerStringOf(value))>"
+}

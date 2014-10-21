@@ -11,41 +11,65 @@ import Foundation
 public typealias ErrorBlock = (error: NSError) -> Void
 public typealias WorkerBlock = (manager: WorkerManager) -> Void
 
-public enum WorkerState : String, Printable {
+private var _Worker_nextID = 0
+var workerLogger : Logger? = Logger(tag: "WORKER", enabled: true)
+
+public enum WorkerState : String {
     case Ready = "Ready"
     case Queueing = "Queueing"
     case Canceled = "Canceled"
     case Executing = "Executing"
     case Success = "Success"
     case Failure = "Failure"
-    
+}
+
+extension WorkerState : Printable {
     public var description: String {
-    get {
-        return self.rawValue
-    }
+        get {
+            return self.rawValue
+        }
     }
 }
 
-var _Worker_nextID: Int = 0
+public class Worker {
+    public let id: Int
+    public var task: WorkerBlock?
+    public var success: DispatchBlock?
+    public var failure: ErrorBlock?
+    public var finally: DispatchBlock?
 
-public class Worker : Printable {
-    let id: Int
-    var state = ObservableValue<WorkerState>(.Ready)
-    var error: NSError?
+    public var state = ObservableValue<WorkerState>(.Ready)
+    public var error: NSError?
 
-    var task: WorkerBlock?
-    var success: DispatchBlock?
-    var failure: ErrorBlock?
-    var finally: DispatchBlock?
-    
+    var log: Logger? { get { return workerLogger } }
+
     public init() {
         self.id = _Worker_nextID++
+        log?.trace("\(self) init")
     }
-
-    public var description: String {
-    get {
-        return "Worker \(id)"
-    }
+    
+    deinit {
+        log?.trace("\(self) deinit")
     }
 }
 
+extension Worker : Printable {
+    public var description: String {
+        get {
+            return "\(typeNameOf(self)) <id:\(id)>"
+        }
+    }
+}
+
+extension Worker : Equatable {
+}
+
+public func ==(lhs: Worker, rhs: Worker) -> Bool {
+    return lhs === rhs
+}
+
+extension Worker : Hashable {
+    public var hashValue: Int { get {
+        return id
+    }}
+}
