@@ -34,14 +34,17 @@
 		035FE3361990A6BD00421433 /* SCNGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0344ECEC19524C1600C40ACC /* SCNGeometry.swift */; };
 		035FE3371990A6CF00421433 /* KVOObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D9CC5B19470F03006463F7 /* KVOObserver.swift */; };
 		03603F3E19F656A300CEE7B3 /* Error.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03603F3D19F656A300CEE7B3 /* Error.swift */; };
+		03603F4219F6F11B00CEE7B3 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03603F4119F6F11B00CEE7B3 /* SystemConfiguration.framework */; };
+		03603F4419F6F12B00CEE7B3 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03603F4319F6F12B00CEE7B3 /* QuartzCore.framework */; };
+		03603F4619F6F13400CEE7B3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03603F4519F6F13400CEE7B3 /* Foundation.framework */; };
+		03603F4819F6F13A00CEE7B3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03603F4719F6F13A00CEE7B3 /* UIKit.framework */; };
+		03603F5019F767CE00CEE7B3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03603F4F19F767CE00CEE7B3 /* Network.swift */; };
+		03603F5219F88ED700CEE7B3 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03603F5119F88ED600CEE7B3 /* Reachability.swift */; };
 		036A67A019A305F800CD98D0 /* RuntimeGlue.h in Headers */ = {isa = PBXBuildFile; fileRef = 036A679E19A305F800CD98D0 /* RuntimeGlue.h */; };
 		036A67A119A305F800CD98D0 /* RuntimeGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A679F19A305F800CD98D0 /* RuntimeGlue.m */; };
 		036A67A219A3060300CD98D0 /* DeviceGlue.h in Headers */ = {isa = PBXBuildFile; fileRef = 0349BA23197EB2B70030AB38 /* DeviceGlue.h */; };
 		036A67A319A3060300CD98D0 /* SerializerGlue.h in Headers */ = {isa = PBXBuildFile; fileRef = 0349BA27197EB4660030AB38 /* SerializerGlue.h */; };
 		036A67A419A3060300CD98D0 /* CGColorGlue.h in Headers */ = {isa = PBXBuildFile; fileRef = 0349BA1C197E9C720030AB38 /* CGColorGlue.h */; };
-		036D8F761989BB51003FCB35 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036D8F541989B0DB003FCB35 /* QuartzCore.framework */; };
-		036D8F771989BB52003FCB35 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036D8F521989B0CC003FCB35 /* UIKit.framework */; };
-		036D8F781989BB52003FCB35 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036D8F501989B0B7003FCB35 /* Foundation.framework */; };
 		036D8F7A1989BC6C003FCB35 /* DeviceGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA24197EB2B70030AB38 /* DeviceGlue.m */; };
 		036D8F7B1989BC6C003FCB35 /* SerializerGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA28197EB4660030AB38 /* SerializerGlue.m */; };
 		036D8F7C1989BC6C003FCB35 /* CGColorGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0349BA1D197E9C720030AB38 /* CGColorGlue.m */; };
@@ -81,13 +84,16 @@
 		035CD6D3194556D000640425 /* CGContext.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGContext.swift; sourceTree = "<group>"; };
 		035CD705194569ED00640425 /* CGDrawing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGDrawing.swift; sourceTree = "<group>"; };
 		03603F3D19F656A300CEE7B3 /* Error.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Error.swift; sourceTree = "<group>"; };
+		03603F4119F6F11B00CEE7B3 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		03603F4319F6F12B00CEE7B3 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		03603F4519F6F13400CEE7B3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		03603F4719F6F13A00CEE7B3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		03603F4F19F767CE00CEE7B3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		03603F5119F88ED600CEE7B3 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = deps/Reachability/Reachability.swift; sourceTree = SOURCE_ROOT; };
 		036A679E19A305F800CD98D0 /* RuntimeGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeGlue.h; sourceTree = "<group>"; };
 		036A679F19A305F800CD98D0 /* RuntimeGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuntimeGlue.m; sourceTree = "<group>"; };
 		036D8EF61989AE99003FCB35 /* Arciem-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Arciem-Bridging-Header.h"; sourceTree = "<group>"; };
 		036D8F041989AE99003FCB35 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		036D8F501989B0B7003FCB35 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		036D8F521989B0CC003FCB35 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		036D8F541989B0DB003FCB35 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.0.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		036D8F5D1989BA70003FCB35 /* Arciem.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Arciem.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0375F83719F0981800783B1C /* WeakValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeakValue.swift; sourceTree = "<group>"; };
 		0375F83B19F0AF4400783B1C /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -125,10 +131,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				03603F4819F6F13A00CEE7B3 /* UIKit.framework in Frameworks */,
+				03603F4619F6F13400CEE7B3 /* Foundation.framework in Frameworks */,
+				03603F4419F6F12B00CEE7B3 /* QuartzCore.framework in Frameworks */,
+				03603F4219F6F11B00CEE7B3 /* SystemConfiguration.framework in Frameworks */,
 				039FC42219922C5900C5211A /* CoreGraphics.framework in Frameworks */,
-				036D8F761989BB51003FCB35 /* QuartzCore.framework in Frameworks */,
-				036D8F781989BB52003FCB35 /* Foundation.framework in Frameworks */,
-				036D8F771989BB52003FCB35 /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -154,10 +161,11 @@
 		036D8F561989B0FD003FCB35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				03603F4719F6F13A00CEE7B3 /* UIKit.framework */,
+				03603F4519F6F13400CEE7B3 /* Foundation.framework */,
+				03603F4319F6F12B00CEE7B3 /* QuartzCore.framework */,
+				03603F4119F6F11B00CEE7B3 /* SystemConfiguration.framework */,
 				039FC42119922C5900C5211A /* CoreGraphics.framework */,
-				036D8F501989B0B7003FCB35 /* Foundation.framework */,
-				036D8F521989B0CC003FCB35 /* UIKit.framework */,
-				036D8F541989B0DB003FCB35 /* QuartzCore.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -225,6 +233,7 @@
 				030091EA19F0F1F8000E5A3A /* CheckedValue.swift */,
 				0375F83719F0981800783B1C /* WeakValue.swift */,
 				03882014194865DC0078C2B3 /* Runtime.swift */,
+				03603F4F19F767CE00CEE7B3 /* Network.swift */,
 				03603F3D19F656A300CEE7B3 /* Error.swift */,
 				03D09328194A6B720015313C /* Dispatch.swift */,
 				03EDC163194AA137008AAFFA /* Worker.swift */,
@@ -232,6 +241,7 @@
 				03D79CD419F04B76002AFF01 /* WorkerManager.swift */,
 				03D79CDA19F08038002AFF01 /* Set.swift */,
 				0375F83B19F0AF4400783B1C /* Log.swift */,
+				03603F5119F88ED600CEE7B3 /* Reachability.swift */,
 				03C4342B194AB3B200463B1F /* Serializer.swift */,
 				03A61A49199C42270090F57D /* BigNum.swift */,
 				030DC475194BB7D0000A6325 /* JSON.swift */,
@@ -356,6 +366,7 @@
 				035FE3301990A6BD00421433 /* Dispatch.swift in Sources */,
 				036D8F7A1989BC6C003FCB35 /* DeviceGlue.m in Sources */,
 				035FE32B1990A6A200421433 /* UserDefaults.swift in Sources */,
+				03603F5019F767CE00CEE7B3 /* Network.swift in Sources */,
 				035FE3361990A6BD00421433 /* SCNGeometry.swift in Sources */,
 				0375F83C19F0AF4400783B1C /* Log.swift in Sources */,
 				030091E919F0EF04000E5A3A /* HTTPWorker.swift in Sources */,
@@ -371,6 +382,7 @@
 				035FE3251990A66E00421433 /* Array.swift in Sources */,
 				035FE3291990A69300421433 /* Color.swift in Sources */,
 				03603F3E19F656A300CEE7B3 /* Error.swift in Sources */,
+				03603F5219F88ED700CEE7B3 /* Reachability.swift in Sources */,
 				035FE31F1990A65A00421433 /* Regex.swift in Sources */,
 				035FE3261990A66E00421433 /* View.swift in Sources */,
 				035FE3221990A66000421433 /* Geometry.swift in Sources */,

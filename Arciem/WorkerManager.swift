@@ -53,16 +53,15 @@ public class WorkerManager {
         }
     }
     
-    func workerDone(worker: Worker, error: NSError? = nil) {
+    func workerDone(worker: Worker) {
         serializer.dispatch { [unowned self] in
             self.workers.remove(worker)
             if(worker.state != .Canceled) {
                 dispatchOn(queue: self.callbackQueue) {
                     if(worker.state != .Canceled) {
-                        if let err = error {
+                        if !worker.errors.isEmpty {
                             worker.state =^ .Failure
-                            worker.error = err
-                            worker.failure?(error: err)
+                            worker.failure?(errors: worker.errors)
                         } else {
                             worker.state =^ .Success
                             worker.success?()
@@ -81,7 +80,7 @@ public class DummyWorker : Worker {
         super.init()
         task = { [unowned self] (unowned manager) in
             _ = dispatchOnBackground(afterDelay: 1.0) {
-                manager.workerDone(self, error: nil)
+                manager.workerDone(self)
             }
         }
     }
