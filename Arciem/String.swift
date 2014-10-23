@@ -40,6 +40,12 @@ public extension String {
         return a
     }
     
+    public func toCString() -> UnsafePointer<Int8> {
+        return self.withCString() {
+            return $0
+        }
+    }
+    
     public static func fromUTF8Bytes(bytes: [Byte]) -> String? {
         return NSString(bytes: bytes, length: bytes.count, encoding: NSUTF8StringEncoding)
     }

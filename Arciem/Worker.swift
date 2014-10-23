@@ -8,8 +8,8 @@
 
 import Foundation
 
-public typealias ErrorBlock = (error: NSError) -> Void
 public typealias WorkerBlock = (manager: WorkerManager) -> Void
+public typealias ErrorsBlock = (errors: [NSError]) -> Void
 
 private var _Worker_nextID = 0
 var workerLogger : Logger? = Logger(tag: "WORKER", enabled: true)
@@ -35,11 +35,11 @@ public class Worker {
     public let id: Int
     public var task: WorkerBlock?
     public var success: DispatchBlock?
-    public var failure: ErrorBlock?
+    public var failure: ErrorsBlock?
     public var finally: DispatchBlock?
 
     public var state = ObservableValue<WorkerState>(.Ready)
-    public var error: NSError?
+    public var errors = [NSError]()
 
     var log: Logger? { get { return workerLogger } }
 

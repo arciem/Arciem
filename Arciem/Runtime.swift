@@ -16,6 +16,18 @@ public func getAssociatedObject(#object: NSObject, #key: NSString) -> NSObject? 
     return getAssociatedObject_glue(object, key)
 }
 
+public func toUnsafePointer<T>(inout t: T) -> UnsafePointer<T> {
+    return withUnsafePointer(&t) {
+        return $0
+    }
+}
+
+public func toUnsafeMutablePointer<T>(inout t: T) -> UnsafeMutablePointer<T> {
+    return withUnsafeMutablePointer(&t) {
+        return $0
+    }
+}
+
 public func typeNameOf(value: AnyObject) -> String {
     let typeLongName = _stdlib_getDemangledTypeName(value)
     return typeLongName
