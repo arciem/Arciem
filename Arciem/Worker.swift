@@ -9,7 +9,6 @@
 import Foundation
 
 public typealias WorkerBlock = (manager: WorkerManager) -> Void
-public typealias ErrorsBlock = (errors: [NSError]) -> Void
 
 private var _Worker_nextID = 0
 var workerLogger : Logger? = Logger(tag: "WORKER", enabled: true)

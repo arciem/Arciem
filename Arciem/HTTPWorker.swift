@@ -24,6 +24,7 @@ public class HTTPWorker : Worker {
     public var data: NSData?
     public var httpResponse: NSHTTPURLResponse!
     public var json: AnyObject?
+    var networkActivity: NetworkActivityIndicator.Activity?
     var sessionTask: NSURLSessionDataTask!
     let sessionDelegate: SessionDelegate
     
@@ -57,6 +58,7 @@ public class HTTPWorker : Worker {
         self.session = NSURLSession(configuration: NSURLSessionConfiguration.ephemeralSessionConfiguration(), delegate: self.sessionDelegate, delegateQueue: nil)
         super.init()
         self.task = { [unowned self] (unowned manager: WorkerManager) -> Void in
+            self.networkActivity = NetworkActivityIndicator.instance().makeActivity()
             self.sessionTask = self.session.dataTaskWithRequest(self.request, completionHandler: { (data: NSData!, responseOpt: NSURLResponse!, error: NSError!) -> Void in
                 self.data = data
                 self.httpResponse = responseOpt as? NSHTTPURLResponse
@@ -78,6 +80,7 @@ public class HTTPWorker : Worker {
                     }
                 }
                 manager.workerDone(self)
+                self.networkActivity = nil
             })
             self.sessionTask.resume()
         }

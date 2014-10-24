@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		030091E919F0EF04000E5A3A /* HTTPWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030091E819F0EF04000E5A3A /* HTTPWorker.swift */; };
 		030091EB19F0F1F8000E5A3A /* CheckedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030091EA19F0F1F8000E5A3A /* CheckedValue.swift */; };
+		033DBD6F19F9B65300BE9AB7 /* Hysteresis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DBD6E19F9B65300BE9AB7 /* Hysteresis.swift */; };
+		033DBD7119F9CE7500BE9AB7 /* NetworkActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DBD7019F9CE7500BE9AB7 /* NetworkActivityIndicator.swift */; };
 		035FE31E1990A65A00421433 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D23A1944D1BA00B49FD3 /* String.swift */; };
 		035FE31F1990A65A00421433 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D093141949857C0015313C /* Regex.swift */; };
 		035FE3201990A65A00421433 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D31942A1DE0074BFFA /* Random.swift */; };
@@ -74,6 +76,8 @@
 		0323D23C1944E21200B49FD3 /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		0323D23E1944E23B00B49FD3 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		0323D26A19451A8800B49FD3 /* CGColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
+		033DBD6E19F9B65300BE9AB7 /* Hysteresis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hysteresis.swift; sourceTree = "<group>"; };
+		033DBD7019F9CE7500BE9AB7 /* NetworkActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkActivityIndicator.swift; sourceTree = "<group>"; };
 		0344ECEC19524C1600C40ACC /* SCNGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNGeometry.swift; sourceTree = "<group>"; };
 		0349BA1C197E9C720030AB38 /* CGColorGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGColorGlue.h; sourceTree = "<group>"; };
 		0349BA1D197E9C720030AB38 /* CGColorGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGColorGlue.m; sourceTree = "<group>"; };
@@ -208,48 +212,50 @@
 			children = (
 				036D8EF61989AE99003FCB35 /* Arciem-Bridging-Header.h */,
 				036D8F571989B645003FCB35 /* Glue */,
-				03EC33D11942897F0074BFFA /* Math.swift */,
-				0323D23A1944D1BA00B49FD3 /* String.swift */,
-				03D79CD019EF12B9002AFF01 /* Data.swift */,
-				03D093141949857C0015313C /* Regex.swift */,
-				03D79CD219EFA882002AFF01 /* Base64.swift */,
-				03EC33D31942A1DE0074BFFA /* Random.swift */,
-				03EC33D51942AFBF0074BFFA /* Time.swift */,
 				039FC4231992E83400C5211A /* Angles.swift */,
-				03EC33D71942B2030074BFFA /* Geometry.swift */,
-				0323D23C1944E21200B49FD3 /* Color.swift */,
-				0323D23E1944E23B00B49FD3 /* Image.swift */,
 				031063431945897800FDA79E /* Array.swift */,
-				031063451945A0A000FDA79E /* View.swift */,
 				03A3D8B019A4006C002C67AF /* Autolayout.swift */,
-				03D9CC5919470CD9006463F7 /* RectSetter.swift */,
-				03D9CC511946A9CB006463F7 /* UserDefaults.swift */,
-				03D9CC571946C2F1006463F7 /* Device.swift */,
-				03D9CC5B19470F03006463F7 /* KVOObserver.swift */,
-				03C4342E194AB9C900463B1F /* Observer.swift */,
-				03D79CD619F07071002AFF01 /* ObservableValue.swift */,
-				03D79CD819F07153002AFF01 /* Valuable.swift */,
-				03B106B519D0E76A004EB814 /* CalculatedValue.swift */,
-				030091EA19F0F1F8000E5A3A /* CheckedValue.swift */,
-				0375F83719F0981800783B1C /* WeakValue.swift */,
-				03882014194865DC0078C2B3 /* Runtime.swift */,
-				03603F4F19F767CE00CEE7B3 /* Network.swift */,
-				03603F3D19F656A300CEE7B3 /* Error.swift */,
-				03D09328194A6B720015313C /* Dispatch.swift */,
-				03EDC163194AA137008AAFFA /* Worker.swift */,
-				030091E819F0EF04000E5A3A /* HTTPWorker.swift */,
-				03D79CD419F04B76002AFF01 /* WorkerManager.swift */,
-				03D79CDA19F08038002AFF01 /* Set.swift */,
-				0375F83B19F0AF4400783B1C /* Log.swift */,
-				03603F5119F88ED600CEE7B3 /* Reachability.swift */,
-				03C4342B194AB3B200463B1F /* Serializer.swift */,
+				03D79CD219EFA882002AFF01 /* Base64.swift */,
 				03A61A49199C42270090F57D /* BigNum.swift */,
-				030DC475194BB7D0000A6325 /* JSON.swift */,
-				03974CD21942BCC00021A1B9 /* CGGeometry.swift */,
+				03B106B519D0E76A004EB814 /* CalculatedValue.swift */,
 				0323D26A19451A8800B49FD3 /* CGColor.swift */,
 				035CD6D3194556D000640425 /* CGContext.swift */,
 				035CD705194569ED00640425 /* CGDrawing.swift */,
+				03974CD21942BCC00021A1B9 /* CGGeometry.swift */,
+				030091EA19F0F1F8000E5A3A /* CheckedValue.swift */,
+				0323D23C1944E21200B49FD3 /* Color.swift */,
+				03D79CD019EF12B9002AFF01 /* Data.swift */,
+				03D9CC571946C2F1006463F7 /* Device.swift */,
+				03D09328194A6B720015313C /* Dispatch.swift */,
+				03603F3D19F656A300CEE7B3 /* Error.swift */,
+				03EC33D71942B2030074BFFA /* Geometry.swift */,
+				030091E819F0EF04000E5A3A /* HTTPWorker.swift */,
+				033DBD6E19F9B65300BE9AB7 /* Hysteresis.swift */,
+				0323D23E1944E23B00B49FD3 /* Image.swift */,
+				030DC475194BB7D0000A6325 /* JSON.swift */,
+				03D9CC5B19470F03006463F7 /* KVOObserver.swift */,
+				0375F83B19F0AF4400783B1C /* Log.swift */,
+				03EC33D11942897F0074BFFA /* Math.swift */,
+				03603F4F19F767CE00CEE7B3 /* Network.swift */,
+				033DBD7019F9CE7500BE9AB7 /* NetworkActivityIndicator.swift */,
+				03D79CD619F07071002AFF01 /* ObservableValue.swift */,
+				03C4342E194AB9C900463B1F /* Observer.swift */,
+				03EC33D31942A1DE0074BFFA /* Random.swift */,
+				03603F5119F88ED600CEE7B3 /* Reachability.swift */,
+				03D9CC5919470CD9006463F7 /* RectSetter.swift */,
+				03D093141949857C0015313C /* Regex.swift */,
+				03882014194865DC0078C2B3 /* Runtime.swift */,
 				0344ECEC19524C1600C40ACC /* SCNGeometry.swift */,
+				03C4342B194AB3B200463B1F /* Serializer.swift */,
+				03D79CDA19F08038002AFF01 /* Set.swift */,
+				0323D23A1944D1BA00B49FD3 /* String.swift */,
+				03EC33D51942AFBF0074BFFA /* Time.swift */,
+				03D9CC511946A9CB006463F7 /* UserDefaults.swift */,
+				03D79CD819F07153002AFF01 /* Valuable.swift */,
+				031063451945A0A000FDA79E /* View.swift */,
+				0375F83719F0981800783B1C /* WeakValue.swift */,
+				03EDC163194AA137008AAFFA /* Worker.swift */,
+				03D79CD419F04B76002AFF01 /* WorkerManager.swift */,
 				03EC33B8194289200074BFFA /* Supporting Files */,
 			);
 			path = Arciem;
@@ -357,6 +363,7 @@
 				035FE32F1990A6BD00421433 /* Runtime.swift in Sources */,
 				03A61A4A199C42270090F57D /* BigNum.swift in Sources */,
 				039FC4241992E83400C5211A /* Angles.swift in Sources */,
+				033DBD7119F9CE7500BE9AB7 /* NetworkActivityIndicator.swift in Sources */,
 				03D79CD519F04B76002AFF01 /* WorkerManager.swift in Sources */,
 				035FE31E1990A65A00421433 /* String.swift in Sources */,
 				0375F83819F0981800783B1C /* WeakValue.swift in Sources */,
@@ -373,6 +380,7 @@
 				035FE3351990A6BD00421433 /* CGDrawing.swift in Sources */,
 				035FE3311990A6BD00421433 /* Worker.swift in Sources */,
 				035FE3211990A66000421433 /* Time.swift in Sources */,
+				033DBD6F19F9B65300BE9AB7 /* Hysteresis.swift in Sources */,
 				035FE3281990A68A00421433 /* CGGeometry.swift in Sources */,
 				035FE3341990A6BD00421433 /* CGContext.swift in Sources */,
 				03D79CD319EFA882002AFF01 /* Base64.swift in Sources */,

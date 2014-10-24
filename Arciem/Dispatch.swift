@@ -11,11 +11,16 @@ import Foundation
 // A Canceler is returned by functions in this file that either execute a block after a delay, or execute a block at intervals. If the <canceled> variable is set to true, the block will never be executed, or the calling of the block at intervals will stop.
 public class Canceler {
     public var canceled = false
+    public func cancel() {
+        canceled = true
+    }
 }
 
 // Convenience types for symmetry with Swift naming conventions
 public typealias DispatchBlock = dispatch_block_t
 public typealias DispatchQueue = dispatch_queue_t
+public typealias ErrorBlock = (error: NSError) -> Void
+public typealias ErrorsBlock = (errors: [NSError]) -> Void
 
 // A block that takes a Canceler. The block will not be called again if it sets the <canceled> variable of the Canceler to true.
 public typealias CancelableBlock = (canceler: Canceler) -> Void

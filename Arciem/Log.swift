@@ -32,28 +32,32 @@ extension LogLevel : Printable {
     }
 }
 
+var logSerializer = Serializer(name: "Log")
 public var logLevel: LogLevel? = LogLevel.Info
 public var logTags = Set<String>()
-public var logDateFormatter: NSDateFormatter!
+public var logDateFormatter: NSDateFormatter = {
+    let f = NSDateFormatter()
+    f.dateFormat = "yyyyMMdd hh:mm:ss.SSS"
+    return f
+}()
 
 public func log(message: String, _ level: LogLevel? = .Info, _ tag: String? = nil) {
     if logLevel != nil {
         if level == nil || level!.rawValue >= logLevel!.rawValue {
             if tag == nil || logTags.contains(tag!) {
-                if logDateFormatter == nil {
-                    logDateFormatter = NSDateFormatter()
-                    logDateFormatter.dateFormat = "yyyyMMdd hh:mm:ss.SSS"
+                let date = NSDate()
+                logSerializer.dispatch() {
+                    let d = logDateFormatter.stringFromDate(date)
+                    var s = "[\(d)"
+                    if let lev = level? {
+                        s += " \(lev)"
+                    }
+                    if let t = tag? {
+                        s += " \(t)"
+                    }
+                    s += "]"
+                    println("\(s) \(message)")
                 }
-                let d = logDateFormatter.stringFromDate(NSDate())
-                var s = "[\(d)"
-                if let lev = level? {
-                    s += " \(lev)"
-                }
-                if let t = tag? {
-                    s += " \(t)"
-                }
-                s += "]"
-                println("\(s) \(message)")
             }
         }
     }
