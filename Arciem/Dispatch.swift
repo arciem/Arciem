@@ -11,9 +11,8 @@ import Foundation
 // A Canceler is returned by functions in this file that either execute a block after a delay, or execute a block at intervals. If the <canceled> variable is set to true, the block will never be executed, or the calling of the block at intervals will stop.
 public class Canceler {
     public var canceled = false
-    public func cancel() {
-        canceled = true
-    }
+    public init() { }
+    public func cancel() { canceled = true }
 }
 
 // Convenience types for symmetry with Swift naming conventions

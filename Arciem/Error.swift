@@ -8,8 +8,14 @@
 
 import Foundation
 
+public var AppErrorDomain = "AppErrorDomain"
+
 extension NSError {
     public convenience init(domain: String, code: Int, localizedDescription: String) {
         self.init(domain: domain, code: code, userInfo: [NSLocalizedDescriptionKey : localizedDescription])
+    }
+    
+    public convenience init(_ localizedDescription: String) {
+        self.init(domain: AppErrorDomain, code: 1, localizedDescription: localizedDescription)
     }
 }

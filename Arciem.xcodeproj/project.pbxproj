@@ -11,6 +11,7 @@
 		030091EB19F0F1F8000E5A3A /* CheckedValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030091EA19F0F1F8000E5A3A /* CheckedValue.swift */; };
 		033DBD6F19F9B65300BE9AB7 /* Hysteresis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DBD6E19F9B65300BE9AB7 /* Hysteresis.swift */; };
 		033DBD7119F9CE7500BE9AB7 /* NetworkActivityIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DBD7019F9CE7500BE9AB7 /* NetworkActivityIndicator.swift */; };
+		033DBD7C19FB65D500BE9AB7 /* Future.swift in Sources */ = {isa = PBXBuildFile; fileRef = 033DBD7B19FB65D500BE9AB7 /* Future.swift */; };
 		035FE31E1990A65A00421433 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0323D23A1944D1BA00B49FD3 /* String.swift */; };
 		035FE31F1990A65A00421433 /* Regex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D093141949857C0015313C /* Regex.swift */; };
 		035FE3201990A65A00421433 /* Random.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EC33D31942A1DE0074BFFA /* Random.swift */; };
@@ -78,6 +79,7 @@
 		0323D26A19451A8800B49FD3 /* CGColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGColor.swift; sourceTree = "<group>"; };
 		033DBD6E19F9B65300BE9AB7 /* Hysteresis.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hysteresis.swift; sourceTree = "<group>"; };
 		033DBD7019F9CE7500BE9AB7 /* NetworkActivityIndicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkActivityIndicator.swift; sourceTree = "<group>"; };
+		033DBD7B19FB65D500BE9AB7 /* Future.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Future.swift; sourceTree = "<group>"; };
 		0344ECEC19524C1600C40ACC /* SCNGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCNGeometry.swift; sourceTree = "<group>"; };
 		0349BA1C197E9C720030AB38 /* CGColorGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CGColorGlue.h; sourceTree = "<group>"; };
 		0349BA1D197E9C720030AB38 /* CGColorGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CGColorGlue.m; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				03D9CC571946C2F1006463F7 /* Device.swift */,
 				03D09328194A6B720015313C /* Dispatch.swift */,
 				03603F3D19F656A300CEE7B3 /* Error.swift */,
+				033DBD7B19FB65D500BE9AB7 /* Future.swift */,
 				03EC33D71942B2030074BFFA /* Geometry.swift */,
 				030091E819F0EF04000E5A3A /* HTTPWorker.swift */,
 				033DBD6E19F9B65300BE9AB7 /* Hysteresis.swift */,
@@ -393,6 +396,7 @@
 				03603F5219F88ED700CEE7B3 /* Reachability.swift in Sources */,
 				035FE31F1990A65A00421433 /* Regex.swift in Sources */,
 				035FE3261990A66E00421433 /* View.swift in Sources */,
+				033DBD7C19FB65D500BE9AB7 /* Future.swift in Sources */,
 				035FE3221990A66000421433 /* Geometry.swift in Sources */,
 				03D79CD719F07071002AFF01 /* ObservableValue.swift in Sources */,
 				035FE3201990A65A00421433 /* Random.swift in Sources */,
