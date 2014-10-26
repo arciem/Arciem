@@ -8,65 +8,141 @@
 
 import Foundation
 
-protocol DeferredProtocol {
+public protocol PromiseP {
     func performWithInputValue(inputValue: Any)
-    var next: DeferredProtocol? { set get }
+    var next: PromiseP? { set get }
+    var future: Future! { set get }
 }
 
-class Deferred<I, O> : DeferredProtocol {
+public class Promise<I, O> : PromiseP {
     typealias InputType = I
     typealias OutputType = O
     typealias TaskType = (InputType) -> Void
-    typealias SuccessType = (OutputType) -> Void
-    typealias FailureType = (NSError) -> Void
-    var task: TaskType?
-    var inputValue: InputType?
-    var outputValue: OutputType?
-    var error: NSError?
-    var next: DeferredProtocol?
+    public var task: TaskType?
+    public var next: PromiseP?
+    public var future: Future!
     
-    func performWithInputValue(inputValue: Any) {
-        task?(inputValue as InputType)
+    public init() {
+        
     }
     
-    func success(outputValue: OutputType) {
-        next?.performWithInputValue(outputValue)
+    public func performWithInputValue(inputValue: Any) {
+        if let input = inputValue as? InputType {
+            task?(input)
+        } else {
+            failure(NSError("Promise input type did not match previous promise output type."))
+        }
     }
     
-    func failure(error: NSError) {
-        self.error = error
+    public func success(outputValue: OutputType) {
+        if next != nil {
+            next!.performWithInputValue(outputValue)
+        } else {
+            future.finally?()
+        }
+    }
+    
+    public func failure(error: NSError) {
+        future.failure?(error: error)
+        future.finally?()
     }
 }
 
-class Future {
-    var tasks = [DeferredProtocol]()
+public class Future {
+    var promises = [PromiseP]()
+    var failure: ErrorBlock?
+    var finally: DispatchBlock?
+    public private(set) var taskQueue: DispatchQueue
+    public private(set) var callbackQueue: DispatchQueue
     
-    func then(task: DeferredProtocol) -> Future {
-        if var lastTask = tasks.last? {
-            lastTask.next = task
+    init(taskQueue: DispatchQueue = backgroundQueue, callbackQueue: DispatchQueue = mainQueue) {
+        self.taskQueue = taskQueue
+        self.callbackQueue = callbackQueue
+    }
+    
+    func then(var promise: PromiseP) -> Future {
+        if var lastTask = promises.last? {
+            lastTask.next = promise
         }
-        tasks.append(task)
+        promises.append(promise)
+        promise.future = self
         return self
     }
     
     func go() -> Future {
-        tasks[0].performWithInputValue(())
+        if let firstTask = promises.first? {
+            firstTask.performWithInputValue(())
+        }
+        promises.removeAll()
         return self
     }
 }
 
-public func testFuture() {
-    let f = Future().then(task1()).then(task2()).go()
+infix operator → { associativity left precedence 80 }
+infix operator † { associativity left precedence 80 }
+infix operator ‡ { associativity left precedence 80 }
+
+public func → <A, B, C>(lhs: Promise<A, B>, rhs: Promise<B, C>) -> Future {
+    return Future().then(lhs).then(rhs)
 }
 
-func task1() -> Deferred<(), String> {
-    let d = Deferred<(), String>()
+public func → (lhs: Future, rhs: PromiseP) -> Future {
+    return lhs.then(rhs)
+}
+
+public func → <T>(lhs: Future, rhs: (T) -> Void) -> Future {
+    let d = Promise<T, T>()
+    d.task = { (val: T) in
+        rhs(val)
+        d.success(val)
+    }
+    return lhs.then(d)
+}
+
+public func → <T, R>(lhs: Future, rhs: (T) -> R) -> Future {
+    let d = Promise<T, R>()
+    d.task = { (val: T) in
+        d.success(rhs(val))
+    }
+    return lhs.then(d)
+}
+
+public func → <T>(lhs: PromiseP, rhs: (T) -> Void) -> Future {
+    return Future().then(lhs) → rhs
+}
+
+public func → <T, R>(lhs: PromiseP, rhs: (T) -> R) -> Future {
+    return Future().then(lhs) → rhs
+}
+
+public func † (lhs: Future, rhs: ErrorBlock) -> Future {
+    lhs.failure = rhs
+    return lhs
+}
+
+public func ‡ (lhs: Future, rhs: DispatchBlock) -> Future {
+    lhs.finally = rhs
+    return lhs.go()
+}
+
+public func testFuture() {
+    let f = task1()
+        → task2()
+        → { (val: Int) in println("val: \(val)") }
+        → task3()
+        → { (val: String) in println("val: \"\(val)\"") }
+        † { (err: NSError) in println("err: \(err)") }
+        ‡ { println("finally") }
+}
+
+func task1() -> Promise<(), String> {
+    let d = Promise<(), String>()
     d.task = { () in
-        dispatchOnBackground() {
+        dispatchOn(queue: d.future.taskQueue) {
             println("Task 1")
-            let s = "55"
-            dispatchOnMain() {
-                println("Task 1 output: \(s)")
+            let s = "42"
+            dispatchOn(queue: d.future.callbackQueue) {
+                println("Task 1 output: \"\(s)\"")
                 d.success(s)
             }
         }
@@ -74,13 +150,13 @@ func task1() -> Deferred<(), String> {
     return d
 }
 
-func task2() -> Deferred<String, Int> {
-    let d = Deferred<String, Int>()
+func task2() -> Promise<String, Int> {
+    let d = Promise<String, Int>()
     d.task = { (str) in
-        dispatchOnBackground() {
-            println("Task 2 input: \(str)")
+        dispatchOn(queue: d.future.taskQueue) {
+            println("Task 2 input: \"\(str)\"")
             let iOpt = str.toInt()
-            dispatchOnMain() {
+            dispatchOn(queue: d.future.callbackQueue) {
                 if let i = iOpt? {
                     println("Task 2 output: \(i)")
                     d.success(i)
@@ -93,114 +169,17 @@ func task2() -> Deferred<String, Int> {
     return d
 }
 
-func task3() -> Deferred<Int, String> {
-    let d = Deferred<Int, String>()
+func task3() -> Promise<Int, String> {
+    let d = Promise<Int, String>()
     d.task = { (i) in
-        dispatchOnBackground() {
+        dispatchOn(queue: d.future.taskQueue) {
+            println("Task 3 input: \(i)")
             let s = "\(i)"
-            dispatchOnMain() {
+            dispatchOn(queue: d.future.callbackQueue) {
+                println("Task 3 output: \"\(s)\"")
                 d.success(s)
             }
         }
     }
     return d
 }
-
-//class Promise {
-//    var tasks: [DispatchBlock]
-//    
-//    init(task: DispatchBlock) {
-//        tasks = [task]
-//    }
-//}
-//
-//enum Future<T> {
-//    case NotYet(Promise)
-//    case Some(T)
-//    case Error(NSError)
-//    
-//    
-//    init(_ task: DispatchBlock) {
-//        let promise = Promise(task)
-//        self = .NotYet(promise)
-//    }
-//}
-
-//class Future<T> {
-////    var task: (String) -> Void
-////    var next: Future? = nil
-//    var value: T? = nil
-//    typealias TaskType = (T) -> Void
-//    var tasks = [TaskType]()
-//    
-//    func then(f: TaskType) -> Future {
-//        tasks.append(f)
-//        return self
-//    }
-//    
-//    func then(f: () -> ()) -> Future {
-//        tasks.append({ _ in
-//            f()
-//        })
-//        return self
-//    }
-////
-////    init(_ task: (String) -> Void) {
-////        self.task = task
-////    }
-////    
-////    func then(next: Future) -> Future {
-////        self.next = next
-////        return next
-////    }
-////    
-//    func resolve(value: T) {
-//        self.value = value
-//        for task in tasks {
-//            task(value)
-//        }
-//    }
-//}
-//
-//func task1() -> Future<String> {
-//    let f = Future<String>()
-//    
-//    dispatchOnBackground() {
-//        println("Task 1")
-//        dispatchOnMain() {
-//            f.resolve("Task 1 value")
-//        }
-//    }
-//    
-//    return f
-//}
-//
-//func task2() -> Future<Int> {
-//    let f = Future<Int>()
-//    
-//    dispatchOnMain() {
-//        println("Task 2")
-//        dispatchOnMain() {
-//            f.resolve(55)
-//        }
-//    }
-//    
-//    return f
-//}
-//
-//public func testFuture() {
-//    let future = task1().then({ f in
-//        println("task1 string: \(f)")
-//    }).then({
-//        println("Another then.")
-//    })
-//    
-//    //        .then(
-//    //        task2()
-//    //        ).then({
-//    //            println("Task 3")
-//    //        })
-//}
-////    let future = Future({ () -> String in
-////        return "Hello"
-////    })

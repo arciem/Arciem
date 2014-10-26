@@ -34,11 +34,11 @@ public class Worker {
     public let id: Int
     public var task: WorkerBlock?
     public var success: DispatchBlock?
-    public var failure: ErrorsBlock?
+    public var failure: ErrorBlock?
     public var finally: DispatchBlock?
 
     public var state = ObservableValue<WorkerState>(.Ready)
-    public var errors = [NSError]()
+    public var error: NSError?
 
     var log: Logger? { get { return workerLogger } }
 

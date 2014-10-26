@@ -63,20 +63,22 @@ public class HTTPWorker : Worker {
                 self.data = data
                 self.httpResponse = responseOpt as? NSHTTPURLResponse
                 if error != nil {
-                    self.errors.append(error)
+                    self.error = error
                 } else {
                     if self.httpResponse.MIMEType == jsonMIMEType {
                         var jsonError: NSError?
                         self.json = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: &jsonError)
                         if jsonError != nil {
-                            self.errors.append(jsonError!)
+                            self.error = jsonError!
                         }
                     }
                     
-                    let statusCode = self.httpResponse.statusCode
-                    if !(200...299 ~= statusCode) {
-                        let httpError = NSError(domain: HTTPErrorDomain, code: statusCode, localizedDescription: self.statusCodeString)
-                        self.errors.append(httpError)
+                    if error == nil {
+                        let statusCode = self.httpResponse.statusCode
+                        if !(200...299 ~= statusCode) {
+                            let httpError = NSError(domain: HTTPErrorDomain, code: statusCode, localizedDescription: self.statusCodeString)
+                            self.error = httpError
+                        }
                     }
                 }
                 manager.workerDone(self)

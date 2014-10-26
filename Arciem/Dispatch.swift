@@ -19,7 +19,6 @@ public class Canceler {
 public typealias DispatchBlock = dispatch_block_t
 public typealias DispatchQueue = dispatch_queue_t
 public typealias ErrorBlock = (error: NSError) -> Void
-public typealias ErrorsBlock = (errors: [NSError]) -> Void
 
 // A block that takes a Canceler. The block will not be called again if it sets the <canceled> variable of the Canceler to true.
 public typealias CancelableBlock = (canceler: Canceler) -> Void
