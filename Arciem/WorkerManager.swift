@@ -61,12 +61,12 @@ public class WorkerManager {
                     if(worker.state != .Canceled) {
                         if worker.error != nil {
                             worker.state =^ .Failure
-                            worker.failure?(error: worker.error!)
+                            worker.😡?(error: worker.error!)
                         } else {
                             worker.state =^ .Success
-                            worker.success?()
+                            worker.😄?()
                         }
-                        worker.finally?()
+                        worker.😎?()
                     }
                 }
             }

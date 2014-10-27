@@ -8,6 +8,8 @@
 
 import Foundation
 
+var FutureLogger = Logger(tag: "FUTURE")
+
 public protocol PromiseP {
     func performWithInputValue(inputValue: Any)
     var next: PromiseP? { set get }
@@ -27,14 +29,15 @@ public class Promise<I, O> : PromiseP {
     }
     
     public func performWithInputValue(inputValue: Any) {
+        FutureLogger?.trace("performWithInputValue: \(inputValue)")
         if let input = inputValue as? InputType {
             task?(input)
         } else {
-            failure(NSError("Promise input type did not match previous promise output type."))
+            FutureLogger?.error("inputValue of Promise did not match outputValue of last promise")
         }
     }
     
-    public func success(outputValue: OutputType) {
+    public func 😄(outputValue: OutputType) {
         if next != nil {
             next!.performWithInputValue(outputValue)
         } else {
@@ -42,9 +45,18 @@ public class Promise<I, O> : PromiseP {
         }
     }
     
-    public func failure(error: NSError) {
+    public func 😡(error: NSError) {
         future.failure?(error: error)
         future.finally?()
+    }
+    
+    func then<Z>(promise: Promise<O, Z>) -> Promise<O, Z> {
+        if var lastTask = future.promises.last? {
+            lastTask.next = promise
+        }
+        future.promises.append(promise)
+        promise.future = future
+        return promise
     }
 }
 
@@ -60,90 +72,95 @@ public class Future {
         self.callbackQueue = callbackQueue
     }
     
-    func then(var promise: PromiseP) -> Future {
+    func then<A>(var promise: Promise<Void, A>) -> Promise<Void, A> {
         if var lastTask = promises.last? {
             lastTask.next = promise
         }
         promises.append(promise)
         promise.future = self
-        return self
+        return promise
     }
     
     func go() -> Future {
         if let firstTask = promises.first? {
-            firstTask.performWithInputValue(())
+            firstTask.performWithInputValue(Void())
         }
         promises.removeAll()
         return self
     }
 }
 
+prefix operator • { }
 infix operator → { associativity left precedence 80 }
 infix operator † { associativity left precedence 80 }
 infix operator ‡ { associativity left precedence 80 }
 
-public func → <A, B, C>(lhs: Promise<A, B>, rhs: Promise<B, C>) -> Future {
-    return Future().then(lhs).then(rhs)
+public prefix func • <A>(lhs: Promise<Void, A>) -> Promise<Void, A> {
+    FutureLogger?.trace("•Promise<Void, A> → Promise<Void, A>")
+    return Future().then(lhs)
 }
 
-public func → (lhs: Future, rhs: PromiseP) -> Future {
+public func → <A, B>(lhs: Promise<Void, A>, rhs: Promise<A, B>) -> Promise<A, B> {
+    FutureLogger?.trace("Promise<Void, A> → Promise<A, B>")
     return lhs.then(rhs)
 }
 
-public func → <T>(lhs: Future, rhs: (T) -> Void) -> Future {
-    let d = Promise<T, T>()
-    d.task = { (val: T) in
+public func → <A, B, C>(lhs: Promise<A, B>, rhs: Promise<B, C>) -> Promise<B, C> {
+    FutureLogger?.trace("Promise<A, B> → Promise<B, C>")
+    return lhs.then(rhs)
+}
+
+public func → <A, B>(lhs: Promise<A, B>, rhs: (B) -> Void) -> Promise<B, Void> {
+    FutureLogger?.trace("Promise<A, B> → (B)->Void")
+    let d = Promise<B, Void>()
+    d.task = { val in
         rhs(val)
-        d.success(val)
+        d.😄(Void())
     }
     return lhs.then(d)
 }
 
-public func → <T, R>(lhs: Future, rhs: (T) -> R) -> Future {
-    let d = Promise<T, R>()
-    d.task = { (val: T) in
-        d.success(rhs(val))
+public func → <A, B, C>(lhs: Promise<A, B>, rhs: (B) -> C) -> Promise<B, C> {
+    FutureLogger?.trace("Promise<A, B> → (B)->C")
+    let d = Promise<B, C>()
+    d.task = { val in
+        d.😄(rhs(val))
     }
     return lhs.then(d)
 }
 
-public func → <T>(lhs: PromiseP, rhs: (T) -> Void) -> Future {
-    return Future().then(lhs) → rhs
-}
-
-public func → <T, R>(lhs: PromiseP, rhs: (T) -> R) -> Future {
-    return Future().then(lhs) → rhs
-}
-
-public func † (lhs: Future, rhs: ErrorBlock) -> Future {
-    lhs.failure = rhs
+public func † <A, B>(lhs: Promise<A, B>, rhs: ErrorBlock) -> Promise<A, B> {
+    FutureLogger?.trace("Promise<A, B> † ErrorBlock")
+    lhs.future.failure = rhs
     return lhs
 }
 
-public func ‡ (lhs: Future, rhs: DispatchBlock) -> Future {
-    lhs.finally = rhs
-    return lhs.go()
+public func ‡ <A, B>(lhs: Promise<A, B>, rhs: DispatchBlock) -> Future {
+    FutureLogger?.trace("Promise<A, B> ‡ DispatchBlock")
+    lhs.future.finally = rhs
+    return lhs.future.go()
 }
 
 public func testFuture() {
-    let f = task1()
+    •task1()
         → task2()
-        → { (val: Int) in println("val: \(val)") }
+        → { (val: Int) -> Int in println("val: \(val)")
+            return val }
         → task3()
         → { (val: String) in println("val: \"\(val)\"") }
         † { (err: NSError) in println("err: \(err)") }
         ‡ { println("finally") }
 }
 
-func task1() -> Promise<(), String> {
-    let d = Promise<(), String>()
-    d.task = { () in
+func task1() -> Promise<Void, String> {
+    let d = Promise<Void, String>()
+    d.task = {
         dispatchOn(queue: d.future.taskQueue) {
             println("Task 1")
             let s = "42"
             dispatchOn(queue: d.future.callbackQueue) {
                 println("Task 1 output: \"\(s)\"")
-                d.success(s)
+                d.😄(s)
             }
         }
     }
@@ -159,9 +176,9 @@ func task2() -> Promise<String, Int> {
             dispatchOn(queue: d.future.callbackQueue) {
                 if let i = iOpt? {
                     println("Task 2 output: \(i)")
-                    d.success(i)
+                    d.😄(i)
                 } else {
-                    d.failure(NSError("Could not convert \(str) to an int."))
+                    d.😡(NSError("Could not convert \(str) to an int."))
                 }
             }
         }
@@ -177,7 +194,7 @@ func task3() -> Promise<Int, String> {
             let s = "\(i)"
             dispatchOn(queue: d.future.callbackQueue) {
                 println("Task 3 output: \"\(s)\"")
-                d.success(s)
+                d.😄(s)
             }
         }
     }

@@ -33,9 +33,9 @@ extension WorkerState : Printable {
 public class Worker {
     public let id: Int
     public var task: WorkerBlock?
-    public var success: DispatchBlock?
-    public var failure: ErrorBlock?
-    public var finally: DispatchBlock?
+    public var 😄: DispatchBlock?   // success
+    public var 😡: ErrorBlock?      // failure
+    public var 😎: DispatchBlock?   // finally
 
     public var state = ObservableValue<WorkerState>(.Ready)
     public var error: NSError?
