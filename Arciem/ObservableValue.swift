@@ -84,6 +84,6 @@ public class ObservableValue<T> : Valuable {
 
 extension ObservableValue : Printable {
     public var description : String {
-        return identifierOf(self)
+        return identifierOfObject(self)
     }
 }

@@ -28,6 +28,11 @@ public func toUnsafeMutablePointer<T>(inout t: T) -> UnsafeMutablePointer<T> {
     }
 }
 
+public func typeNameOf(value: Any) -> String {
+    let typeLongName = _stdlib_getDemangledTypeName(value)
+    return typeLongName
+}
+
 public func typeNameOf(value: AnyObject) -> String {
     let typeLongName = _stdlib_getDemangledTypeName(value)
     return typeLongName
@@ -39,6 +44,20 @@ public func pointerStringOf(obj: AnyObject) -> String {
     return "\(ptr)"
 }
 
-public func identifierOf(value: AnyObject) -> String {
-    return "\(typeNameOf(value)) <\(pointerStringOf(value))>"
+public func identifierOfType(value: Any) -> String {
+    var s = "\(typeNameOf(value))"
+    return s
+}
+
+public func identifierOfObject(obj: AnyObject) -> String {
+    var s = "\(typeNameOf(obj)) <\(pointerStringOf(obj))>"
+    return s
+}
+
+public func identifierOfValue(value: Debuggable) -> String {
+    var s = "\(typeNameOf(value))"
+    if let debugName = value.debugName? {
+        s += " <\(debugName)>"
+    }
+    return s
 }

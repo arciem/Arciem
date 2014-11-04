@@ -43,6 +43,13 @@
 		03603F4819F6F13A00CEE7B3 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03603F4719F6F13A00CEE7B3 /* UIKit.framework */; };
 		03603F5019F767CE00CEE7B3 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03603F4F19F767CE00CEE7B3 /* Network.swift */; };
 		03603F5219F88ED700CEE7B3 /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03603F5119F88ED600CEE7B3 /* Reachability.swift */; };
+		0362FD031A07677E0041B29E /* Dataflow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0362FD021A07677E0041B29E /* Dataflow.swift */; };
+		0362FD051A07CDC40041B29E /* Debug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0362FD041A07CDC40041B29E /* Debug.swift */; };
+		0362FD0A1A08E3270041B29E /* Graph.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0362FD091A08E3270041B29E /* Graph.swift */; };
+		0362FD0C1A08E33C0041B29E /* Element.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0362FD0B1A08E33C0041B29E /* Element.swift */; };
+		0362FD0E1A08E3660041B29E /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0362FD0D1A08E3660041B29E /* Node.swift */; };
+		0362FD101A08E3810041B29E /* Edge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0362FD0F1A08E3810041B29E /* Edge.swift */; };
+		0362FD121A08E8260041B29E /* GraphAlgorithm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0362FD111A08E8260041B29E /* GraphAlgorithm.swift */; };
 		036A67A019A305F800CD98D0 /* RuntimeGlue.h in Headers */ = {isa = PBXBuildFile; fileRef = 036A679E19A305F800CD98D0 /* RuntimeGlue.h */; };
 		036A67A119A305F800CD98D0 /* RuntimeGlue.m in Sources */ = {isa = PBXBuildFile; fileRef = 036A679F19A305F800CD98D0 /* RuntimeGlue.m */; };
 		036A67A219A3060300CD98D0 /* DeviceGlue.h in Headers */ = {isa = PBXBuildFile; fileRef = 0349BA23197EB2B70030AB38 /* DeviceGlue.h */; };
@@ -96,6 +103,13 @@
 		03603F4719F6F13A00CEE7B3 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		03603F4F19F767CE00CEE7B3 /* Network.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
 		03603F5119F88ED600CEE7B3 /* Reachability.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Reachability.swift; path = deps/Reachability/Reachability.swift; sourceTree = SOURCE_ROOT; };
+		0362FD021A07677E0041B29E /* Dataflow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dataflow.swift; sourceTree = "<group>"; };
+		0362FD041A07CDC40041B29E /* Debug.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Debug.swift; sourceTree = "<group>"; };
+		0362FD091A08E3270041B29E /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
+		0362FD0B1A08E33C0041B29E /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
+		0362FD0D1A08E3660041B29E /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
+		0362FD0F1A08E3810041B29E /* Edge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
+		0362FD111A08E8260041B29E /* GraphAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphAlgorithm.swift; sourceTree = "<group>"; };
 		036A679E19A305F800CD98D0 /* RuntimeGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeGlue.h; sourceTree = "<group>"; };
 		036A679F19A305F800CD98D0 /* RuntimeGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuntimeGlue.m; sourceTree = "<group>"; };
 		036D8EF61989AE99003FCB35 /* Arciem-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Arciem-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -148,6 +162,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0362FD081A08E3270041B29E /* Graph */ = {
+			isa = PBXGroup;
+			children = (
+				0362FD0F1A08E3810041B29E /* Edge.swift */,
+				0362FD111A08E8260041B29E /* GraphAlgorithm.swift */,
+				0362FD0B1A08E33C0041B29E /* Element.swift */,
+				0362FD091A08E3270041B29E /* Graph.swift */,
+				0362FD0D1A08E3660041B29E /* Node.swift */,
+			);
+			path = Graph;
+			sourceTree = "<group>";
+		};
 		036D8F021989AE99003FCB35 /* ArciemTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -227,11 +253,14 @@
 				030091EA19F0F1F8000E5A3A /* CheckedValue.swift */,
 				0323D23C1944E21200B49FD3 /* Color.swift */,
 				03D79CD019EF12B9002AFF01 /* Data.swift */,
+				0362FD021A07677E0041B29E /* Dataflow.swift */,
+				0362FD041A07CDC40041B29E /* Debug.swift */,
 				03D9CC571946C2F1006463F7 /* Device.swift */,
 				03D09328194A6B720015313C /* Dispatch.swift */,
 				03603F3D19F656A300CEE7B3 /* Error.swift */,
 				033DBD7B19FB65D500BE9AB7 /* Future.swift */,
 				03EC33D71942B2030074BFFA /* Geometry.swift */,
+				0362FD081A08E3270041B29E /* Graph */,
 				030091E819F0EF04000E5A3A /* HTTPWorker.swift */,
 				033DBD6E19F9B65300BE9AB7 /* Hysteresis.swift */,
 				0323D23E1944E23B00B49FD3 /* Image.swift */,
@@ -359,6 +388,7 @@
 				036D8F7C1989BC6C003FCB35 /* CGColorGlue.m in Sources */,
 				03A3D8B119A4006C002C67AF /* Autolayout.swift in Sources */,
 				035FE3321990A6BD00421433 /* Serializer.swift in Sources */,
+				0362FD121A08E8260041B29E /* GraphAlgorithm.swift in Sources */,
 				035FE32A1990A69300421433 /* CGColor.swift in Sources */,
 				036D8F7B1989BC6C003FCB35 /* SerializerGlue.m in Sources */,
 				03D79CD919F07153002AFF01 /* Valuable.swift in Sources */,
@@ -369,10 +399,12 @@
 				033DBD7119F9CE7500BE9AB7 /* NetworkActivityIndicator.swift in Sources */,
 				03D79CD519F04B76002AFF01 /* WorkerManager.swift in Sources */,
 				035FE31E1990A65A00421433 /* String.swift in Sources */,
+				0362FD051A07CDC40041B29E /* Debug.swift in Sources */,
 				0375F83819F0981800783B1C /* WeakValue.swift in Sources */,
 				036A67A119A305F800CD98D0 /* RuntimeGlue.m in Sources */,
 				03D79CD119EF12B9002AFF01 /* Data.swift in Sources */,
 				030091EB19F0F1F8000E5A3A /* CheckedValue.swift in Sources */,
+				0362FD0E1A08E3660041B29E /* Node.swift in Sources */,
 				035FE3301990A6BD00421433 /* Dispatch.swift in Sources */,
 				036D8F7A1989BC6C003FCB35 /* DeviceGlue.m in Sources */,
 				035FE32B1990A6A200421433 /* UserDefaults.swift in Sources */,
@@ -382,10 +414,14 @@
 				030091E919F0EF04000E5A3A /* HTTPWorker.swift in Sources */,
 				035FE3351990A6BD00421433 /* CGDrawing.swift in Sources */,
 				035FE3311990A6BD00421433 /* Worker.swift in Sources */,
+				0362FD031A07677E0041B29E /* Dataflow.swift in Sources */,
+				0362FD0A1A08E3270041B29E /* Graph.swift in Sources */,
+				0362FD101A08E3810041B29E /* Edge.swift in Sources */,
 				035FE3211990A66000421433 /* Time.swift in Sources */,
 				033DBD6F19F9B65300BE9AB7 /* Hysteresis.swift in Sources */,
 				035FE3281990A68A00421433 /* CGGeometry.swift in Sources */,
 				035FE3341990A6BD00421433 /* CGContext.swift in Sources */,
+				0362FD0C1A08E33C0041B29E /* Element.swift in Sources */,
 				03D79CD319EFA882002AFF01 /* Base64.swift in Sources */,
 				035FE32E1990A6BD00421433 /* Observer.swift in Sources */,
 				036D8F7D1989BC74003FCB35 /* Math.swift in Sources */,

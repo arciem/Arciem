@@ -21,24 +21,33 @@ public func sqrt(n: Float) -> Float { return sqrtf(n) }
 public func hypot(dx: Float, dy: Float) -> Float { return hypotf(dx, dy) }
 public func atan2(dx: Float, dy: Float) -> Float { return atan2f(dx, dy) }
 
-public protocol Addable {
+public protocol ImmutableAddable {
     func +(lhs: Self, rhs: Self) -> Self
     func -(lhs: Self, rhs: Self) -> Self
+}
 
+public protocol MutableAddable {
     func += (inout lhs: Self, rhs: Self)
     func -= (inout lhs: Self, rhs: Self)
 }
 
-public protocol Arithmeticable : Addable {
+public protocol Addable : ImmutableAddable, MutableAddable { }
+
+public protocol ImmutableArithmeticable : ImmutableAddable {
     func *(lhs: Self, rhs: Self) -> Self
     func /(lhs: Self, rhs: Self) -> Self
     func %(lhs: Self, rhs: Self) -> Self
+}
 
+public protocol MutableArithmeticable : MutableAddable {
     func *= (inout lhs: Self, rhs: Self)
     func /= (inout lhs: Self, rhs: Self)
     func %= (inout lhs: Self, rhs: Self)
 }
 
+public protocol Arithmeticable : ImmutableArithmeticable, MutableArithmeticable { }
+
+extension Int : Arithmeticable { }
 extension Float : Arithmeticable { }
 extension Double : Arithmeticable { }
 extension CGFloat : Arithmeticable { }

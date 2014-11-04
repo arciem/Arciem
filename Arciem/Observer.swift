@@ -37,7 +37,7 @@ public class Observer<T> {
 
 extension Observer : Printable {
     public var description : String {
-        return "\(identifierOf(self)) id:\(id)"
+        return "\(identifierOfObject(self)) id:\(id)"
     }
 }
 

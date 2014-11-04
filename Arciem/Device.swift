@@ -38,6 +38,11 @@ public func isOSVersionAtLeast(minVerStr: String) -> Bool {
     return currSysVer.compare(minVerStr, options: NSStringCompareOptions.NumericSearch) != NSComparisonResult.OrderedAscending
 }
 
+public func documentDirectoryPath() -> NSURL {
+    let urls = NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask) as [NSURL]
+    return urls.last!
+}
+
 public let isOSVersionAtLeast8 = isOSVersionAtLeast("8.0")
 
 // suitable for returning from UIViewController.supportedInterfaceOrientations()

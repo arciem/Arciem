@@ -21,7 +21,7 @@ public class WorkerManager {
     public init(workQueue: DispatchQueue, callbackQueue: DispatchQueue) {
         self.workQueue = workQueue
         self.callbackQueue = callbackQueue
-        log?.trace("\(identifierOf(self)) init")
+        log?.trace("\(identifierOfObject(self)) init")
     }
     
     public convenience init() {
@@ -29,7 +29,7 @@ public class WorkerManager {
     }
     
     deinit {
-        log?.trace("\(identifierOf(self)) deinit")
+        log?.trace("\(identifierOfObject(self)) deinit")
     }
     
     public func addWorker(worker: Worker) {
