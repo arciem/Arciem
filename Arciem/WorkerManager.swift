@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
-
 var workerManagerLogger : Logger? = Logger(tag: "WORKER_MANAGER", enabled: true)
 
 public class WorkerManager {
@@ -34,12 +32,12 @@ public class WorkerManager {
     
     public func addWorker(worker: Worker) {
         serializer.dispatch { [unowned self] in
-            assert(worker.state == .Ready, "worker is not ready")
+            assert(worker.state.value? as? WorkerState == WorkerState.Ready, "worker is not ready")
             self.workers.add(worker)
-            worker.state =^ .Queueing
-            dispatchOn(queue: self.workQueue) {
-                if(worker.state != .Canceled) {
-                    worker.state =^ .Executing
+            worker.state.value = WorkerState.Queueing
+            dispatchOnQueue(self.workQueue) {
+                if(worker.state.value? as? WorkerState == WorkerState.Canceled) {
+                    worker.state.value = WorkerState.Executing
                     worker.task?(manager: self)
                 }
             }
@@ -48,7 +46,7 @@ public class WorkerManager {
     
     public func cancelWorker(worker: Worker) {
         serializer.dispatch {
-            worker.state =^ .Canceled
+            worker.state.value = WorkerState.Canceled
             self.workers.remove(worker)
         }
     }
@@ -56,14 +54,14 @@ public class WorkerManager {
     func workerDone(worker: Worker) {
         serializer.dispatch { [unowned self] in
             self.workers.remove(worker)
-            if(worker.state != .Canceled) {
-                dispatchOn(queue: self.callbackQueue) {
-                    if(worker.state != .Canceled) {
+            if(worker.state.value? as? WorkerState == WorkerState.Canceled) {
+                dispatchOnQueue(self.callbackQueue) {
+                    if(worker.state.value? as? WorkerState == WorkerState.Canceled) {
                         if worker.error != nil {
-                            worker.state =^ .Failure
+                            worker.state.value = WorkerState.Failure
                             worker.😡?(error: worker.error!)
                         } else {
-                            worker.state =^ .Success
+                            worker.state.value = WorkerState.Success
                             worker.😄?()
                         }
                         worker.😎?()
@@ -79,7 +77,7 @@ public class DummyWorker : Worker {
     public override init() {
         super.init()
         task = { [unowned self] (unowned manager) in
-            _ = dispatchOnBackground(afterDelay: 1.0) {
+            _ = dispatchOnBackgroundAfterDelay(1.0) {
                 manager.workerDone(self)
             }
         }
@@ -97,7 +95,7 @@ public func testWorker() {
         }))
     workerManager.addWorker(worker)
     
-    dispatchOnMain(afterDelay: 5) {
+    dispatchOnMainAfterDelay(5) {
         workerManager = nil
     }
 }

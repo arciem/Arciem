@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
-
 public typealias WorkerBlock = (manager: WorkerManager) -> Void
 
 private var _Worker_nextID = 0
@@ -33,11 +31,11 @@ extension WorkerState : Printable {
 public class Worker {
     public let id: Int
     public var task: WorkerBlock?
-    public var 😄: DispatchBlock?   // success
-    public var 😡: ErrorBlock?      // failure
-    public var 😎: DispatchBlock?   // finally
+    public var 😄: DispatchBlock?   // "success"
+    public var 😡: ErrorBlock?      // "failure"
+    public var 😎: DispatchBlock?   // "finally"
 
-    public var state = ObservableValue<WorkerState>(.Ready)
+    public var state = ObservableValue(WorkerState.Ready)
     public var error: NSError?
 
     var log: Logger? { get { return workerLogger } }

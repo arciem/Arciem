@@ -34,7 +34,7 @@ public class Serializer {
         if(isExecutingOnMyQueue) {
             f()
         } else {
-            dispatchSyncOn(queue: queue, f)
+            dispatchSyncOnQueue(queue, f)
         }
     }
     
@@ -44,7 +44,7 @@ public class Serializer {
         if(self.isExecutingOnMyQueue) {
             result = f()
         } else {
-            dispatchSyncOn(queue: self.queue) {
+            dispatchSyncOnQueue(self.queue) {
                 result = f()
             }
         }

@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
-
 var FutureLogger = Logger(tag: "FUTURE")
 
 public protocol PromiseP {
@@ -90,26 +88,25 @@ public class Future {
     }
 }
 
-prefix operator • { }
-infix operator → { associativity left precedence 80 }
-infix operator † { associativity left precedence 80 }
-infix operator ‡ { associativity left precedence 80 }
-
+// "new"
 public prefix func • <A>(lhs: Promise<Void, A>) -> Promise<Void, A> {
     FutureLogger?.trace("•Promise<Void, A> → Promise<Void, A>")
     return Future().then(lhs)
 }
 
+// "successor"
 public func → <A, B>(lhs: Promise<Void, A>, rhs: Promise<A, B>) -> Promise<A, B> {
     FutureLogger?.trace("Promise<Void, A> → Promise<A, B>")
     return lhs.then(rhs)
 }
 
+// "successor"
 public func → <A, B, C>(lhs: Promise<A, B>, rhs: Promise<B, C>) -> Promise<B, C> {
     FutureLogger?.trace("Promise<A, B> → Promise<B, C>")
     return lhs.then(rhs)
 }
 
+// "successor"
 public func → <A, B>(lhs: Promise<A, B>, rhs: (B) -> Void) -> Promise<B, Void> {
     FutureLogger?.trace("Promise<A, B> → (B)->Void")
     let d = Promise<B, Void>()
@@ -120,6 +117,7 @@ public func → <A, B>(lhs: Promise<A, B>, rhs: (B) -> Void) -> Promise<B, Void>
     return lhs.then(d)
 }
 
+// "successor"
 public func → <A, B, C>(lhs: Promise<A, B>, rhs: (B) -> C) -> Promise<B, C> {
     FutureLogger?.trace("Promise<A, B> → (B)->C")
     let d = Promise<B, C>()
@@ -129,12 +127,14 @@ public func → <A, B, C>(lhs: Promise<A, B>, rhs: (B) -> C) -> Promise<B, C> {
     return lhs.then(d)
 }
 
+// "failure"
 public func † <A, B>(lhs: Promise<A, B>, rhs: ErrorBlock) -> Promise<A, B> {
     FutureLogger?.trace("Promise<A, B> † ErrorBlock")
     lhs.future.failure = rhs
     return lhs
 }
 
+// "finally"
 public func ‡ <A, B>(lhs: Promise<A, B>, rhs: DispatchBlock) -> Future {
     FutureLogger?.trace("Promise<A, B> ‡ DispatchBlock")
     lhs.future.finally = rhs
@@ -155,10 +155,10 @@ public func testFuture() {
 func task1() -> Promise<Void, String> {
     let d = Promise<Void, String>()
     d.task = {
-        dispatchOn(queue: d.future.taskQueue) {
+        dispatchOnQueue(d.future.taskQueue) {
             println("Task 1")
             let s = "42"
-            dispatchOn(queue: d.future.callbackQueue) {
+            dispatchOnQueue(d.future.callbackQueue) {
                 println("Task 1 output: \"\(s)\"")
                 d.😄(s)
             }
@@ -170,10 +170,10 @@ func task1() -> Promise<Void, String> {
 func task2() -> Promise<String, Int> {
     let d = Promise<String, Int>()
     d.task = { (str) in
-        dispatchOn(queue: d.future.taskQueue) {
+        dispatchOnQueue(d.future.taskQueue) {
             println("Task 2 input: \"\(str)\"")
             let iOpt = str.toInt()
-            dispatchOn(queue: d.future.callbackQueue) {
+            dispatchOnQueue(d.future.callbackQueue) {
                 if let i = iOpt? {
                     println("Task 2 output: \(i)")
                     d.😄(i)
@@ -189,10 +189,10 @@ func task2() -> Promise<String, Int> {
 func task3() -> Promise<Int, String> {
     let d = Promise<Int, String>()
     d.task = { (i) in
-        dispatchOn(queue: d.future.taskQueue) {
+        dispatchOnQueue(d.future.taskQueue) {
             println("Task 3 input: \(i)")
             let s = "\(i)"
-            dispatchOn(queue: d.future.callbackQueue) {
+            dispatchOnQueue(d.future.callbackQueue) {
                 println("Task 3 output: \"\(s)\"")
                 d.😄(s)
             }

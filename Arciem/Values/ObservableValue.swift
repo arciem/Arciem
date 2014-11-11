@@ -6,18 +6,15 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
-
-public class ObservableValue<T> : Valuable {
-    typealias ObserverType = Observer<T>
-    typealias WeakObserverType = WeakValue<ObserverType>
+public class ObservableValue /*: Valuable*/ {
+    typealias WeakObserverType = WeakValue<Observer>
     var observers = [WeakObserverType]()
-    var _value: T
+    var _value: Any?
 
     var log: Logger? { get { return observerLogger } }
 
     // conformance to Valuable
-    public var value : T {
+    public var value : Any? {
         get {
             return _value
         }
@@ -28,7 +25,7 @@ public class ObservableValue<T> : Valuable {
         }
     }
     
-    public init(_ value: T) {
+    public init(_ value: Any?) {
         self._value = value
         log?.trace("\(self) init")
     }
@@ -40,22 +37,22 @@ public class ObservableValue<T> : Valuable {
     func beforeSet() {
         let v = value
         for observer in observers {
-            (observer^)?.willChange?(oldValue: v)
+            (observer.value)?.willChange?(oldValue: v)
         }
     }
     
     func afterSet() {
         let v = value
         for observer in observers {
-            (observer^)?.didChange?(newValue: v)
+            (observer.value)?.didChange?(newValue: v)
         }
     }
     
-    public func addObserver(newObserver: ObserverType) {
+    public func addObserver(newObserver: Observer) {
         assert(newObserver.observedValue == nil, "attempting to re-add observer")
         var updatedObservers = [WeakObserverType]()
         for weakObserver in observers {
-            if let observer = weakObserver^ {
+            if let observer = weakObserver.value? {
                 updatedObservers.append(weakObserver)
             }
         }
@@ -65,13 +62,13 @@ public class ObservableValue<T> : Valuable {
         newObserver.didInitialize?(initialValue: value)
     }
     
-    public func removeObserver(observer: ObserverType) {
+    public func removeObserver(observer: Observer) {
         assert(observer.observedValue != nil, "attempting to remove non-added observer")
         assert(observer.observedValue! === self, "attempting to remove observer never added to self")
         var updatedObservers = [WeakObserverType]()
         var found = false
         for weakObserver in observers {
-            if let observer = weakObserver^ {
+            if let observer = weakObserver.value? {
                 found = true
             } else {
                 updatedObservers.append(weakObserver)
@@ -87,3 +84,7 @@ extension ObservableValue : Printable {
         return identifierOfObject(self)
     }
 }
+
+//public func == (lhs: ObservableValue, rhs: Any?) {
+//    return lhs.value == rhs
+//}

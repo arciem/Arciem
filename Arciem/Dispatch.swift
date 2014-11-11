@@ -55,40 +55,40 @@ public func dispatchTimeSinceNow(offsetInSeconds: NSTimeInterval) -> dispatch_ti
 // 1
 // 2
 // 3
-public func dispatchSyncOn(#queue: DispatchQueue, f: DispatchBlock) {
+public func dispatchSyncOnQueue(queue: DispatchQueue, f: DispatchBlock) {
     dispatch_sync(queue, f)
 }
 
 // Dispatch a block synchronously on the main queue. This is useful when you're already executing a block on a background queue and you want to ensure the next operation happens on the main queue before the code of your background block proceeds.
 public func dispatchSyncOnMain(f: DispatchBlock) {
-    dispatchSyncOn(queue: mainQueue, f)
+    dispatchSyncOnQueue(mainQueue, f)
 }
 
 // Dispatch a block asynchronously on the give queue. This method returns immediately. Blocks dispatched asynchronously will be executed at some time in the future.
-public func dispatchOn(#queue: DispatchQueue, f: DispatchBlock) {
+public func dispatchOnQueue(queue: DispatchQueue, f: DispatchBlock) {
     dispatch_async(queue, f)
 }
 
 // Dispatch a block asynchronously on the main queue.
 public func dispatchOnMain(f: DispatchBlock) {
-    dispatchOn(queue: mainQueue, f)
+    dispatchOnQueue(mainQueue, f)
 }
 
 // Dispatch a block asynchronously on the background queue.
 public func dispatchOnBackground(f: DispatchBlock) {
-    dispatchOn(queue: backgroundQueue, f)
+    dispatchOnQueue(backgroundQueue, f)
 }
 
-func _dispatchOn(#queue: DispatchQueue, afterDelay delay: NSTimeInterval, c: Canceler, f: CancelableBlock) {
+func _dispatchOnQueue(queue: DispatchQueue, afterDelay delay: NSTimeInterval, c: Canceler, f: CancelableBlock) {
     dispatch_after(dispatchTimeSinceNow(delay), queue) {
         f(canceler: c)
     }
 }
 
 // After the given delay, dispatch a block asynchronously on the given queue. Returns a Canceler object that, if its <canceled> attribute is true when the dispatch time arrives, the block will not be executed.
-public func dispatchOn(#queue: DispatchQueue, afterDelay delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
+public func dispatchOnQueue(queue: DispatchQueue, afterDelay delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
     let canceler = Canceler()
-    _dispatchOn(queue: queue, afterDelay: delay, canceler) { canceler in
+    _dispatchOnQueue(queue, afterDelay: delay, canceler) { canceler in
         if !canceler.canceled {
             f()
         }
@@ -97,36 +97,36 @@ public func dispatchOn(#queue: DispatchQueue, afterDelay delay: NSTimeInterval, 
 }
 
 // After the given delay, dispatch a block asynchronously on the main queue. Returns a Canceler object that, if its <canceled> attribute is true when the dispatch time arrives, the block will not be executed.
-public func dispatchOnMain(afterDelay delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
-    return dispatchOn(queue: mainQueue, afterDelay: delay, f)
+public func dispatchOnMainAfterDelay(delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
+    return dispatchOnQueue(mainQueue, afterDelay: delay, f)
 }
 
 // After the given delay, dispatch a block asynchronously on the background queue. Returns a Canceler object that, if its <canceled> attribute is true when the dispatch time arrives, the block will not be executed.
-public func dispatchOnBackground(afterDelay delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
-    return dispatchOn(queue: backgroundQueue, afterDelay: delay, f)
+public func dispatchOnBackgroundAfterDelay(delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
+    return dispatchOnQueue(backgroundQueue, afterDelay: delay, f)
 }
 
-func _dispatchRepeatedOn(#queue: DispatchQueue, atInterval interval: NSTimeInterval, canceler: Canceler, f:CancelableBlock) {
-    _dispatchOn(queue: queue, afterDelay: interval, canceler) { canceler in
+func _dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: NSTimeInterval, canceler: Canceler, f:CancelableBlock) {
+    _dispatchOnQueue(queue, afterDelay: interval, canceler) { canceler in
         if !canceler.canceled {
             f(canceler: canceler)
         }
         if !canceler.canceled {
-            _dispatchRepeatedOn(queue: queue, atInterval: interval, canceler, f)
+            _dispatchRepeatedOnQueue(queue, atInterval: interval, canceler, f)
         }
     }
 }
 
-public func dispatchRepeatedOn(#queue: DispatchQueue, atInterval interval: NSTimeInterval, f:CancelableBlock) -> Canceler {
+public func dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: NSTimeInterval, f:CancelableBlock) -> Canceler {
     let canceler = Canceler()
-    _dispatchRepeatedOn(queue: queue, atInterval: interval, canceler, f)
+    _dispatchRepeatedOnQueue(queue, atInterval: interval, canceler, f)
     return canceler
 }
 
 public func dispatchRepeatedOnMain(atInterval interval: NSTimeInterval, f:CancelableBlock) -> Canceler {
-    return dispatchRepeatedOn(queue: mainQueue, atInterval: interval, f)
+    return dispatchRepeatedOnQueue(mainQueue, atInterval: interval, f)
 }
 
 public func dispatchRepeatedOnBackground(atInterval interval: NSTimeInterval, f:CancelableBlock) -> Canceler {
-    return dispatchRepeatedOn(queue: backgroundQueue, atInterval: interval, f)
+    return dispatchRepeatedOnQueue(backgroundQueue, atInterval: interval, f)
 }

@@ -20,8 +20,6 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-import Foundation
-
 public struct Set<T: Hashable> : Equatable {
     typealias Element = T
     private var contents: [Element: Bool]

@@ -6,9 +6,7 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
-
-public class CalculatedValue<T> : Valuable {
+public class CalculatedValue<T> /*: Valuable*/ {
     typealias ValueType = T
     var _value : ValueType? = nil
     var i : () -> ValueType

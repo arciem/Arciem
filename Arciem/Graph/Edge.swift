@@ -9,12 +9,21 @@
 public class Edge : Element {
     weak internal(set) public var tail: Node! = nil
     weak internal(set) public var head: Node! = nil
-}
-
-extension Edge : Printable {
-    public var description: String {
-        get { return "(Edge \(eid))" }
+    
+    public func transferValue() {
+        _assertHasEndNodes()
+        if let edgeName = self.name? {
+            if let tailValue = tail.value? {
+                head[edgeName] = tailValue
+            }
+        }
+    }
+    
+    private func _assertHasEndNodes() {
+        assert(tail != nil && head != nil, "Unexpected deallocation/removal of end nodes from \(self).")
     }
 }
 
-public typealias EdgeSet = Set<Edge>
+extension Edge : Printable {
+    public var description: String { get { return "(\(eid))" } }
+}

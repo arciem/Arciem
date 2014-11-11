@@ -54,10 +54,10 @@ public func identifierOfObject(obj: AnyObject) -> String {
     return s
 }
 
-public func identifierOfValue(value: Debuggable) -> String {
-    var s = "\(typeNameOf(value))"
-    if let debugName = value.debugName? {
-        s += " <\(debugName)>"
-    }
-    return s
-}
+//public func identifierOfValue(value: Nameable) -> String {
+//    var s = "\(typeNameOf(value))"
+//    if let name = value.name? {
+//        s += " <\(name)>"
+//    }
+//    return s
+//}

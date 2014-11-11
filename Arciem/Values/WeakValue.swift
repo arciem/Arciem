@@ -6,9 +6,7 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
-
-public struct WeakValue<T: AnyObject> : Valuable {
+public struct WeakValue<T: AnyObject> /*: Valuable*/ {
     typealias ValueType = T?
     weak public var value: ValueType
     

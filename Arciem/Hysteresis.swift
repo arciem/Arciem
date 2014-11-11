@@ -46,7 +46,7 @@ public class Hysteresis {
         serializer.dispatch() { [unowned self] in
             if ++self.causeCount == 1 {
                 self.effectEndCanceler?.cancel()
-                self.effectStartCanceler = dispatchOnBackground(afterDelay: self.effectStartLag) {
+                self.effectStartCanceler = dispatchOnBackgroundAfterDelay(self.effectStartLag) {
                     if !self.effectStarted {
                         self.effectStart()
                         self.effectStarted = true
@@ -61,7 +61,7 @@ public class Hysteresis {
             assert(self.causeCount > 0, "Attempt to decrement causeCount below zero.")
             if --self.causeCount == 0 {
                 self.effectStartCanceler?.cancel()
-                self.effectEndCanceler = dispatchOnBackground(afterDelay: self.effectEndLag) {
+                self.effectEndCanceler = dispatchOnBackgroundAfterDelay(self.effectEndLag) {
                     if self.effectStarted {
                         self.effectEnd()
                         self.effectStarted = false

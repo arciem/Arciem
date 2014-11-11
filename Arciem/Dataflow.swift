@@ -8,11 +8,11 @@ public protocol DataflowValue {
 
 private var dataflowLogger : Logger? = Logger(tag: "DATAFLOW", enabled: true)
 
-public class Dataflow<V> : DataflowValue, Debuggable {
+public class Dataflow<V> : DataflowValue, Nameable {
     typealias ValueType = V
     typealias OutputFunc = (ValueType) -> Void
 
-    public var debugName: String?
+    public var name: String?
     var inputs = [String : DataflowValue]()
     var _inputsSet: Int = 0
     var outputs = [OutputFunc]()
@@ -45,8 +45,8 @@ public class Dataflow<V> : DataflowValue, Debuggable {
         }
     }
     
-    public init(inputs: [(String, DataflowValue)], debugName: String? = nil) {
-        self.debugName = debugName
+    public init(inputs: [(String, DataflowValue)], name: String? = nil) {
+        self.name = name
         log?.trace("\(identifier) init with inputList:\(inputs.description)")
         for (let name, let input) in inputs {
             self.inputs[name] = input
@@ -64,14 +64,14 @@ public class Dataflow<V> : DataflowValue, Debuggable {
         }
     }
     
-    public init(value: ValueType, debugName: String? = nil) {
-        self.debugName = debugName
+    public init(value: ValueType, name: String? = nil) {
+        self.name = name
         log?.trace("\(identifier) init with value: \(value)")
         self.value = value
     }
     
-    public init(debugName: String? = nil) {
-        self.debugName = debugName
+    public init(name: String? = nil) {
+        self.name = name
         log?.trace("\(identifier) init with nothing")
     }
     
@@ -147,14 +147,14 @@ public class DFInfix<V> : Dataflow<V> {
         set { setInputNamed("rhs", value: newValue) }
     }
     
-    public init(lhs: Dataflow<V>, rhs: Dataflow<V>, debugName: String? = nil) {
-        super.init(inputs: [("lhs", lhs), ("rhs", rhs)], debugName: debugName)
+    public init(lhs: Dataflow<V>, rhs: Dataflow<V>, name: String? = nil) {
+        super.init(inputs: [("lhs", lhs), ("rhs", rhs)], name: name)
     }
 }
 
 public class DFAdd<V: ImmutableArithmeticable> : DFInfix<V> {
-    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, debugName: String? = nil) {
-        super.init(lhs: lhs, rhs: rhs, debugName: debugName)
+    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, name: String? = nil) {
+        super.init(lhs: lhs, rhs: rhs, name: name)
     }
     
     override func operate() -> (ValueType!, NSError?) {
@@ -163,8 +163,8 @@ public class DFAdd<V: ImmutableArithmeticable> : DFInfix<V> {
 }
 
 public class DFSubtract<V: ImmutableArithmeticable> : DFInfix<V> {
-    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, debugName: String? = nil) {
-        super.init(lhs: lhs, rhs: rhs, debugName: debugName)
+    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, name: String? = nil) {
+        super.init(lhs: lhs, rhs: rhs, name: name)
     }
     
     override func operate() -> (ValueType!, NSError?) {
@@ -173,8 +173,8 @@ public class DFSubtract<V: ImmutableArithmeticable> : DFInfix<V> {
 }
 
 public class DFMultiply<V: ImmutableArithmeticable> : DFInfix<V> {
-    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, debugName: String? = nil) {
-        super.init(lhs: lhs, rhs: rhs, debugName: debugName)
+    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, name: String? = nil) {
+        super.init(lhs: lhs, rhs: rhs, name: name)
     }
     
     override func operate() -> (ValueType!, NSError?) {
@@ -183,8 +183,8 @@ public class DFMultiply<V: ImmutableArithmeticable> : DFInfix<V> {
 }
 
 public class DFDivide<V: ImmutableArithmeticable> : DFInfix<V> {
-    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, debugName: String? = nil) {
-        super.init(lhs: lhs, rhs: rhs, debugName: debugName)
+    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, name: String? = nil) {
+        super.init(lhs: lhs, rhs: rhs, name: name)
     }
     
     override func operate() -> (ValueType!, NSError?) {
@@ -193,8 +193,8 @@ public class DFDivide<V: ImmutableArithmeticable> : DFInfix<V> {
 }
 
 public class DFRemainder<V: ImmutableArithmeticable> : DFInfix<V> {
-    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, debugName: String? = nil) {
-        super.init(lhs: lhs, rhs: rhs, debugName: debugName)
+    public override init(lhs: Dataflow<V>, rhs: Dataflow<V>, name: String? = nil) {
+        super.init(lhs: lhs, rhs: rhs, name: name)
     }
     
     override func operate() -> (ValueType!, NSError?) {
@@ -203,8 +203,8 @@ public class DFRemainder<V: ImmutableArithmeticable> : DFInfix<V> {
 }
 
 public class DFConcatenate<V> : DFInfix<String> {
-    public override init(lhs: Dataflow<String>, rhs: Dataflow<String>, debugName: String? = nil) {
-        super.init(lhs: lhs, rhs: rhs, debugName: debugName)
+    public override init(lhs: Dataflow<String>, rhs: Dataflow<String>, name: String? = nil) {
+        super.init(lhs: lhs, rhs: rhs, name: name)
     }
     
     override func operate() -> (ValueType!, NSError?) {
