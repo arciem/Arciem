@@ -42,6 +42,11 @@ public class Element {
         set { self["value"] = newValue! }
     }
     
+    public func setValue(value: Any?) -> Self {
+        self.value = value
+        return self
+    }
+    
     public var hasValue : Bool {
         get { return value != nil }
     }
@@ -49,6 +54,11 @@ public class Element {
     public var name : String? {
         get { return self["name"] as? String }
         set { self["name"] = newValue! }
+    }
+    
+    public func setName(name: String?) -> Self {
+        self.name = name
+        return self
     }
     
     public var hasName : Bool {
@@ -102,15 +112,6 @@ extension Element {
             attrs["label"] = dotLabel
             return attrs
         }
-    }
-    
-    public func stringFromDotAttributes(attrs: [String : String]) -> String {
-        var strings = [String]()
-        for (key, value) in attrs {
-            strings.append("\(key)=\"\(value)\"")
-        }
-        let s = join(",", strings)
-        return "[\(s)]"
     }
 }
 

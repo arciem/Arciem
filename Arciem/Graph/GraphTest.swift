@@ -13,43 +13,43 @@ public func graphTest() {
 func graphTest1() {
     let graph = Graph()
     
-    var root = •graph; root ¶= "root"
+    var root = graph.newNode().setName("root")
     graph.root = root
     
-    var a = •graph; a ¶= "a"
-    var b = •graph; b ¶= "b"
-    var c = •graph; c ¶= "c"
-    var d = •graph; d ¶= "d"
-    var e = •graph; e ¶= "e"
-    var f = •graph; f ¶= "f"
-    var g = •graph; g ¶= "g"
-    var h = •graph; h ¶= "h"
-    var i = •graph; i ¶= "i"
-    var j = •graph; j ¶= "j"
-    var k = •graph; k ¶= "k"
-    var l = •graph; l ¶= "l"
-    var m = •graph; m ¶= "m"
-    var n = •graph; n ¶= "n"
+    var a = graph.newNode().setName("a")
+    var b = graph.newNode().setName("b")
+    var c = graph.newNode().setName("c")
+    var d = graph.newNode().setName("d")
+    var e = graph.newNode().setName("e")
+    var f = graph.newNode().setName("f")
+    var g = graph.newNode().setName("g")
+    var h = graph.newNode().setName("h")
+    var i = graph.newNode().setName("i")
+    var j = graph.newNode().setName("j")
+    var k = graph.newNode().setName("k")
+    var l = graph.newNode().setName("l")
+    var m = graph.newNode().setName("m")
+    var n = graph.newNode().setName("n")
     
-    var ra = root → a; ra ¶= "ra"
-    var rb = root → b; rb ¶= "rb"
-    var rc = root → c; rc ¶= "rc"
+    var ra = root.newEdgeTo(a).setName("ra")
+    var rb = root.newEdgeTo(b).setName("rb")
+    var rc = root.newEdgeTo(c).setName("rc")
     
-    var bd = b → d; bd ¶= "bd"
-    var be = b → e; be ¶= "be"
+    var bd = b.newEdgeTo(d).setName("bd")
+    var be = b.newEdgeTo(e).setName("be")
     
-    var cf = c → f; cf ¶= "cf"
-    var cg = c → g; cg ¶= "cg"
+    var cf = c.newEdgeTo(f).setName("cf")
+    var cg = c.newEdgeTo(g).setName("cg")
     
-    var dh = d → h; dh ¶= "dh"
-    var di = d → i; di ¶= "di"
-    var dj = d → j; dj ¶= "dj"
+    var dh = d.newEdgeTo(h).setName("dh")
+    var di = d.newEdgeTo(i).setName("di")
+    var dj = d.newEdgeTo(j).setName("dj")
     
-    var fk = f → k; fk ¶= "fk"
-    var fl = f → l; fl ¶= "fl"
+    var fk = f.newEdgeTo(k).setName("fk")
+    var fl = f.newEdgeTo(l).setName("fl")
     
-    var gm = g → m; gm ¶= "gm"
-    var gn = b → n; gn ¶= "gn"
+    var gm = g.newEdgeTo(m).setName("gm")
+    var gn = b.newEdgeTo(n).setName("gn")
     
     graph.writeDotDescriptionToFilename("graph")
 }
@@ -57,11 +57,11 @@ func graphTest1() {
 func graphTest2() {
     let graph = Graph()
     
-    var a = •graph; a ¶= "a"; a ^= 3
-    var b = •graph; b ¶= "b"; b ^= 4
-    var c = •graph; c ¶= "c"; c ^= 25
-    var d = •graph; d ¶= "d"; d ^= 6
-    var e = •graph; e ¶= "e"; e ^= 7
+    var a = graph.newNode().setName("a").setValue(3)
+    var b = graph.newNode().setName("b").setValue(4)
+    var c = graph.newNode().setName("c").setValue(25)
+    var d = graph.newNode().setName("d").setValue(6)
+    var e = graph.newNode().setName("e").setValue(7)
     
     let x = (a + b * c + d) % e
 
@@ -71,8 +71,8 @@ func graphTest2() {
 func graphTest3() {
     let graph = Graph()
 
-    var a = •graph; a ^= 3; a ¶= "a"
-    var b = •graph; b ^= 5; b ¶= "b"
+    var a = graph.newNode().setValue(3).setName("a")
+    var b = graph.newNode().setValue(5).setName("b")
     var x = a * b
     
     graph.writeDotDescriptionToFilename("graph")
@@ -83,11 +83,11 @@ var g4: Graph!
 func graphTest4() {
     g4 = Graph()
 
-    var a = •g4; a ¶= "a"
-    var b = •g4; b ¶= "b"
-    var c = •g4; c ¶= "c"
-    var d = •g4; d ¶= "d"
-    var e = •g4; e ¶= "e"
+    var a = g4.newNode().setName("a")
+    var b = g4.newNode().setName("b")
+    var c = g4.newNode().setName("c")
+    var d = g4.newNode().setName("d")
+    var e = g4.newNode().setName("e")
     
     let x = (a - b * c + d) % e
 
@@ -97,7 +97,7 @@ func graphTest4() {
     let values = [3, 4, 5, 6, 7]
     var t: NSTimeInterval = 5
     for (var node, value) in shuffled(Array(Zip2(nodes, values))) {
-        node §= delayedValue(value, t)
+        node.setOperation(delayedValue(value, t))
         t += Random.randomDouble(2.0..<5.0)
     }
 }
@@ -107,7 +107,7 @@ func delayedValue(value: Int, delay: NSTimeInterval) -> ((Node) -> Void) {
         node.canceler?.cancel()
         node.canceler = dispatchOnBackgroundAfterDelay(delay) {
             dispatchOnMain() {
-                node ^= value
+                node.setValue(value)
                 node.owner!.writeDotDescriptionToFilename("graph")
             }
         }

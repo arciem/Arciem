@@ -6,11 +6,18 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-public class Graph : Element {
+public class Graph {
     public private(set) var nodes = Set<Node>()
     public private(set) var edges = Set<Edge>()
-    public var root: Node?
-    var error: NSError?
+    public var root: Node? = nil
+    public var name: String? = nil
+    var error: NSError? = nil
+    
+    public func newNode() -> Node {
+        let node = Node()
+        addNode(node)
+        return node
+    }
     
     public func addNode(node: Node) {
         _setMine(node)
@@ -162,6 +169,15 @@ extension Graph {
         }
     }
     
+    public class func stringFromDotAttributes(attrs: [String : String]) -> String {
+        var strings = [String]()
+        for (key, value) in attrs {
+            strings.append("\(key)=\"\(value)\"")
+        }
+        let s = join(",", strings)
+        return "[\(s)]"
+    }
+    
     public var dotDescription: String {
         get {
             var lines = [String]()
@@ -171,18 +187,18 @@ extension Graph {
                 var s = "\t\(node.eid)"
                 var attrs = node.dotAttributes
                 if node.hasValue {
-                    attrs["color"] = "red"
+                    attrs["color"] = "green3"
                 }
-                var attrsStr = stringFromDotAttributes(attrs)
+                var attrsStr = self.dynamicType.stringFromDotAttributes(attrs)
                 s += " \(attrsStr);"
                 lines.append(s)
                 for edge in node.outEdges {
                     var s = "\t\(edge.tail.eid) -> \(edge.head.eid)"
                     var attrs = edge.dotAttributes
                     if edge.tail.hasValue {
-                        attrs["color"] = "red"
+                        attrs["color"] = "green3"
                     }
-                    var attrsStr = stringFromDotAttributes(attrs)
+                    var attrsStr = self.dynamicType.stringFromDotAttributes(attrs)
                     s += " \(attrsStr);"
                     lines.append(s)
                 }
@@ -213,8 +229,5 @@ public prefix func •(rhs: Graph) -> Node {
 
 // "successor"
 public func →(lhs: Node, rhs: Node) -> Edge {
-    let graph = lhs.owner!
-    var edge = Edge()
-    graph.addEdge(edge, tail: lhs, head: rhs)
-    return edge
+    return lhs.newEdgeTo(rhs)
 }

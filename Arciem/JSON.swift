@@ -53,7 +53,7 @@ public class JSON {
         let (error, bytes) = bytesWithObject(obj, prettyPrinted: prettyPrinted)
         var string: String?
         if error == nil {
-            string = String.fromUTF8Bytes(bytes!)
+            string = stringFromUTF8Bytes(bytes!)
         }
         return (error, string)
     }

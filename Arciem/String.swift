@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
-
 public extension String {
     // String already provides func toInt() -> Int?
     
@@ -45,12 +43,25 @@ public extension String {
             return $0
         }
     }
-    
-    public static func fromUTF8Bytes(bytes: [Byte]) -> String? {
-        return NSString(bytes: bytes, length: bytes.count, encoding: NSUTF8StringEncoding)
+}
+
+public func stringFromUTF8Bytes(bytes: [Byte]) -> String? {
+    return NSString(bytes: bytes, length: bytes.count, encoding: NSUTF8StringEncoding)
+}
+
+public func stringFromUTF8Data(data: NSData) -> String? {
+    return NSString(data: data, encoding: NSUTF8StringEncoding)
+}
+
+public func hexStringFromByte(byte: Byte) -> String {
+    return NSString(format: "0x%02x", byte)
+}
+
+public func hexStringFromBytes(bytes: [Byte]) -> String {
+    var strings = [String]()
+    for byte in bytes {
+        strings.append(hexStringFromByte(byte))
     }
-    
-    public static func fromUTF8Data(data: NSData) -> String? {
-        return NSString(data: data, encoding: NSUTF8StringEncoding)
-    }
+    let s = join(", ", strings)
+    return "[\(s)]"
 }

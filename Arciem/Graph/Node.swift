@@ -32,6 +32,19 @@ public class Node : Element {
     public func performOperation() {
         operation?(self)
     }
+    
+    public func newEdgeTo(head: Node) -> Edge {
+        let graph = self.owner!
+        var edge = Edge()
+        graph.addEdge(edge, tail: self, head: head)
+        return edge;
+    }
+    
+    public func setOperation(op: OpFuncType) -> Self {
+        self.operation = op
+        performOperation()
+        return self
+    }
 }
 
 extension Node : Printable {
@@ -40,8 +53,7 @@ extension Node : Printable {
 
 // "operation assign"
 public func §= (inout lhs: Node, rhs:Node.OpFuncType) {
-    lhs.operation = rhs
-    lhs.performOperation()
+    lhs.setOperation(rhs)
 }
 
 public func infix<T: ImmutableArithmeticable>(symbol: String, op:((l: T, r: T) -> T))(lhs: Node, rhs: Node) -> Node {
