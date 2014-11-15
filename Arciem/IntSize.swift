@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Arciem
-
 public struct IntSize {
     public let width: Int
     public let height: Int

@@ -2,107 +2,146 @@
 //  Color.swift
 //  Arciem
 //
-//  Created by Robert McNally on 6/8/14.
+//  Created by Robert McNally on 11/14/14.
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import UIKit
-
-// The regex below should match all these strings
-/*
-1 0 0
-1.0 0.0 0.0 1.0
-r: .1 g: 0.512 b: 0.9 a: 1
-red: .1 green: 0.512 blue: 0.9 alpha: 1
-h: .1 s: 0.512 b: 0.9 alpha: 1
-hue: .1 saturation: 0.512 brightness: 0.9 alpha: 1
-*/
-
-// ^\s*(?:(r|h)(?:ed|ue)?:\s*)?(\d*(?:\.\d*)?)\s+(?:(?:g|s)(?:reen|aturation)?:\s*)?(\d*(?:\.\d*)?)\s+(?:(?:b)(?:lue|rightness)?:\s*)?(\d*(?:\.\d*)?)(?:\s+(?:a(?:lpha)?:\s*)?(\d*(?:\.\d*)?))?\s*$
-let _colorParsingRegex: NSRegularExpression! = ~/"^\\s*(?:(r|h)(?:ed|ue)?:\\s*)?(\\d*(?:\\.\\d*)?)\\s+(?:(?:g|s)(?:reen|aturation)?:\\s*)?(\\d*(?:\\.\\d*)?)\\s+(?:(?:b)(?:lue|rightness)?:\\s*)?(\\d*(?:\\.\\d*)?)(?:\\s+(?:a(?:lpha)?:\\s*)?(\\d*(?:\\.\\d*)?))?\\s*$"
-
-public extension UIColor {
-    public func colorByDarkening(#fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByDarkening(color: self.CGColor, fraction: fraction))
-    }
-
-    public func colorByLightening(#fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByLightening(color: self.CGColor, fraction: fraction))
+public struct Color {
+    let red: Float
+    let green: Float
+    let blue: Float
+    let alpha: Float
+    
+    public init(red: Float, green: Float, blue: Float, alpha: Float = 1.0) {
+        self.red = red
+        self.green = green
+        self.blue = blue
+        self.alpha = alpha
     }
     
-    public func colorByDodging(#fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByDodging(color: self.CGColor, fraction: fraction))
+    public init(redByte: Byte, greenByte: Byte, blueByte: Byte, alphaByte: Byte = 255) {
+        self.init(red: Float(redByte) / 255.0,
+            green: Float(greenByte) / 255.0,
+            blue: Float(blueByte) / 255.0,
+            alpha: Float(alphaByte) / 255.0
+        )
     }
     
-    public func colorByBurning(#fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByBurning(color: self.CGColor, fraction: fraction))
+    public init(bytes: [Byte]) {
+        let redByte = bytes[0]
+        let greenByte = bytes[1]
+        let blueByte = bytes[2]
+        var alphaByte: Byte = 255
+        if bytes.count >= 4 {
+            alphaByte = bytes[3]
+        }
+        self.init(redByte: redByte, greenByte: greenByte, blueByte: blueByte, alphaByte: alphaByte)
     }
     
-    public func colorByInterpolating(color color2: UIColor, fraction: CGFloat) -> UIColor {
-        let cgColor = CGColorCreateByInterpolating(color1: self.CGColor, color2: color2.CGColor, fraction: fraction)
-        return UIColor(CGColor: cgColor)
+    public init(color: Color, alpha: Float) {
+        self.red = color.red
+        self.green = color.green
+        self.blue = color.blue
+        self.alpha = alpha
     }
     
-    public func randomColor() -> UIColor {
-        return UIColor(CGColor: CGColorCreateRandom())
-    }
-    
-    public func convertToRGB() -> UIColor {
-        return UIColor(CGColor: CGColorConvertToRGB(self.CGColor))
-    }
-}
-
-public func colorFromString(s: NSString) -> UIColor {
-    var components = [CGFloat]()
-    var type = "r"
-    
-    var textCheckingResult: NSTextCheckingResult? = _colorParsingRegex.firstMatchInString(s, options: nil, range: NSRange(0..<s.length))
-    if let tcr = textCheckingResult {
-        for var i = 1; i < tcr.numberOfRanges; ++i {
-            let range = tcr.rangeAtIndex(i)
-            if range.location != Int(Foundation.NSNotFound) {
-                let matchText: NSString = s.substringWithRange(range)
-                if matchText.length > 0 {
-                    if i == 1 {
-                        type = matchText
-                    } else if i > 1 {
-                        components.append(matchText.cgFloatValue())
-                    }
-                }
+    public init(var hue h: Float, var saturation s: Float, var brightness v: Float, alpha a: Float = 1.0) {
+        v = Math.clamp(v, 0.0...1.0)
+        s = Math.clamp(s, 0.0...1.0)
+        red = v
+        green = v
+        blue = v
+        alpha = a
+        if(s > 0.0) {
+            h %= 1.0
+            if h < 0.0 { h += 1.0 }
+            h *= 6.0
+            let i = Int(floorf(h))
+            let f = h - Float(i)
+            let p = v * (1.0 - s)
+            let q = v * (1.0 - (s * f))
+            let t = v * (1.0 - (s * (1.0 - f)))
+            switch(i) {
+            case 0: red = v; green = t; blue = p
+            case 1: red = q; green = v; blue = p
+            case 2: red = p; green = v; blue = t
+            case 3: red = p; green = q; blue = v
+            case 4: red = t; green = p; blue = v
+            case 5: red = v; green = p; blue = q
+            default: assert(false, "unknown hue sector")
             }
         }
     }
     
-    if components.count < 4 {
-        components.append(1)
+    public static func randomColor(random: Random = Random.sharedInstance, alpha: Float = 1.0) -> Color {
+        return Color(
+            red: random.randomFloat(),
+            green: random.randomFloat(),
+            blue: random.randomFloat(),
+            alpha: alpha
+        )
     }
     
-    var color: UIColor!
-    switch type {
-    case "r":
-        color = UIColor(red: components[0], green: components[1], blue: components[2], alpha: components[3])
-        break
-    default:
-        color = UIColor(hue: components[0], saturation: components[1], brightness: components[2], alpha: components[3])
-        break
+    public func multipliedBy(rhs: Float) -> Color {
+        return Color(red: red * rhs, green: green * rhs, blue: blue * rhs, alpha: alpha * rhs)
     }
     
-    return color
+    public func addedTo(rhs: Color) -> Color {
+        return Color(red: red + rhs.red, green: green + rhs.green, blue: blue + rhs.blue, alpha: alpha + rhs.alpha)
+    }
+    
+    public func lightened(frac: Float) -> Color {
+        return Color(
+            red: Math.denormalize(frac, red, Float(1)),
+            green: Math.denormalize(frac, green, Float(1)),
+            blue: Math.denormalize(frac, blue, Float(1)),
+            alpha: alpha)
+    }
+    
+    public func darkened(frac: Float) -> Color {
+        return Color(
+            red: Math.denormalize(frac, red, Float(0)),
+            green: Math.denormalize(frac, green, Float(0)),
+            blue: Math.denormalize(frac, blue, Float(0)),
+            alpha: alpha)
+    }
+    
+    public static let Black = Color(red: 0, green: 0, blue: 0)
+    public static let DarkGray = Color(red: 1 / 3.0, green: 1 / 3.0, blue: 1 / 3.0)
+    public static let LightGray = Color(red: 2 / 3.0, green: 2 / 3.0, blue: 2 / 3.0)
+    public static let White = Color(red: 1, green: 1, blue: 1)
+    public static let Gray = Color(red: 0.5, green: 0.5, blue: 0.5)
+    public static let Red = Color(red: 1, green: 0, blue: 0)
+    public static let Green = Color(red: 0, green: 1, blue: 0)
+    public static let DarkGreen = Color(red: 0, green: 0.5, blue: 0)
+    public static let Blue = Color(red: 0, green: 0, blue: 1)
+    public static let Cyan = Color(red: 0, green: 1, blue: 1)
+    public static let Yellow = Color(red: 1, green: 1, blue: 0)
+    public static let Magenta = Color(red: 1, green: 0, blue: 1)
+    public static let Orange = Color(red: 1, green: 0.5, blue: 0)
+    public static let Purple = Color(red: 0.5, green: 0, blue: 0.5)
+    public static let Brown = Color(red: 0.6, green: 0.4, blue: 0.2)
+    public static let Clear = Color(red: 0, green: 0, blue: 0, alpha: 0)
+    
+    public static let Chartreuse = blend(.Yellow, .Green, frac: 0.5)
+    public static let Gold = Color(redByte: 251, greenByte: 212, blueByte: 55)
+    public static let BlueGreen = Color(redByte: 0, greenByte: 169, blueByte: 149)
+    public static let MediumBlue = Color(redByte: 0, greenByte: 110, blueByte: 185)
+    public static let DeepBlue = Color(redByte: 60, greenByte: 55, blueByte: 149)
 }
 
-/*
-public func testColorFromString() {
-    let s = [
-        "1 0 0",
-        "1.0 0.0 0.0 1.0",
-        "r: .1 g: 0.512 b: 0.9 a: 1",
-        "red: .1 green: 0.512 blue: 0.9 alpha: 1",
-        "h: .1 s: 0.512 b: 0.9 alpha: 1",
-        "hue: .1 saturation: 0.512 brightness: 0.9 alpha: 1"
-    ]
-    for ss in s {
-        let color = colorFromString(ss)
-        println("\(ss) -> \(color)")
+extension Color : Printable {
+    public var description: String {
+        get {
+            return "Color(red:\(red) green:\(green) blue:\(blue) alpha:\(alpha))"
+        }
     }
 }
-*/
+
+public func *(lhs: Color, rhs: Float) -> Color {
+    return lhs.multipliedBy(rhs)
+}
+
+public func +(lhs: Color, rhs: Color) -> Color {
+    return lhs.addedTo(rhs)
+}

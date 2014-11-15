@@ -10,6 +10,10 @@ public func randomIndex<T>(array: Array<T>, random: Random = Random.sharedInstan
     return random.randomInt(0..<array.count)
 }
 
+public func randomElement<T>(array: Array<T>, random: Random = Random.sharedInstance) -> T {
+    return array[randomIndex(array)]
+}
+
 public func shuffled<T>(array: Array<T>, random: Random = Random.sharedInstance) -> Array<T> {
     var result = array
     for var a = 0; a < result.count; ++a {

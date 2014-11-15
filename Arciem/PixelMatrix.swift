@@ -1,6 +1,5 @@
 //
-//  Canvas.swift
-//  Lores
+//  PixelMatrix.swift
 //
 //  Created by Robert McNally on 7/22/14.
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
@@ -9,7 +8,7 @@
 import UIKit
 import Accelerate
 
-public class Canvas {
+public class PixelMatrix {
     public let size: IntSize
     public let minX: Int = 0
     public let minY: Int = 0
@@ -138,7 +137,7 @@ public class Canvas {
         return planarFloatsPerRow * point.y + point.x
     }
     
-    public func setPoint(point: IntPoint, toColor color: RGBAColor) {
+    public func setPoint(point: IntPoint, toColor color: Color) {
         checkPoint(point)
         
         invalidateImage()
@@ -150,14 +149,14 @@ public class Canvas {
         blueFData[offset] = color.blue
     }
     
-    public func colorAtPoint(point: IntPoint) -> RGBAColor {
+    public func colorAtPoint(point: IntPoint) -> Color {
         checkPoint(point)
         
         let offset = offsetForPoint(point)
-        return RGBAColor(red: redFData[offset], green: greenFData[offset], blue: blueFData[offset], alpha: alphaFData[offset])
+        return Color(red: redFData[offset], green: greenFData[offset], blue: blueFData[offset], alpha: alphaFData[offset])
     }
     
-    public func clearToColor(color: RGBAColor) {
+    public func clearToColor(color: Color) {
         invalidateImage()
         
         vImageOverwriteChannelsWithScalar_PlanarF(color.red, &redF, UInt32(kvImageNoFlags))
