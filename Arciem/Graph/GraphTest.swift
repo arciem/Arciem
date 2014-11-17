@@ -13,43 +13,43 @@ public func graphTest() {
 func graphTest1() {
     let graph = Graph()
     
-    var root = graph.newNode().setName("root")
+    var root = OpNode<Int>().addToGraph(graph).setName("root")
     graph.root = root
     
-    var a = graph.newNode().setName("a")
-    var b = graph.newNode().setName("b")
-    var c = graph.newNode().setName("c")
-    var d = graph.newNode().setName("d")
-    var e = graph.newNode().setName("e")
-    var f = graph.newNode().setName("f")
-    var g = graph.newNode().setName("g")
-    var h = graph.newNode().setName("h")
-    var i = graph.newNode().setName("i")
-    var j = graph.newNode().setName("j")
-    var k = graph.newNode().setName("k")
-    var l = graph.newNode().setName("l")
-    var m = graph.newNode().setName("m")
-    var n = graph.newNode().setName("n")
+    var a = Node().addToGraph(graph).setName("a")
+    var b = Node().addToGraph(graph).setName("b")
+    var c = Node().addToGraph(graph).setName("c")
+    var d = Node().addToGraph(graph).setName("d")
+    var e = Node().addToGraph(graph).setName("e")
+    var f = Node().addToGraph(graph).setName("f")
+    var g = Node().addToGraph(graph).setName("g")
+    var h = Node().addToGraph(graph).setName("h")
+    var i = Node().addToGraph(graph).setName("i")
+    var j = Node().addToGraph(graph).setName("j")
+    var k = Node().addToGraph(graph).setName("k")
+    var l = Node().addToGraph(graph).setName("l")
+    var m = Node().addToGraph(graph).setName("m")
+    var n = Node().addToGraph(graph).setName("n")
     
-    var ra = root.newEdgeTo(a).setName("ra")
-    var rb = root.newEdgeTo(b).setName("rb")
-    var rc = root.newEdgeTo(c).setName("rc")
+    var ra = Edge().addToGraph(graph, tail: root, head: a).setName("ra")
+    var rb = Edge().addToGraph(graph, tail: root, head: b).setName("rb")
+    var rc = Edge().addToGraph(graph, tail: root, head: c).setName("rc")
     
-    var bd = b.newEdgeTo(d).setName("bd")
-    var be = b.newEdgeTo(e).setName("be")
+    var bd = Edge().addToGraph(graph, tail: b, head: d).setName("bd")
+    var be = Edge().addToGraph(graph, tail: b, head: e).setName("be")
     
-    var cf = c.newEdgeTo(f).setName("cf")
-    var cg = c.newEdgeTo(g).setName("cg")
+    var cf = Edge().addToGraph(graph, tail: c, head: f).setName("cf")
+    var cg = Edge().addToGraph(graph, tail: c, head: g).setName("cg")
     
-    var dh = d.newEdgeTo(h).setName("dh")
-    var di = d.newEdgeTo(i).setName("di")
-    var dj = d.newEdgeTo(j).setName("dj")
+    var dh = Edge().addToGraph(graph, tail: d, head: h).setName("dh")
+    var di = Edge().addToGraph(graph, tail: d, head: i).setName("di")
+    var dj = Edge().addToGraph(graph, tail: d, head: j).setName("dj")
     
-    var fk = f.newEdgeTo(k).setName("fk")
-    var fl = f.newEdgeTo(l).setName("fl")
+    var fk = Edge().addToGraph(graph, tail: f, head: k).setName("fk")
+    var fl = Edge().addToGraph(graph, tail: f, head: l).setName("fl")
     
-    var gm = g.newEdgeTo(m).setName("gm")
-    var gn = b.newEdgeTo(n).setName("gn")
+    var gm = Edge().addToGraph(graph, tail: g, head: m).setName("gm")
+    var gn = Edge().addToGraph(graph, tail: g, head: n).setName("gn")
     
     graph.writeDotDescriptionToFilename("graph")
 }
@@ -57,11 +57,11 @@ func graphTest1() {
 func graphTest2() {
     let graph = Graph()
     
-    var a = graph.newNode().setName("a").setValue(3)
-    var b = graph.newNode().setName("b").setValue(4)
-    var c = graph.newNode().setName("c").setValue(25)
-    var d = graph.newNode().setName("d").setValue(6)
-    var e = graph.newNode().setName("e").setValue(7)
+    var a = OpNode<Int>().addToGraph(graph).setName("a").setValue(3)
+    var b = OpNode<Int>().addToGraph(graph).setName("b").setValue(4)
+    var c = OpNode<Int>().addToGraph(graph).setName("c").setValue(25)
+    var d = OpNode<Int>().addToGraph(graph).setName("d").setValue(6)
+    var e = OpNode<Int>().addToGraph(graph).setName("e").setValue(7)
     
     let x = (a + b * c + d) % e
 
@@ -71,8 +71,8 @@ func graphTest2() {
 func graphTest3() {
     let graph = Graph()
 
-    var a = graph.newNode().setValue(3).setName("a")
-    var b = graph.newNode().setValue(5).setName("b")
+    var a = OpNode<Int>().addToGraph(graph).setValue(3).setName("a")
+    var b = OpNode<Int>().addToGraph(graph).setValue(5).setName("b")
     var x = a * b
     
     graph.writeDotDescriptionToFilename("graph")
@@ -83,11 +83,11 @@ var g4: Graph!
 func graphTest4() {
     g4 = Graph()
 
-    var a = g4.newNode().setName("a")
-    var b = g4.newNode().setName("b")
-    var c = g4.newNode().setName("c")
-    var d = g4.newNode().setName("d")
-    var e = g4.newNode().setName("e")
+    var a = OpNode<Int>().addToGraph(g4).setName("a")
+    var b = OpNode<Int>().addToGraph(g4).setName("b")
+    var c = OpNode<Int>().addToGraph(g4).setName("c")
+    var d = OpNode<Int>().addToGraph(g4).setName("d")
+    var e = OpNode<Int>().addToGraph(g4).setName("e")
     
     let x = (a - b * c + d) % e
 
@@ -102,8 +102,8 @@ func graphTest4() {
     }
 }
 
-func delayedValue(value: Int, delay: NSTimeInterval) -> ((Node) -> Void) {
-    return { (var node: Node) -> Void in
+func delayedValue<V>(value: V, delay: NSTimeInterval) -> ((OpNode<V>) -> Void) {
+    return { (var node: OpNode<V>) -> Void in
         node.canceler?.cancel()
         node.canceler = dispatchOnBackgroundAfterDelay(delay) {
             dispatchOnMain() {

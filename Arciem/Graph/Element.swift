@@ -36,20 +36,6 @@ public class Element {
     func _assertSameOwner(e: Element) {
         assert(self.owner != nil && e.owner != nil && self.owner === e.owner, "\(self) and \(e) must have the same owner.")
     }
-    
-    public var value : Any? {
-        get { return self["value"] }
-        set { self["value"] = newValue! }
-    }
-    
-    public func setValue(value: Any?) -> Self {
-        self.value = value
-        return self
-    }
-    
-    public var hasValue : Bool {
-        get { return value != nil }
-    }
 
     public var name : String? {
         get { return self["name"] as? String }
@@ -63,6 +49,28 @@ public class Element {
     
     public var hasName : Bool {
         get { return name != nil }
+    }
+    
+    public var dotAttributes : [String : String] {
+        get {
+            var attrs = [String : String]()
+            let labels = dotLabels
+            let labelString = join("\\n", labels)
+            if labelString != "" {
+                attrs["label"] = labelString
+            }
+            return attrs
+        }
+    }
+
+    public var dotLabels : [String] {
+        get {
+            var labels = [String]()
+            if let name = self.name? {
+                labels.append(name)
+            }
+            return labels
+        }
     }
 }
 
@@ -78,59 +86,12 @@ extension Element : Hashable {
     }
 }
 
-extension Element {
-    public var dotLabel : String? {
-        get {
-            var label: String?
-            var labelFields = [(String, Any)]()
-//            labelFields.append(("id", eid))
-            if let name = self.name? {
-                labelFields.append(("name", name))
-            }
-            if let value = self.value? {
-                labelFields.append(("value", value))
-            }
-            let labelFieldStrings: [String] = map(labelFields) { (key:String, value:Any) in
-                var s = ""
-                if key != "name" {
-                    s += "\(key):"
-                }
-                s += "\(value)"
-                return s
-            }
-            let f = join("\\n", labelFieldStrings)
-            if f != "" {
-                label = f
-            }
-            return label
-        }
-    }
-    
-    public var dotAttributes : [String : String] {
-        get {
-            var attrs = [String : String]()
-            attrs["label"] = dotLabel
-            return attrs
-        }
-    }
-}
-
 // "name assign"
-public func ¶=<E: Element>(inout lhs: E, rhs: String) {
+public func ¶=<T: Element>(inout lhs: T, rhs: String) {
     lhs.name = rhs
 }
 
 // "name extract"
-public postfix func ¶(lhs: Element) -> String? {
+public postfix func ¶<T: Element>(lhs: T) -> String? {
     return lhs.name
-}
-
-// "value assign"
-public func ^=<E: Element, T>(inout lhs: E, rhs: T) {
-    lhs.value = rhs
-}
-
-// "value extract"
-public postfix func ^(lhs: Element) -> Any? {
-    return lhs.value
 }

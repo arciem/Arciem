@@ -7,21 +7,16 @@
 //
 
 public class Graph {
-    public private(set) var nodes = Set<Node>()
-    public private(set) var edges = Set<Edge>()
+    public var nodes = Set<Node>()
+    public var edges = Set<Edge>()
     public var root: Node? = nil
     public var name: String? = nil
     var error: NSError? = nil
     
-    public func newNode() -> Node {
-        let node = Node()
-        addNode(node)
-        return node
-    }
-    
-    public func addNode(node: Node) {
+    public func addNode<N: Node>(node: N) -> N {
         _setMine(node)
         _addNode(node)
+        return node
     }
     
     public func removeNode(node: Node) {
@@ -186,18 +181,12 @@ extension Graph {
             for node in nodes {
                 var s = "\t\(node.eid)"
                 var attrs = node.dotAttributes
-                if node.hasValue {
-                    attrs["color"] = "green3"
-                }
                 var attrsStr = self.dynamicType.stringFromDotAttributes(attrs)
                 s += " \(attrsStr);"
                 lines.append(s)
                 for edge in node.outEdges {
                     var s = "\t\(edge.tail.eid) -> \(edge.head.eid)"
                     var attrs = edge.dotAttributes
-                    if edge.tail.hasValue {
-                        attrs["color"] = "green3"
-                    }
                     var attrsStr = self.dynamicType.stringFromDotAttributes(attrs)
                     s += " \(attrsStr);"
                     lines.append(s)
@@ -221,13 +210,13 @@ extension Graph {
 }
 
 // "new"
-public prefix func •(rhs: Graph) -> Node {
-    let node = Node()
+public prefix func •<V>(rhs: Graph) -> OpNode<V> {
+    let node = OpNode<V>()
     rhs.addNode(node)
     return node
 }
 
 // "successor"
-public func →(lhs: Node, rhs: Node) -> Edge {
-    return lhs.newEdgeTo(rhs)
+public func →<V1,V2>(lhs: OpNode<V1>, rhs: OpNode<V2>) -> OpEdge<V1> {
+    return lhs.addEdgeTo(rhs)
 }

@@ -12,11 +12,10 @@ public enum Mark {
     case Black
 }
 
-public class Markers<K: Hashable> {
-    typealias KeyType = K
-    var dict = [KeyType : Mark]()
+public class Markers {
+    var dict = [EID : Mark]()
     
-    public subscript(key: KeyType) -> Mark {
+    public subscript(key: EID) -> Mark {
         get { return dict[key] ?? .White }
         set { dict[key] = newValue }
     }
@@ -26,7 +25,7 @@ public typealias NodeVisitorBlock = (Node) -> Void
 public typealias EdgeVisitorBlock = (Edge) -> Void
 
 public class DepthFirstSearch {
-    var markers = Markers<Node>()
+    var markers = Markers()
     let graph: Graph
 
     public var nodeVisitorInitialize: NodeVisitorBlock?
@@ -49,7 +48,7 @@ public class DepthFirstSearch {
         }
         
         for node in graph.nodes {
-            if markers[node] == .White {
+            if markers[node.eid] == .White {
                 nodeVisitorStart?(node)
                 visitNode(node)
             }
@@ -57,12 +56,12 @@ public class DepthFirstSearch {
     }
     
     func visitNode(node: Node) {
-        markers[node] = .Gray
+        markers[node.eid] = .Gray
         nodeVisitorDiscover?(node)
         for edge in node.outEdges {
             edgeVisitorExamine?(edge)
             let head = edge.head
-            switch markers[head] {
+            switch markers[head.eid] {
             case .White:
                 edgeVisitorTree?(edge)
                 visitNode(head)
@@ -72,7 +71,7 @@ public class DepthFirstSearch {
                 edgeVisitorForwardOrCross?(edge)
             }
         }
-        markers[node] = .Black
+        markers[node.eid] = .Black
         nodeVisitorFinish?(node)
     }
 }
