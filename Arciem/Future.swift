@@ -155,7 +155,7 @@ public func testFuture() {
 func task1() -> Promise<Void, String> {
     let d = Promise<Void, String>()
     d.task = {
-        dispatchOnQueue(d.future.taskQueue) {
+        let canceler = dispatchOnQueue(d.future.taskQueue) {
             println("Task 1")
             let s = "42"
             dispatchOnQueue(d.future.callbackQueue) {
@@ -170,7 +170,7 @@ func task1() -> Promise<Void, String> {
 func task2() -> Promise<String, Int> {
     let d = Promise<String, Int>()
     d.task = { (str) in
-        dispatchOnQueue(d.future.taskQueue) {
+        let canceler = dispatchOnQueue(d.future.taskQueue) {
             println("Task 2 input: \"\(str)\"")
             let iOpt = str.toInt()
             dispatchOnQueue(d.future.callbackQueue) {
@@ -189,7 +189,7 @@ func task2() -> Promise<String, Int> {
 func task3() -> Promise<Int, String> {
     let d = Promise<Int, String>()
     d.task = { (i) in
-        dispatchOnQueue(d.future.taskQueue) {
+        let canceler = dispatchOnQueue(d.future.taskQueue) {
             println("Task 3 input: \(i)")
             let s = "\(i)"
             dispatchOnQueue(d.future.callbackQueue) {

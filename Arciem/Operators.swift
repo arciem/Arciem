@@ -53,8 +53,27 @@ infix operator ¶= { associativity left precedence 105 }
 // "value assign"
 infix operator ^= { associativity left precedence 105 }
 
+// "layout attribute must equal"
+infix operator ==⦿ { }
+
+// "layout attribute must be greater than or equal to"
+infix operator >=⦿ { }
+
+// "layout attribute must be less than or equal to"
+infix operator <=⦿ { }
+
+// "priority assign"
+infix operator =⦿= { associativity left precedence 95 }
+
 public func ⁂<A, B>(lhs: A, rhs: B) -> A {
     return lhs
+}
+
+// "rightward assign"
+infix operator => { associativity right precedence 95 }
+
+public func =><T>(lhs:T, inout rhs:T) {
+    rhs = lhs
 }
 
 //

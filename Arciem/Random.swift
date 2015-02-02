@@ -11,51 +11,26 @@ import CoreGraphics
 
 private var _instance = Random()
 
-/*
-**  longrand() -- generate 2**31-2 random numbers
-**
-**  public domain by Ray Gardner
-**
-**  based on "Random Number Generators: Good Ones Are Hard to Find",
-**  S.K. Park and K.W. Miller, Communications of the ACM 31:10 (Oct 1988),
-**  and "Two Fast Implementations of the 'Minimal Standard' Random
-**  Number Generator", David G. Carta, Comm. ACM 33, 1 (Jan 1990), p. 87-88
-**
-**  linear congruential generator f(z) = 16807 z mod (2 ** 31 - 1)
-*/
-
 public class Random {
-    private var seed:Int32 = 1
-    private let a:UInt64 = 16807
-    private let m:UInt64 = UInt64(UInt32.max >> 1)
-
-//    public lazy var instance = Random()
-
-    public init(seed:Int32) {
-        self.seed = seed
-    }
+    let m: UInt64 = 1 << 32
     
-    public init() {
-        reseed()
-    }
-    
-    public func reseed() {
-        let s:NSNumber = time(nil)
-        self.seed = s.intValue
-        // Throw away the first value, which may be similar from run to run
-        random()
-    }
-    
-    public class var sharedInstance: Random {
+    class var sharedInstance: Random {
         get {
             return _instance
         }
     }
     
-    // returns a random Int32 in the half-open interval 0..<m
-    func random() -> Int32 {
-        seed = Int32((a &* UInt64(seed)) &% m)
-        return seed
+    public func cryptoRandom() -> Int32 {
+        var a: UnsafeMutablePointer<Int32>! = .alloc(1)
+        SecRandomCopyBytes(kSecRandomDefault, 4, UnsafeMutablePointer<UInt8>(a))
+        let n = a.memory
+        a.dealloc(1)
+        return n
+    }
+
+    // returns a random Int32 in the half-open interval 0..<(2**32)
+    public func random() -> UInt32 {
+        return arc4random()
     }
     
     // returns a random Double in the half-open interval 0..<1

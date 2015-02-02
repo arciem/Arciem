@@ -83,18 +83,18 @@ var g4: Graph!
 func graphTest4() {
     g4 = Graph()
 
-    var a = OpNode<Int>().addToGraph(g4).setName("a")
-    var b = OpNode<Int>().addToGraph(g4).setName("b")
-    var c = OpNode<Int>().addToGraph(g4).setName("c")
-    var d = OpNode<Int>().addToGraph(g4).setName("d")
-    var e = OpNode<Int>().addToGraph(g4).setName("e")
+    var a = OpNode<Double>().addToGraph(g4).setName("a")
+    var b = OpNode<Double>().addToGraph(g4).setName("b")
+    var c = OpNode<Double>().addToGraph(g4).setName("c")
+    var d = OpNode<Double>().addToGraph(g4).setName("d")
+    var e = OpNode<Double>().addToGraph(g4).setName("e")
     
     let x = (a - b * c + d) % e
 
     g4.writeDotDescriptionToFilename("graph")
     
     let nodes = [a, b, c, d, e]
-    let values = [3, 4, 5, 6, 7]
+    let values = [3.3, 4.4, 5.5, 6.6, 7.7]
     var t: NSTimeInterval = 5
     for (var node, value) in shuffled(Array(Zip2(nodes, values))) {
         node.setOperation(delayedValue(value, t))

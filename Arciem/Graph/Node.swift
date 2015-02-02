@@ -25,7 +25,7 @@ extension Node : Printable {
 public class OpNode<V> : Node {
     public typealias ValueType = V
     
-    public typealias OpFuncType = (OpNode<V>) -> Void
+    public typealias OpFuncType = (OpNode<ValueType>) -> Void
     public var operation: OpFuncType?
     public var canceler: Canceler?
     

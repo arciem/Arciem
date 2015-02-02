@@ -8,11 +8,11 @@
 
 import Foundation
 
-// A Canceler is returned by functions in this file that either execute a block after a delay, or execute a block at intervals. If the <canceled> variable is set to true, the block will never be executed, or the calling of the block at intervals will stop.
+// A Canceler is returned by functions in this file that either execute a block after a delay, or execute a block at intervals. If the <isCanceled> variable is set to true, the block will never be executed, or the calling of the block at intervals will stop.
 public class Canceler {
-    public var canceled = false
+    public var isCanceled = false
     public init() { }
-    public func cancel() { canceled = true }
+    public func cancel() { isCanceled = true }
 }
 
 // Convenience types for symmetry with Swift naming conventions
@@ -20,7 +20,7 @@ public typealias DispatchBlock = dispatch_block_t
 public typealias DispatchQueue = dispatch_queue_t
 public typealias ErrorBlock = (error: NSError) -> Void
 
-// A block that takes a Canceler. The block will not be called again if it sets the <canceled> variable of the Canceler to true.
+// A block that takes a Canceler. The block will not be called again if it sets the <isCanceled> variable of the Canceler to true.
 public typealias CancelableBlock = (canceler: Canceler) -> Void
 
 // This variable returns the GCD main queue, which is the queue associated with the main thread. All calls to CocoaTouch UI APIs should happen on this thread.
@@ -64,19 +64,31 @@ public func dispatchSyncOnMain(f: DispatchBlock) {
     dispatchSyncOnQueue(mainQueue, f)
 }
 
+func _dispatchOnQueue(queue: DispatchQueue, c: Canceler, f: CancelableBlock) {
+    dispatch_async(queue) {
+        f(canceler: c)
+    }
+}
+
 // Dispatch a block asynchronously on the give queue. This method returns immediately. Blocks dispatched asynchronously will be executed at some time in the future.
-public func dispatchOnQueue(queue: DispatchQueue, f: DispatchBlock) {
-    dispatch_async(queue, f)
+public func dispatchOnQueue(queue: DispatchQueue, f: DispatchBlock) -> Canceler {
+    let canceler = Canceler()
+    _dispatchOnQueue(queue, canceler) { canceler in
+        if !canceler.isCanceled {
+            f()
+        }
+    }
+    return canceler
 }
 
 // Dispatch a block asynchronously on the main queue.
-public func dispatchOnMain(f: DispatchBlock) {
-    dispatchOnQueue(mainQueue, f)
+public func dispatchOnMain(f: DispatchBlock) -> Canceler {
+    return dispatchOnQueue(mainQueue, f)
 }
 
 // Dispatch a block asynchronously on the background queue.
-public func dispatchOnBackground(f: DispatchBlock) {
-    dispatchOnQueue(backgroundQueue, f)
+public func dispatchOnBackground(f: DispatchBlock) -> Canceler {
+    return dispatchOnQueue(backgroundQueue, f)
 }
 
 func _dispatchOnQueue(queue: DispatchQueue, afterDelay delay: NSTimeInterval, c: Canceler, f: CancelableBlock) {
@@ -85,33 +97,33 @@ func _dispatchOnQueue(queue: DispatchQueue, afterDelay delay: NSTimeInterval, c:
     }
 }
 
-// After the given delay, dispatch a block asynchronously on the given queue. Returns a Canceler object that, if its <canceled> attribute is true when the dispatch time arrives, the block will not be executed.
+// After the given delay, dispatch a block asynchronously on the given queue. Returns a Canceler object that, if its <isCanceled> attribute is true when the dispatch time arrives, the block will not be executed.
 public func dispatchOnQueue(queue: DispatchQueue, afterDelay delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
     let canceler = Canceler()
     _dispatchOnQueue(queue, afterDelay: delay, canceler) { canceler in
-        if !canceler.canceled {
+        if !canceler.isCanceled {
             f()
         }
     }
     return canceler
 }
 
-// After the given delay, dispatch a block asynchronously on the main queue. Returns a Canceler object that, if its <canceled> attribute is true when the dispatch time arrives, the block will not be executed.
+// After the given delay, dispatch a block asynchronously on the main queue. Returns a Canceler object that, if its <isCanceled> attribute is true when the dispatch time arrives, the block will not be executed.
 public func dispatchOnMainAfterDelay(delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
     return dispatchOnQueue(mainQueue, afterDelay: delay, f)
 }
 
-// After the given delay, dispatch a block asynchronously on the background queue. Returns a Canceler object that, if its <canceled> attribute is true when the dispatch time arrives, the block will not be executed.
+// After the given delay, dispatch a block asynchronously on the background queue. Returns a Canceler object that, if its <isCanceled> attribute is true when the dispatch time arrives, the block will not be executed.
 public func dispatchOnBackgroundAfterDelay(delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
     return dispatchOnQueue(backgroundQueue, afterDelay: delay, f)
 }
 
 func _dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: NSTimeInterval, canceler: Canceler, f:CancelableBlock) {
     _dispatchOnQueue(queue, afterDelay: interval, canceler) { canceler in
-        if !canceler.canceled {
+        if !canceler.isCanceled {
             f(canceler: canceler)
         }
-        if !canceler.canceled {
+        if !canceler.isCanceled {
             _dispatchRepeatedOnQueue(queue, atInterval: interval, canceler, f)
         }
     }

@@ -54,6 +54,29 @@ public func identifierOfObject(obj: AnyObject) -> String {
     return s
 }
 
+public extension NSObject {
+    public var debugName: String? {
+        get {
+            return getAssociatedObject(object: self, key: "debugName") as String?
+        }
+        set {
+            setAssociatedObject(object: self, key: "debugName", value: newValue?)
+        }
+    }
+    
+    public func setAssociatedFlag(key: String) {
+        setAssociatedObject(object: self, key: key, value: NSNumber(bool: true))
+    }
+    
+    public func removeAssociatedFlag(key: String) {
+        setAssociatedObject(object: self, key: key, value: nil)
+    }
+    
+    public func hasAssociatedFlag(key: String) -> Bool {
+        return getAssociatedObject(object: self, key: key) != nil
+    }
+}
+
 //public func identifierOfValue(value: Nameable) -> String {
 //    var s = "\(typeNameOf(value))"
 //    if let name = value.name? {
