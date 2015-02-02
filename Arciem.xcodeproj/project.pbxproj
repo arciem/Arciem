@@ -135,11 +135,6 @@
 		036208641A16C179009E8B5A /* Color.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		036208661A16C1D8009E8B5A /* IntSize.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IntSize.swift; sourceTree = "<group>"; };
 		0362FD041A07CDC40041B29E /* Nameable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Nameable.swift; sourceTree = "<group>"; };
-		0362FD091A08E3270041B29E /* Graph.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Graph.swift; sourceTree = "<group>"; };
-		0362FD0B1A08E33C0041B29E /* Element.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Element.swift; sourceTree = "<group>"; };
-		0362FD0D1A08E3660041B29E /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
-		0362FD0F1A08E3810041B29E /* Edge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Edge.swift; sourceTree = "<group>"; };
-		0362FD111A08E8260041B29E /* GraphAlgorithm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphAlgorithm.swift; sourceTree = "<group>"; };
 		036A679E19A305F800CD98D0 /* RuntimeGlue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RuntimeGlue.h; sourceTree = "<group>"; };
 		036A679F19A305F800CD98D0 /* RuntimeGlue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RuntimeGlue.m; sourceTree = "<group>"; };
 		036D8EF61989AE99003FCB35 /* Arciem-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Arciem-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -152,7 +147,6 @@
 		038BABE91A17E5AE002876C2 /* Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
 		038BABEB1A17E7AE002876C2 /* ColorFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFunc.swift; sourceTree = "<group>"; };
 		03974CD21942BCC00021A1B9 /* CGGeometry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CGGeometry.swift; sourceTree = "<group>"; };
-		039D52371A09763500B8653E /* GraphTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GraphTest.swift; sourceTree = "<group>"; };
 		039D52391A09854D00B8653E /* Operators.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		039FC42119922C5900C5211A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		039FC4231992E83400C5211A /* Angles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Angles.swift; sourceTree = "<group>"; };
@@ -202,7 +196,7 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0325D5AB1A79B8250057C3C9 /* Graph2 */ = {
+		0325D5AB1A79B8250057C3C9 /* Graph */ = {
 			isa = PBXGroup;
 			children = (
 				0325D5B01A79B9480057C3C9 /* Element.swift */,
@@ -211,19 +205,6 @@
 				0325D5AC1A79B8450057C3C9 /* Node.swift */,
 				031893891A7ED8530096532A /* GraphAlgorithm.swift */,
 				031893871A7DC92E0096532A /* GraphTest.swift */,
-			);
-			path = Graph2;
-			sourceTree = "<group>";
-		};
-		0362FD081A08E3270041B29E /* Graph */ = {
-			isa = PBXGroup;
-			children = (
-				0362FD091A08E3270041B29E /* Graph.swift */,
-				0362FD0B1A08E33C0041B29E /* Element.swift */,
-				0362FD0D1A08E3660041B29E /* Node.swift */,
-				0362FD0F1A08E3810041B29E /* Edge.swift */,
-				0362FD111A08E8260041B29E /* GraphAlgorithm.swift */,
-				039D52371A09763500B8653E /* GraphTest.swift */,
 			);
 			path = Graph;
 			sourceTree = "<group>";
@@ -319,8 +300,7 @@
 			isa = PBXGroup;
 			children = (
 				036D8EF61989AE99003FCB35 /* Arciem-Bridging-Header.h */,
-				0325D5AB1A79B8250057C3C9 /* Graph2 */,
-				0362FD081A08E3270041B29E /* Graph */,
+				0325D5AB1A79B8250057C3C9 /* Graph */,
 				038BABED1A17E858002876C2 /* Graphics */,
 				036D8F571989B645003FCB35 /* Glue */,
 				039FC4231992E83400C5211A /* Angles.swift */,
