@@ -60,7 +60,7 @@ public func testResults() {
     testResult(Result(value: "Dog"))
     testResult(Result<String?>(value: nil))
     testResult(Result<String?>(value: "Dog"))
-    testResult(Result(value: () ))
+    testResult(Result( value: () ))
     let e = NSError(domain: "FooDomain", code: 10, userInfo: nil)
     testResult(Result<String>(error: e))
     

@@ -13,63 +13,74 @@ public typealias JSONObject = AnyObject
 public typealias JSONDict = [String: AnyObject]
 
 public class JSON {
-    public class func objectForResource(name: String) -> (NSError?, JSONObject?) {
-        var error: NSError?
-        var jsonObject: JSONObject?
-        
+    public class func objectForResource(name: String) -> Result<JSONObject> {
         let path = NSBundle.mainBundle().pathForResource(name, ofType: "json")
         if path == nil {
-            error = NSError("Could not find JSON resource: \(name)")
+            let error = NSError("Could not find JSON resource: \(name)")
+            return .Error(error)
         } else {
             let jsonData = NSData(contentsOfFile:path!)
             if jsonData == nil {
-                error = NSError("Could not load data from file: \(path)")
+                return .Error(NSError("Could not load data from file: \(path)"))
             } else {
-                (error, jsonObject) = objectWithData(jsonData!)
+                return objectWithData(jsonData!)
             }
         }
-        
-        return (error, jsonObject)
     }
     
-    public class func dataWithObject(obj: JSONObject, prettyPrinted: Bool = false) -> (NSError?, NSData?) {
-        var error: NSError?
+    public class func dataWithObject(obj: JSONObject, prettyPrinted: Bool = false) -> Result<NSData> {
         let options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : NSJSONWritingOptions(0)
+        var error: NSError?
         let jsonData = NSJSONSerialization.dataWithJSONObject(obj, options: options, error: &error)
-        assert(jsonData != nil, "Could not generate JSON data from object: \(error)")
-        return (error, jsonData)
-    }
-    
-    public class func bytesWithObject(obj: JSONObject, prettyPrinted: Bool = false) -> (NSError?, [Byte]?) {
-        let (error, data) = dataWithObject(obj, prettyPrinted: prettyPrinted)
-        var bytes: [Byte]?
-        if error == nil {
-            bytes = data!.toByteArray()
+        if let error = error? {
+            return .Error(error)
         }
-        return (error, bytes)
+        return Result(value: jsonData!)
     }
     
-    public class func stringWithObject(obj: JSONObject, prettyPrinted: Bool = false) -> (NSError?, String?) {
-        let (error, bytes) = bytesWithObject(obj, prettyPrinted: prettyPrinted)
-        var string: String?
-        if error == nil {
-            string = stringFromUTF8Bytes(bytes!)
+    public class func bytesWithObject(obj: JSONObject, prettyPrinted: Bool = false) -> Result<[Byte]> {
+        switch dataWithObject(obj, prettyPrinted: prettyPrinted) {
+        case .Value(let v):
+            return Result(value: v.unbox.toByteArray())
+        case .Error(let e):
+            return .Error(e)
+        default:
+            return .None
         }
-        return (error, string)
     }
     
-    public class func objectWithData(data: NSData) -> (NSError?, JSONObject?) {
+    public class func stringWithObject(obj: JSONObject, prettyPrinted: Bool = false) -> Result<String> {
+        let bytes = bytesWithObject(obj, prettyPrinted: prettyPrinted)
+        switch bytes {
+        case .Value(let v):
+            if let s = stringFromUTF8Bytes(v.unbox) {
+                return Result(value: s)
+            } else {
+                return .Error(NSError("Could not convert bytes to string using UTF8"))
+            }
+        case .Error(let e):
+            return .Error(e)
+        default:
+            return .None
+        }
+    }
+    
+    public class func objectWithData(data: NSData) -> Result<JSONObject> {
         var error: NSError?
         var jsonObject: JSONObject?
         jsonObject = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
-        return (error, jsonObject)
+        if error == nil {
+            return Result(value: jsonObject!)
+        } else {
+            return .Error(error!)
+        }
     }
     
-    public class func objectWithBytes(bytes: [Byte]) -> (NSError?, JSONObject?) {
+    public class func objectWithBytes(bytes: [Byte]) -> Result<JSONObject> {
         return objectWithData(NSData(byteArray: bytes))
     }
     
-    public class func objectWithString(string: String) -> (NSError?, JSONObject?) {
+    public class func objectWithString(string: String) -> Result<JSONObject> {
         return objectWithBytes(string.toUTF8Bytes())
     }
 }
