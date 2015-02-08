@@ -6,4 +6,4 @@
 //  Copyright (c) 2015 Arciem LLC. All rights reserved.
 //
 
-public typealias Packet = JSONObject
+public typealias Packet = Result<JSON>

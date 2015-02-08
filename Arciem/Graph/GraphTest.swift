@@ -6,6 +6,9 @@
 //  Copyright (c) 2015 Arciem LLC. All rights reserved.
 //
 
+import Arciem
+import XCTest
+
 public func graphTest() {
     graphTest4()
 }
@@ -13,14 +16,14 @@ public func graphTest() {
 func graphTest1() {
     let g = Graph()
     
-    let n1 = Node<Float>(g)
-    let n2 = Node(lhs: n1)
-    let n3 = -n2
-    let n4 = Node<Float>(g)
-    let n5 = n2 * n4
-    let n6 = n5 - n4
-    n1.result = Result(value: 10.5)
-    n4.result = Result(value: 2.0)
+    let n1 = Node<Float>(g).setName("n1")
+    let n2 = Node(lhs: n1).setName("n2")
+    let n3 = (-n2).setName("n3")
+    let n4 = Node<Float>(g).setName("n4")
+    let n5 = (n2 * n4).setName("n5")
+    let n6 = (n5 - n4).setName("n6")
+    n1.result = Result(10.5)
+    n4.result = Result(2.0)
     g.writeDotDescriptionToFilename("test")
 }
 
@@ -74,9 +77,9 @@ func graphTest2() {
 func graphTest3() {
     let graph = Graph()
     
-    var a = Node<Int>(graph).setName("a").setValue(3)
-    var b = Node<Int>(graph).setName("b").setValue(4)
-    var c = Node<Int>(graph).setName("c").setValue(25)
+    var a = Node<Int>(graph).setName("a").setValue(4)
+    var b = Node<Int>(graph).setName("b").setValue(25)
+    var c = Node<Int>(graph).setName("c").setValue(3)
     var d = Node<Int>(graph).setName("d").setValue(6)
     var e = Node<Int>(graph).setName("e").setValue(7)
     
@@ -108,12 +111,13 @@ func graphTest4() {
     for (var node, value) in Array(Zip2(nodes, values)) {
         var result: Result<Double>?
         if let f = value as? Double {
-            result = Result(value: f)
+            result = Result(f)
         } else if let e = value as? NSError {
             result = Result(error: e)
         }
         if let result = result? {
             node.setOperation(delayedResult(result, t))
+            node.operate()
             t += Random.randomDouble(2.0..<5.0)
         }
     }

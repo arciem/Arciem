@@ -32,14 +32,23 @@ infix operator ^== { precedence 130 }
 // "value not equals"
 infix operator ^!= { precedence 130 }
 
-// "successor"
+// "successor", "next"
 infix operator → { associativity left precedence 170 }
+
+// "mutate Result"
+infix operator ¿ { associativity left precedence 170 }
+
+// "success"
+infix operator ★ { associativity left precedence 170 }
 
 // "failure"
 infix operator † { associativity left precedence 170 }
 
 // "finally"
 infix operator ‡ { associativity left precedence 170 }
+
+// "bind"
+infix operator ≈> { associativity left precedence 170 }
 
 // "chaining"
 infix operator ⁂ { associativity left precedence 108 }
@@ -75,6 +84,11 @@ infix operator => { associativity right precedence 95 }
 public func =><T>(lhs:T, inout rhs:T) {
     rhs = lhs
 }
+
+// "throw away"
+prefix operator ⏏ { }
+
+public prefix func ⏏<T>(lhs: T) -> Void { }
 
 //
 // Variable and Method Names

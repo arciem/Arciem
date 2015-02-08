@@ -43,6 +43,27 @@ public extension String {
             return $0
         }
     }
+
+    public subscript (r: Range<Int>) -> String {
+        get {
+            let startIndex = advance(self.startIndex, r.startIndex)
+            let endIndex = advance(startIndex, r.endIndex - r.startIndex)
+            
+            return self[Range(start: startIndex, end: endIndex)]
+        }
+    }
+    
+    public func truncatedAtLength(maxLength: Int, ellipsis: String = "…") -> String {
+        let length = countElements(self)
+        let ellipsisLength = countElements(ellipsis)
+        let truncLength = max(0, maxLength - ellipsisLength)
+        let realMaxLength = min(length, truncLength)
+        var t = self[0..<realMaxLength]
+        if realMaxLength == truncLength {
+            t += ellipsis
+        }
+        return t
+    }
 }
 
 public func stringFromUTF8Bytes(bytes: [Byte]) -> String? {

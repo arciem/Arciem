@@ -11,3 +11,11 @@ public final class Box<T> {
     public let unbox: T
     public init(_ value: T) { unbox = value }
 }
+
+extension Box : Printable {
+    public var description: String {
+        get {
+            return "Box(\(unbox))"
+        }
+    }
+}

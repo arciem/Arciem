@@ -6,85 +6,91 @@
 //  Copyright (c) 2015 Arciem LLC. All rights reserved.
 //
 
-typealias ReceiveFunc = (Packet) -> Void
+public typealias ReceiveFunc = (Packet) -> Void
 
-class Port {
-    var name: String
-    var connection: Connection?
+public class Port {
+    private let serializer = Serializer()
+    public var name: String? = nil
+    public internal(set) weak var component: Component? = nil
+    public internal(set) var connections = [Connection]()
+    public let synchronous: Bool
     
-    init(name: String) {
-        self.name = name
+    init(synchronous: Bool) {
+        self.synchronous = synchronous
+    }
+    
+    public func addConnection(connection: Connection) {
+        serializer.dispatch() {
+            assert((self.connections.filter() { $0 === connection }).isEmpty, "Port is already bound to connection.")
+            self.connections.append(connection)
+        }
+    }
+    
+    deinit {
+        dataflowLogger?.trace("deinit \(self)")
     }
 }
 
-class InputPort: Port {
-    let receive: ReceiveFunc
+public class InputPort: Port {
+    public var receive: ReceiveFunc? = nil
+
+    public override init(synchronous: Bool) {
+        super.init(synchronous: synchronous)
+    }
+}
     
-    init(name: String, receive: ReceiveFunc) {
+public class OutputPort: Port {
+    public override init(synchronous: Bool) {
+        super.init(synchronous: synchronous)
+    }
+
+    public func send(packet: Packet) {
+        serializer.dispatch() {
+            for connection in self.connections {
+                connection.send(packet)
+            }
+        }
+    }
+
+    public func sendJSON(json: JSON) {
+        send(Packet(json))
+    }
+    
+    public func sendObject(obj: JSONObject) {
+        sendJSON(JSON(obj))
+    }
+    
+    public func sendError(err: NSError) {
+        send(Packet(error: err))
+    }
+}
+
+public class ResultPort: InputPort {
+    public convenience init(synchronous: Bool = true, receive: ReceiveFunc) {
+        self.init(synchronous: synchronous)
         self.receive = receive
-        super.init(name: name)
     }
 }
 
-class OutputPort: Port  {
-    override init(name: String) {
-        super.init(name: name)
-    }
-    
-    func send(packet: Packet) {
-        connection?.send(packet)
+public class ParameterPort: OutputPort {
+    public override init(synchronous: Bool = true) {
+        super.init(synchronous: synchronous)
     }
 }
 
-class Connection {
-    var queue = [Packet]()
-    var serializer: Serializer
-    weak var tailPort: OutputPort?
-    weak var headPort: InputPort?
-    
-    init() {
-        self.serializer = Serializer(name: "Connection")
-    }
-    
-    func send(packet: Packet) {
-        queue.append(packet)
-        serializer.dispatch {
-            var packet: Packet = self.queue.removeAtIndex(0)
-            self.headPort?.receive(packet)
-        }
-    }
+public func ≈>(tail: OutputPort, head: InputPort) -> Connection {
+    return Connection(tail: tail, head: head)
 }
 
-class Component {
-    var inputPorts = [InputPort]()
-    var outputPorts = [OutputPort]()
-    
-    func addInputPortNamed(name: String, receive: ReceiveFunc) -> InputPort {
-        let port = InputPort(name: name, receive: receive)
-        inputPorts.append(port)
-        return port
-    }
-    
-    func addOutputPortNamed(name: String) -> OutputPort {
-        let port = OutputPort(name: name)
-        outputPorts.append(port)
-        return port
-    }
+public func ≈>(obj: JSONObject, head: InputPort) -> Connection {
+    let tail = ParameterPort()
+    let connection = Connection(tail: tail, head: head)
+    tail.sendObject(obj)
+    return connection
 }
 
-typealias TransformFunc = (Packet) -> Packet
-
-class TransformComponent : Component {
-    let input: InputPort!
-    let output: OutputPort!
-    let transform: TransformFunc
-    init(transform: TransformFunc) {
-        self.transform = transform
-        super.init()
-        input = addInputPortNamed("input") { [unowned self] inPacket in
-            let outPacket: Packet = transform(inPacket)
-            self.output.send(outPacket)
-        }
-        output = addOutputPortNamed("output")
-    }
+public func ≈>(tail: OutputPort, receive: ReceiveFunc) -> Connection {
+    let head = ResultPort(receive: receive)
+    let connection = Connection(tail: tail, head: head)
+    return connection
 }

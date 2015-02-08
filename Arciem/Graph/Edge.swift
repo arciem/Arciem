@@ -35,15 +35,10 @@ public class Edge<ResultType> : AbstractEdge {
         get {
             var attrs = super.dotAttributes
             if let t = tail as? TailNodeType {
-                switch t.result {
-                case .None:
-                    break
-                case .Value(let v):
-                    attrs["color"] = "green3"
-                    break
-                case .Error(let e):
-                    attrs["color"] = "red"
-                    break
+                if let result = t.result? {
+                    result
+                        ★ { _ in attrs["color"] = "green3" }
+                        † { _ in attrs["color"] = "red" }
                 }
             }
             return attrs

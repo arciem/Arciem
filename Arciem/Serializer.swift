@@ -17,8 +17,8 @@ public class Serializer {
     let queue: DispatchQueue
     let queueContext: NSNumber
     
-    public init(name: String) {
-        self.queue = dispatch_queue_create((name as NSString).UTF8String, DISPATCH_QUEUE_SERIAL)
+    public init(name: NSString? = nil) {
+        self.queue = dispatch_queue_create(name?.UTF8String ?? nil, DISPATCH_QUEUE_SERIAL)
         self.queueContext = NSNumber(integer: ++nextQueueContext)
         dispatch_queue_set_specific_glue(self.queue, serializerKey, self.queueContext)
     }

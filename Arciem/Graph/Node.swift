@@ -61,7 +61,7 @@ extension AbstractNode {
 public class Node<ValueType> : AbstractNode {
     public typealias OutEdgeType = Edge<ValueType>
     public typealias ResultType = Result<ValueType>
-    public var result: ResultType = Result() {
+    public var result: ResultType? {
         didSet {
             for edge in outEdges as [OutEdgeType] {
                 edge.transfer?()
@@ -75,7 +75,7 @@ public class Node<ValueType> : AbstractNode {
     }
     
     public func setValue(value: ValueType) -> Self {
-        return setResult(Result(value: value))
+        return setResult(Result(value))
     }
     
     public typealias OperationFunc = (Node<ValueType>) -> Void
@@ -104,15 +104,10 @@ public class Node<ValueType> : AbstractNode {
     public override var dotAttributes : [String : String] {
         get {
             var attrs = super.dotAttributes
-            switch result {
-            case .None:
-                break
-            case .Value(let v):
-                attrs["color"] = "green3"
-                break
-            case .Error(let e):
-                attrs["color"] = "red"
-                break
+            if let result = result? {
+                result
+                    ★ { _ in attrs["color"] = "green3" }
+                    † { _ in attrs["color"] = "red" }
             }
             return attrs
         }
@@ -122,15 +117,10 @@ public class Node<ValueType> : AbstractNode {
     public override var dotLabels : [String] {
         get {
             var labels = super.dotLabels
-            switch result {
-            case .None:
-                break
-            case .Value(let v):
-                labels.append("=\(v.unbox)")
-                break
-            case .Error(let e):
-                labels.append("!\(e.code)")
-                break
+            if let result = result? {
+                result
+                    ★ { value in labels.append("=\(value)") }
+                    † { error in labels.append("!\(error.code)") }
             }
             return labels
         }
@@ -153,9 +143,9 @@ extension Node : Printable {
 }
 
 public class OutputNode<ValueType> : Node<ValueType> {
-    public typealias OutputFunc = (ResultType) -> Void
+    public typealias OutputFunc = (ResultType?) -> Void
     public var output: OutputFunc
-    public override var result: ResultType {
+    public override var result: ResultType? {
         didSet {
             output(result)
         }
@@ -167,7 +157,7 @@ public class OutputNode<ValueType> : Node<ValueType> {
     }
 }
 
-public func newOutputNode<ValueType>(graph: Graph, name: String?, lhs: Node<ValueType>, output:(Result<ValueType>) -> Void) -> Node<ValueType> {
+public func newOutputNode<ValueType>(graph: Graph, name: String?, lhs: Node<ValueType>, output:(Result<ValueType>?) -> Void) -> Node<ValueType> {
     let head = OutputNode<ValueType>(graph, output: output)
     head.name = name
     Edge(tail: lhs, head: head) { [unowned lhs, unowned head] in lhs.result => head.result }
@@ -175,7 +165,7 @@ public func newOutputNode<ValueType>(graph: Graph, name: String?, lhs: Node<Valu
 }
 
 public class PrefixOpNode<RHSType, ValueType> : Node<ValueType> {
-    public var rhs: Result<RHSType> = Result() {
+    public var rhs: Result<RHSType>? {
         didSet {
             operate()
         }
@@ -186,30 +176,28 @@ public class PrefixOpNode<RHSType, ValueType> : Node<ValueType> {
     }
 }
 
-public func newPrefixOpNode<R, ValueType>(graph: Graph, name: String?, op:((r: R) -> ValueType))(rhs: Node<R>) -> Node<ValueType> {
+public func newPrefixOpNode<R, ValueType>(graph: Graph, name: String?, op:((R) -> ValueType))(rhs: Node<R>) -> Node<ValueType> {
     let head = PrefixOpNode<R, ValueType>(graph) { (node) in
         let n = node as PrefixOpNode<R, ValueType>
-        switch n.rhs {
-        case .Value(let v):
-            n.result = Result(value: op(r: v.unbox))
-        case .Error(let e):
-            n.result = .Error(e)
-        default:
-            n.result = .None
+        if let rhs = n.rhs? {
+            n.result = rhs → { op($0) }
+        } else {
+            n.result = nil
         }
     }
     head.name = name
-    Edge(tail: rhs, head: head) { [unowned rhs, unowned head] in rhs.result => head.rhs }
+    let e = Edge(tail: rhs, head: head) { [unowned rhs, unowned head] in rhs.result => head.rhs }
+    e.transfer?()
     return head
 }
 
 public class InfixOpNode<LHSType, RHSType, ValueType> : Node<ValueType> {
-    public var rhs: Result<RHSType> = Result() {
+    public var rhs: Result<RHSType>? {
         didSet {
             operate()
         }
     }
-    public var lhs: Result<LHSType> = Result() {
+    public var lhs: Result<LHSType>? {
         didSet {
             operate()
         }
@@ -220,23 +208,32 @@ public class InfixOpNode<LHSType, RHSType, ValueType> : Node<ValueType> {
 }
 
 public func newInfixOpNode<L, R, ValueType>(graph: Graph, name: String?, op:((l: L, r:R) -> ValueType))(lhs: Node<L>, rhs: Node<R>) -> Node<ValueType> {
-    let head = InfixOpNode<L, R, ValueType>(graph) { (node) in
+    let head = InfixOpNode<L, R, ValueType>(graph) { node in
         let n = node as InfixOpNode<L, R, ValueType>
-        switch (n.lhs, n.rhs) {
-        case (.Value(let lv), .Value(let rv)):
-            n.result = Result(value: op(l: lv.unbox, r: rv.unbox))
-            break
-        case (.Error(let e), _):
-            n.result = .Error(e)
-        case (_, .Error(let e)):
-            n.result = .Error(e)
-        default:
-            n.result = .None
+        if let lhs = n.lhs? {
+            if let rhs = n.rhs? {
+                switch (lhs, rhs) {
+                case (.Value(let lv), .Value(let rv)):
+                    n.result = Result(op(l: lv.unbox, r: rv.unbox))
+                case (.Error(let e), _):
+                    n.result = .Error(e)
+                case (_, .Error(let e)):
+                    n.result = .Error(e)
+                default:
+                    n.result = nil
+                }
+            } else {
+                n.result = nil
+            }
+        } else {
+            n.result = nil
         }
     }
     head.name = name
-    Edge(tail: rhs, head: head) { [unowned rhs, unowned head] in rhs.result => head.rhs }.setName("rhs")
-    Edge(tail: lhs, head: head) { [unowned lhs, unowned head] in lhs.result => head.lhs }.setName("lhs")
+    let e1 = Edge(tail: rhs, head: head) { [unowned rhs, unowned head] in rhs.result => head.rhs }.setName("rhs")
+    e1.transfer?()
+    let e2 = Edge(tail: lhs, head: head) { [unowned lhs, unowned head] in lhs.result => head.lhs }.setName("lhs")
+    e2.transfer?()
     return head
 }
 

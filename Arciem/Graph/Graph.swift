@@ -124,14 +124,11 @@ public prefix func •<T>(rhs:(Graph) -> Node<T>) -> (Graph, Node<T>) {
 public func →<T>(lhs: (graph: Graph, node: Node<T>), rhs: (T) -> Void) -> (Graph, Node<T>) {
     let graph = lhs.graph
     let n = newOutputNode(lhs.graph, "=", lhs.node)
-        { [unowned graph] (result) in
-            switch result {
-            case .Value(let v):
-                rhs(v.unbox)
-            case .Error(let e):
-                graph.failure?(error: e)
-            default:
-                break
+        { [unowned graph] result in
+            if let result = result? {
+                result
+                    ★ { rhs($0) }
+                    † { graph.failure?(error: $0) ?? () }
             }
             graph.finally?()
     }

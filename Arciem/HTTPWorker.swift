@@ -52,11 +52,12 @@ public class HTTPWorker : Worker {
         }
     }
 
-    public init(request: NSURLRequest) {
+    public init(request: NSURLRequest, allowUntrustedCertificate: Bool = false) {
         self.request = request
         self.sessionDelegate = SessionDelegate()
         self.session = NSURLSession(configuration: NSURLSessionConfiguration.ephemeralSessionConfiguration(), delegate: self.sessionDelegate, delegateQueue: nil)
         super.init()
+        self.allowUntrustedCertificate = allowUntrustedCertificate
         self.task = { [unowned self] (unowned manager: WorkerManager) -> Void in
             self.networkActivity = NetworkActivityIndicator.instance().makeActivity()
             self.sessionTask = self.session.dataTaskWithRequest(self.request, completionHandler: { (data: NSData!, responseOpt: NSURLResponse!, error: NSError!) -> Void in
@@ -65,7 +66,7 @@ public class HTTPWorker : Worker {
                 if error != nil {
                     self.error = error
                 } else {
-                    if self.httpResponse.MIMEType == jsonMIMEType {
+                    if self.httpResponse.MIMEType == JSONMIMEType {
                         var jsonError: NSError?
                         self.json = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: &jsonError)
                         if jsonError != nil {

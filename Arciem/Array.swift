@@ -38,3 +38,11 @@ public func shuffledTest() {
     let shuffledDeck = shuffled(deck)
     println(shuffledDeck)
 }
+
+public func hasElement<T: Equatable>(array: Array<T>, obj: T) -> Bool {
+    return array.filter { $0 == obj }.count > 0
+}
+
+public func hasObject<T: AnyObject>(array: Array<T>, obj: T) -> Bool {
+    return array.filter { $0 === obj }.count > 0
+}
