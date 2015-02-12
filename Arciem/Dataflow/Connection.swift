@@ -26,7 +26,7 @@ public class Connection {
     }
     
     func send(packet: Packet) {
-        if let head = head? {
+        if let head = head {
             if head.synchronous {
                 head.receive?(packet)
             } else {

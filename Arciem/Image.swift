@@ -16,3 +16,22 @@ public func drawImage(#size: CGSize, #opaque: Bool, scale: CGFloat = 0.0, drawin
     UIGraphicsEndImageContext()
     return image
 }
+
+extension UIImage {
+    public func scaledToSize(size: CGSize) -> UIImage {
+        return drawImage(size: size, opaque: false, scale: 1.0) { context in
+            self.drawInRect(CGRect(origin: CGPoint.zeroPoint, size: size))
+        }
+    }
+    
+    public func scaledAspectFitToSize(size: CGSize) -> UIImage {
+        let inSize = self.size.aspectFitWithinSize(size)
+        return scaledToSize(inSize)
+    }
+    
+    public func scaledAspectFillToSize(size: CGSize) -> UIImage {
+        let inSize = self.size.aspectFillWithinSize(size)
+        println("size:\(size) inSize:\(inSize)")
+        return scaledToSize(inSize)
+    }
+}

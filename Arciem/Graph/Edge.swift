@@ -35,7 +35,7 @@ public class Edge<ResultType> : AbstractEdge {
         get {
             var attrs = super.dotAttributes
             if let t = tail as? TailNodeType {
-                if let result = t.result? {
+                if let result = t.result {
                     result
                         ★ { _ in attrs["color"] = "green3" }
                         † { _ in attrs["color"] = "red" }
@@ -50,11 +50,11 @@ extension Edge : Printable {
     public var description: String {
         get {
             var items = [typeNameOf(self), "eid:\(eid)"]
-            if let name = name? {
+            if let name = name {
                 items.append("name:\(name)")
             }
             items.append("tail:\(tail) ➡️ head:\(head)")
-            let s = join(" ", items)
+            let s = joinStrings(" ", items)
             return "(\(s))"
         }
     }

@@ -10,128 +10,141 @@ import UIKit
 
 public let goldenRatio: Double = 1.61803398874989484820
 public let pointsPerInch: Double = 72.0
+public let pi = M_PI
+public let piOverTwo = M_PI_2
+public let twoPi = 2.0 * M_PI
+public let rad2deg = 180.0 / M_PI
+public let deg2rad = M_PI / 180.0
 
 public class Geometry {
-    public class func distanceSquared<T: Floatable>(#x: T, y: T) -> T { return x * x + y * y }
-    public class func distanceSquared<T: Floatable>(#x1: T, y1: T, x2: T, y2: T) -> T { return distanceSquared(x: x2 - x1, y: y2 - y1) }
+}
+
+// Float
+extension Geometry {
+    public class func distanceSquared(#x: Float, y: Float) -> Float { return x * x + y * y }
+    public class func distanceSquared(#x1: Float, y1: Float, x2: Float, y2: Float) -> Float { return distanceSquared(x: x2 - x1, y: y2 - y1) }
     
-    public class func distance<T: Floatable>(#x: T, y: T) -> T { return T.hypot(x, y) }
-    public class func distance<T: Floatable>(#x1: T, y1: T, x2: T, y2: T) -> T { return distance(x: x2 - x1, y: y2 - y1) }
+    public class func distance(#x: Float, y: Float) -> Float { return hypotf(x, y) }
+    public class func distance(#x1: Float, y1: Float, x2: Float, y2: Float) -> Float { return distance(x: x2 - x1, y: y2 - y1) }
     
-    public class func distanceSquared<T: Floatable>(#x: T, y: T, z: T) -> T { return x * x + y * y + z * z }
-    public class func distanceSquared<T: Floatable>(#x1: T, y1: T, z1: T, x2: T, y2: T, z2: T) -> T { return distanceSquared(x: x2 - x1, y: y2 - y1, z: z2 - z1) }
+    public class func distanceSquared(#x: Float, y: Float, z: Float) -> Float { return x * x + y * y + z * z }
+    public class func distanceSquared(#x1: Float, y1: Float, z1: Float, x2: Float, y2: Float, z2: Float) -> Float { return distanceSquared(x: x2 - x1, y: y2 - y1, z: z2 - z1) }
     
-    public class func distance<T: Floatable>(#x: T, y: T, z: T) -> T { return T.sqrt(distanceSquared(x: x, y: y, z: z)) }
+    public class func distance(#x: Float, y: Float, z: Float) -> Float { return sqrtf(distanceSquared(x: x, y: y, z: z)) }
     
-    public class func distance<T: Floatable>(#x1: T, y1: T, z1: T, x2: T, y2: T, z2: T) -> T { return T.sqrt(distance(x: x2 - x1, y: y2 - y1, z: z2 - z1)) }
+    public class func distance(#x1: Float, y1: Float, z1: Float, x2: Float, y2: Float, z2: Float) -> Float { return sqrtf(distance(x: x2 - x1, y: y2 - y1, z: z2 - z1)) }
     
-    public class func radians<T: Floatable>(#x: T, y: T) -> Radians<T> { return Radians(radians:T.atan2(y, x)) }
-    public class func radians<T: Floatable>(#x1: T, y1: T, x2: T, y2: T) -> Radians<T> { return radians(x: x2 - x1, y: y2 - y1) }
+    public class func radiansFromDegrees(degrees: Float) -> Float { return degrees * Float(deg2rad) }
+    public class func degreesFromRadians(radians: Float) -> Float { return radians * Float(rad2deg) }
     
-    public class func degrees<T: Floatable>(#x: T, y: T) -> Degrees<T> { return Degrees(radians:T.atan2(y, x)) }
-    public class func degrees<T: Floatable>(#x1: T, y1: T, x2: T, y2: T) -> Degrees<T> { return degrees(x: x2 - x1, y: y2 - y1) }
+    public class func radians(#x: Float, y: Float) -> Float { return atan2f(y, x) }
+    public class func radians(#x1: Float, y1: Float, x2: Float, y2: Float) -> Float { return radians(x: x2 - x1, y: y2 - y1) }
     
-    public class func area<T: Floatable>(#x: T, y: T) -> T { return x * y; }
-    public class func volume<T: Floatable>(#x: T, y: T, z: T) -> T { return x * y * z; }
+    public class func degrees(#x: Float, y: Float) -> Float { return degreesFromRadians(radians(x: x, y: y)) }
+    public class func degrees(#x1: Float, y1: Float, x2: Float, y2: Float) -> Float { return degrees(x: x2 - x1, y: y2 - y1) }
     
-    public class func dot<T: Floatable>(#x1: T, y1: T, x2: T, y2: T) -> T { return x1 * x2 + y1 * y2; }
-    public class func dot<T: Floatable>(#x1: T, y1: T, z1: T, x2: T, y2: T, z2: T) -> T { return x1 * x2 + y1 * y2 + z1 * z2; }
+    public class func area(#x: Float, y: Float) -> Float { return x * y; }
+    public class func volume(#x: Float, y: Float, z: Float) -> Float { return x * y * z; }
     
-    public class func cross<T: Floatable>(#x1: T, y1: T, z1: T, x2: T, y2: T, z2: T) -> (x:T, y:T, z:T) {
+    public class func dot(#x1: Float, y1: Float, x2: Float, y2: Float) -> Float { return x1 * x2 + y1 * y2; }
+    public class func dot(#x1: Float, y1: Float, z1: Float, x2: Float, y2: Float, z2: Float) -> Float { return x1 * x2 + y1 * y2 + z1 * z2; }
+    
+    public class func cross(#x1: Float, y1: Float, z1: Float, x2: Float, y2: Float, z2: Float) -> (x:Float, y:Float, z:Float) {
         return (x:z2 * y1 - y2 * z1, y:x2 * z1 - z2 * x1, z:y2 * x1 - x2 * y1)
     }
     
-    public class func scale<T: Floatable>(#dx: T, dy: T, s: T) -> (dx: T, dy: T) { return (dx: dx * s, dy: dy * s) }
-    public class func scale<T: Floatable>(#dx: T, dy: T, dz: T, s: T) -> (dx: T, dy: T, dz: T) { return (dx: dx * s, dy: dy * s, dz: dz * s) }
-    public class func scale<T: Floatable>(#dx: T, dy: T, sx: T, sy: T) -> (dx: T, dy: T) { return (dx: dx * sx, dy: dy * sy) }
-    public class func scale<T: Floatable>(#dx: T, dy: T, dz: T, sx: T, sy: T, sz: T) -> (dx: T, dy: T, dz: T) { return (dx: dx * sx, dy: dy * sy, dz: dz * sz) }
+    public class func scale(#dx: Float, dy: Float, s: Float) -> (dx: Float, dy: Float) { return (dx: dx * s, dy: dy * s) }
+    public class func scale(#dx: Float, dy: Float, dz: Float, s: Float) -> (dx: Float, dy: Float, dz: Float) { return (dx: dx * s, dy: dy * s, dz: dz * s) }
+    public class func scale(#dx: Float, dy: Float, sx: Float, sy: Float) -> (dx: Float, dy: Float) { return (dx: dx * sx, dy: dy * sy) }
+    public class func scale(#dx: Float, dy: Float, dz: Float, sx: Float, sy: Float, sz: Float) -> (dx: Float, dy: Float, dz: Float) { return (dx: dx * sx, dy: dy * sy, dz: dz * sz) }
     
-    public class func normalize<T: Floatable>(#x: T, y: T) -> (x: T, y: T) {
+    public class func normalize(#x: Float, y: Float) -> (x: Float, y: Float) {
         let d = distance(x: x, y: y); return (x: x / d, y: y / d)
     }
-    public class func normalize<T: Floatable>(#x: T, y: T, z: T) -> (x: T, y: T, z: T) {
+    public class func normalize(#x: Float, y: Float, z: Float) -> (x: Float, y: Float, z: Float) {
         let d = distance(x: x, y: y, z: z); return (x: x / d, y: y / d, z: z / d)
     }
     
-    public class func normalize<T>(var #radians: Radians<T>) -> Radians<T> {
-        let p2 = Radians<T>(radians:T(twoPi))
+    public class func normalize(#radians: Float) -> Float {
+        let p2 = Float(twoPi)
         
         if radians > p2 {
-            radians -= p2
-            if radians > p2 {
-                radians = radians % p2
+            let r2 = radians - p2
+            if r2 > p2 {
+                return r2 % p2
             }
         } else if radians < 0.0 {
-            radians += p2
-            if radians < 0.0 {
-                radians = radians % p2
+            let r2 = radians + p2
+            if r2 < 0.0 {
+                return r2 % p2
             }
         }
         
         return radians
     }
     
-    public class func normalize<T>(var #degrees: Degrees<T>) -> Degrees<T> {
-        return Degrees(normalize(radians:Radians(degrees)))
+    public class func normalize(#degrees: Float) -> Float {
+        return normalize(radians: radiansFromDegrees(degrees))
     }
     
-    public class func rotate<A, T where A: Angle, T == A.NativeType, T: Floatable>(#x: T, y: T, angle: A) -> (x: T, y: T) {
-        let ca = angle.cos
-        let sa = angle.sin
+    public class func rotate<A: Angle>(#x: Float, y: Float, angle: A) -> (x: Float, y: Float) {
+        let ca = Float(angle.cos)
+        let sa = Float(angle.sin)
         return (x: x * ca - y * sa, y: y * ca + x * sa)
     }
     
-    public class func fromPolar<A, T where A: Angle, T == A.NativeType, T: Floatable>(#radius: T, angle: A) -> (x: T, y: T) {
-        return (x: radius * angle.cos, y: radius * angle.sin)
+    public class func fromPolar<A: Angle>(#radius: Float, angle: A) -> (x: Float, y: Float) {
+        let r = Double(radius)
+        return (x: Float(r * angle.cos), y: Float(r * angle.sin))
     }
     
-    public class func interpolate<T: Floatable>(#x1: T, y1: T, x2: T, y2: T, t: T) -> (x: T, y: T) {
+    public class func interpolate(#x1: Float, y1: Float, x2: Float, y2: Float, t: Float) -> (x: Float, y: Float) {
         return (x: Math.interpolate(t, x1, x2), y: Math.interpolate(t, y1, y2))
     }
     
-    public class func scaleForAspectFit<T: Floatable>(#dxContent: T, dyContent: T, dxArea: T, dyArea: T) -> T {
-        return T.fmin(dxArea / dxContent, dyArea / dyContent)
+    public class func scaleForAspectFit(#dxContent: Float, dyContent: Float, dxArea: Float, dyArea: Float) -> Float {
+        return fminf(dxArea / dxContent, dyArea / dyContent)
     }
     
-    public class func scaleForAspectFill<T: Floatable>(#dxContent: T, dyContent: T, dxArea: T, dyArea: T) -> T {
-        return T.fmax(dxArea / dxContent, dyArea / dyContent)
+    public class func scaleForAspectFill(#dxContent: Float, dyContent: Float, dxArea: Float, dyArea: Float) -> Float {
+        return fminf(dxArea / dxContent, dyArea / dyContent)
     }
     
-    public class func aspectFit<T: Floatable>(#dxContent: T, dyContent: T, dxArea: T, dyArea: T) -> (dx: T, dy: T) {
+    public class func aspectFit(#dxContent: Float, dyContent: Float, dxArea: Float, dyArea: Float) -> (dx: Float, dy: Float) {
         let s = scaleForAspectFit(dxContent: dxContent, dyContent: dyContent, dxArea: dxArea, dyArea: dyArea)
         return scale(dx: dxContent, dy: dyContent, s: s)
     }
     
-    public class func aspectFill<T: Floatable>(#dxContent: T, dyContent: T, dxArea: T, dyArea: T) -> (dx: T, dy: T) {
+    public class func aspectFill(#dxContent: Float, dyContent: Float, dxArea: Float, dyArea: Float) -> (dx: Float, dy: Float) {
         let s = scaleForAspectFill(dxContent: dxContent, dyContent: dyContent, dxArea: dxArea, dyArea: dyArea)
         return scale(dx: dxContent, dy: dyContent, s: s)
     }
     
     // These versions use parabola segments (hermite curves)
-    public class func easeOutFast<T: Floatable>(t: T) -> T { let f = Math.clamp(t); return 2 * f - f * f }
-    public class func easeInFast<T: Floatable>(t: T) -> T { let f = Math.clamp(t); return f * f }
-    public class func easeInAndOutFast<T: Floatable>(t: T) -> T { let f = Math.clamp(t); return f * f * (3.0 - 2.0 * f) }
+    public class func easeOutFast(t: Float) -> Float { let f = Math.clamp(t); return 2 * f - f * f }
+    public class func easeInFast(t: Float) -> Float { let f = Math.clamp(t); return f * f }
+    public class func easeInAndOutFast(t: Float) -> Float { let f = Math.clamp(t); return f * f * (3.0 - 2.0 * f) }
     
     // These versions use sine curve segments, and are more computationally intensive
-    public class func easeOut<T: Floatable>(t: T) -> T { let f = Math.clamp(t); return T.sin(f * T(piOverTwo)) }
-    public class func easeIn<T: Floatable>(t: T) -> T { let f = Math.clamp(t); return 1.0 - T.cos(f * T(piOverTwo)) }
-    public class func easeInAndOut<T: Floatable>(t: T) -> T { let f = Math.clamp(t); return 0.5 * (1 + T.sin(T(pi) * (f - 0.5))) }
+    public class func easeOut(t: Float) -> Float { let f = Math.clamp(t); return sinf(f * Float(piOverTwo)) }
+    public class func easeIn(t: Float) -> Float { let f = Math.clamp(t); return 1.0 - cosf(f * Float(piOverTwo)) }
+    public class func easeInAndOut(t: Float) -> Float { let f = Math.clamp(t); return 0.5 * (1 + sinf(Float(pi) * (f - 0.5))) }
     
-    public class func triangleUpThenDown<T: Floatable>(t: T) -> T { let f = Math.fract(t); return f < 0.5 ? Math.map(f, 0.0, 0.5, 0.0, 1.0) : Math.map(f, 0.5, 1.0, 1.0, 0.0) }
-    public class func triangleDownThenUp<T: Floatable>(t: T) -> T { let f = Math.fract(t); return f < 0.5 ? Math.map(f, 0.0, 0.5, 1.0, 0.0) : Math.map(f, 0.5, 1.0, 0.0, 1.0) }
-    public class func sawtoothUp<T: Floatable>(t: T) -> T { return Math.fract(t) }
-    public class func sawtoothDown<T: Floatable>(t: T) -> T { return 1.0 - Math.fract(t) }
+    public class func triangleUpThenDown(t: Float) -> Float { let f = Math.fract(t); return f < 0.5 ? Math.map(f, 0.0, 0.5, 0.0, 1.0) : Math.map(f, 0.5, 1.0, 1.0, 0.0) }
+    public class func triangleDownThenUp(t: Float) -> Float { let f = Math.fract(t); return f < 0.5 ? Math.map(f, 0.0, 0.5, 1.0, 0.0) : Math.map(f, 0.5, 1.0, 0.0, 1.0) }
+    public class func sawtoothUp(t: Float) -> Float { return Math.fract(t) }
+    public class func sawtoothDown(t: Float) -> Float { return 1.0 - Math.fract(t) }
     
-    public class func sineUpThenDown<T: Floatable>(t: T) -> T { return T.sin(t * T(twoPi)) * 0.5 + 0.5 }
-    public class func sineDownThenUp<T: Floatable>(t: T) -> T { return 1.0 - T.sin(t * T(twoPi)) * 0.5 + 0.5 }
-    public class func cosineUpThenDown<T: Floatable>(t: T) -> T { return 1.0 - T.cos(t * T(twoPi)) * 0.5 + 0.5 }
-    public class func cosineDownThenUp<T: Floatable>(t: T) -> T { return T.cos(t * T(twoPi)) * 0.5 + 0.5 }
+    public class func sineUpThenDown(t: Float) -> Float { return sinf(t * Float(twoPi)) * 0.5 + 0.5 }
+    public class func sineDownThenUp(t: Float) -> Float { return 1.0 - sinf(t * Float(twoPi)) * 0.5 + 0.5 }
+    public class func cosineUpThenDown(t: Float) -> Float { return 1.0 - sinf(t * Float(twoPi)) * 0.5 + 0.5 }
+    public class func cosineDownThenUp(t: Float) -> Float { return sinf(t * Float(twoPi)) * 0.5 + 0.5 }
     
-    public class func miterLength<T: Floatable>(#lineWidth: T, phi: T) -> T { return lineWidth * (1.0 / T.sin(phi / 2.0)) }
+    public class func miterLength(#lineWidth: Float, phi: Float) -> Float { return lineWidth * (1.0 / sinf(phi / 2.0)) }
     
     
-    public class func binarySearch<T: Floatable>(var #min: T, var max: T, epsilon: T, test:(T) -> NSComparisonResult) {
-        var value: T
+    public class func binarySearch(var #min: Float, var max: Float, epsilon: Float, test:(Float) -> NSComparisonResult) {
+        var value: Float
         var done: Bool = false
         do {
             value = Math.denormalize(0.5, min, max)
@@ -145,7 +158,302 @@ public class Geometry {
                 min = value
                 max = value
             }
-            if T.abs(max - min) <= epsilon {
+            if Float.abs(max - min) <= epsilon {
+                done = true
+            }
+        } while(!done)
+    }
+}
+
+
+// Double
+extension Geometry {
+    public class func distanceSquared(#x: Double, y: Double) -> Double { return x * x + y * y }
+    public class func distanceSquared(#x1: Double, y1: Double, x2: Double, y2: Double) -> Double { return distanceSquared(x: x2 - x1, y: y2 - y1) }
+    
+    public class func distance(#x: Double, y: Double) -> Double { return hypot(x, y) }
+    public class func distance(#x1: Double, y1: Double, x2: Double, y2: Double) -> Double { return distance(x: x2 - x1, y: y2 - y1) }
+    
+    public class func distanceSquared(#x: Double, y: Double, z: Double) -> Double { return x * x + y * y + z * z }
+    public class func distanceSquared(#x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double) -> Double { return distanceSquared(x: x2 - x1, y: y2 - y1, z: z2 - z1) }
+    
+    public class func distance(#x: Double, y: Double, z: Double) -> Double { return sqrt(distanceSquared(x: x, y: y, z: z)) }
+    
+    public class func distance(#x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double) -> Double { return sqrt(distance(x: x2 - x1, y: y2 - y1, z: z2 - z1)) }
+    
+    public class func radiansFromDegrees(degrees: Double) -> Double { return degrees * Double(deg2rad) }
+    public class func degreesFromRadians(radians: Double) -> Double { return radians * Double(rad2deg) }
+    
+    public class func radians(#x: Double, y: Double) -> Double { return atan2(y, x) }
+    public class func radians(#x1: Double, y1: Double, x2: Double, y2: Double) -> Double { return radians(x: x2 - x1, y: y2 - y1) }
+    
+    public class func degrees(#x: Double, y: Double) -> Double { return degreesFromRadians(radians(x: x, y: y)) }
+    public class func degrees(#x1: Double, y1: Double, x2: Double, y2: Double) -> Double { return degrees(x: x2 - x1, y: y2 - y1) }
+    
+    public class func area(#x: Double, y: Double) -> Double { return x * y; }
+    public class func volume(#x: Double, y: Double, z: Double) -> Double { return x * y * z; }
+    
+    public class func dot(#x1: Double, y1: Double, x2: Double, y2: Double) -> Double { return x1 * x2 + y1 * y2; }
+    public class func dot(#x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double) -> Double { return x1 * x2 + y1 * y2 + z1 * z2; }
+    
+    public class func cross(#x1: Double, y1: Double, z1: Double, x2: Double, y2: Double, z2: Double) -> (x:Double, y:Double, z:Double) {
+        return (x:z2 * y1 - y2 * z1, y:x2 * z1 - z2 * x1, z:y2 * x1 - x2 * y1)
+    }
+    
+    public class func scale(#dx: Double, dy: Double, s: Double) -> (dx: Double, dy: Double) { return (dx: dx * s, dy: dy * s) }
+    public class func scale(#dx: Double, dy: Double, dz: Double, s: Double) -> (dx: Double, dy: Double, dz: Double) { return (dx: dx * s, dy: dy * s, dz: dz * s) }
+    public class func scale(#dx: Double, dy: Double, sx: Double, sy: Double) -> (dx: Double, dy: Double) { return (dx: dx * sx, dy: dy * sy) }
+    public class func scale(#dx: Double, dy: Double, dz: Double, sx: Double, sy: Double, sz: Double) -> (dx: Double, dy: Double, dz: Double) { return (dx: dx * sx, dy: dy * sy, dz: dz * sz) }
+    
+    public class func normalize(#x: Double, y: Double) -> (x: Double, y: Double) {
+        let d = distance(x: x, y: y); return (x: x / d, y: y / d)
+    }
+    public class func normalize(#x: Double, y: Double, z: Double) -> (x: Double, y: Double, z: Double) {
+        let d = distance(x: x, y: y, z: z); return (x: x / d, y: y / d, z: z / d)
+    }
+    
+    public class func normalize(#radians: Double) -> Double {
+        let p2 = Double(twoPi)
+        
+        if radians > p2 {
+            let r2 = radians - p2
+            if r2 > p2 {
+                return r2 % p2
+            }
+        } else if radians < 0.0 {
+            let r2 = radians + p2
+            if r2 < 0.0 {
+                return r2 % p2
+            }
+        }
+        
+        return radians
+    }
+    
+    public class func normalize(#degrees: Double) -> Double {
+        return normalize(radians: radiansFromDegrees(degrees))
+    }
+    
+    public class func rotate<A: Angle>(#x: Double, y: Double, angle: A) -> (x: Double, y: Double) {
+        let ca = angle.cos
+        let sa = angle.sin
+        return (x: x * ca - y * sa, y: y * ca + x * sa)
+    }
+    
+    public class func fromPolar<A: Angle>(#radius: Double, angle: A) -> (x: Double, y: Double) {
+        let r = Double(radius)
+        return (x: r * angle.cos, y: r * angle.sin)
+    }
+    
+    public class func interpolate(#x1: Double, y1: Double, x2: Double, y2: Double, t: Double) -> (x: Double, y: Double) {
+        return (x: Math.interpolate(t, x1, x2), y: Math.interpolate(t, y1, y2))
+    }
+    
+    public class func scaleForAspectFit(#dxContent: Double, dyContent: Double, dxArea: Double, dyArea: Double) -> Double {
+        return fmin(dxArea / dxContent, dyArea / dyContent)
+    }
+    
+    public class func scaleForAspectFill(#dxContent: Double, dyContent: Double, dxArea: Double, dyArea: Double) -> Double {
+        return fmin(dxArea / dxContent, dyArea / dyContent)
+    }
+    
+    public class func aspectFit(#dxContent: Double, dyContent: Double, dxArea: Double, dyArea: Double) -> (dx: Double, dy: Double) {
+        let s = scaleForAspectFit(dxContent: dxContent, dyContent: dyContent, dxArea: dxArea, dyArea: dyArea)
+        return scale(dx: dxContent, dy: dyContent, s: s)
+    }
+    
+    public class func aspectFill(#dxContent: Double, dyContent: Double, dxArea: Double, dyArea: Double) -> (dx: Double, dy: Double) {
+        let s = scaleForAspectFill(dxContent: dxContent, dyContent: dyContent, dxArea: dxArea, dyArea: dyArea)
+        return scale(dx: dxContent, dy: dyContent, s: s)
+    }
+    
+    // These versions use parabola segments (hermite curves)
+    public class func easeOutFast(t: Double) -> Double { let f = Math.clamp(t); return 2 * f - f * f }
+    public class func easeInFast(t: Double) -> Double { let f = Math.clamp(t); return f * f }
+    public class func easeInAndOutFast(t: Double) -> Double { let f = Math.clamp(t); return f * f * (3.0 - 2.0 * f) }
+    
+    // These versions use sine curve segments, and are more computationally intensive
+    public class func easeOut(t: Double) -> Double { let f = Math.clamp(t); return sin(f * Double(piOverTwo)) }
+    public class func easeIn(t: Double) -> Double { let f = Math.clamp(t); return 1.0 - cos(f * Double(piOverTwo)) }
+    public class func easeInAndOut(t: Double) -> Double { let f = Math.clamp(t); return 0.5 * (1 + sin(Double(pi) * (f - 0.5))) }
+    
+    public class func triangleUpThenDown(t: Double) -> Double { let f = Math.fract(t); return f < 0.5 ? Math.map(f, 0.0, 0.5, 0.0, 1.0) : Math.map(f, 0.5, 1.0, 1.0, 0.0) }
+    public class func triangleDownThenUp(t: Double) -> Double { let f = Math.fract(t); return f < 0.5 ? Math.map(f, 0.0, 0.5, 1.0, 0.0) : Math.map(f, 0.5, 1.0, 0.0, 1.0) }
+    public class func sawtoothUp(t: Double) -> Double { return Math.fract(t) }
+    public class func sawtoothDown(t: Double) -> Double { return 1.0 - Math.fract(t) }
+    
+    public class func sineUpThenDown(t: Double) -> Double { return sin(t * Double(twoPi)) * 0.5 + 0.5 }
+    public class func sineDownThenUp(t: Double) -> Double { return 1.0 - sin(t * Double(twoPi)) * 0.5 + 0.5 }
+    public class func cosineUpThenDown(t: Double) -> Double { return 1.0 - sin(t * Double(twoPi)) * 0.5 + 0.5 }
+    public class func cosineDownThenUp(t: Double) -> Double { return sin(t * Double(twoPi)) * 0.5 + 0.5 }
+    
+    public class func miterLength(#lineWidth: Double, phi: Double) -> Double { return lineWidth * (1.0 / sin(phi / 2.0)) }
+    
+    
+    public class func binarySearch(var #min: Double, var max: Double, epsilon: Double, test:(Double) -> NSComparisonResult) {
+        var value: Double
+        var done: Bool = false
+        do {
+            value = Math.denormalize(0.5, min, max)
+            let result: NSComparisonResult = test(value)
+            switch result {
+            case .OrderedAscending:
+                min = value
+            case .OrderedDescending:
+                max = value
+            case .OrderedSame:
+                min = value
+                max = value
+            }
+            if Double.abs(max - min) <= epsilon {
+                done = true
+            }
+        } while(!done)
+    }
+}
+
+
+
+// CGFloat
+extension Geometry {
+    public class func distanceSquared(#x: CGFloat, y: CGFloat) -> CGFloat { return x * x + y * y }
+    public class func distanceSquared(#x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) -> CGFloat { return distanceSquared(x: x2 - x1, y: y2 - y1) }
+    
+    public class func distance(#x: CGFloat, y: CGFloat) -> CGFloat { return hypot(x, y) }
+    public class func distance(#x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) -> CGFloat { return distance(x: x2 - x1, y: y2 - y1) }
+    
+    public class func distanceSquared(#x: CGFloat, y: CGFloat, z: CGFloat) -> CGFloat { return x * x + y * y + z * z }
+    public class func distanceSquared(#x1: CGFloat, y1: CGFloat, z1: CGFloat, x2: CGFloat, y2: CGFloat, z2: CGFloat) -> CGFloat { return distanceSquared(x: x2 - x1, y: y2 - y1, z: z2 - z1) }
+    
+    public class func distance(#x: CGFloat, y: CGFloat, z: CGFloat) -> CGFloat { return sqrt(distanceSquared(x: x, y: y, z: z)) }
+    
+    public class func distance(#x1: CGFloat, y1: CGFloat, z1: CGFloat, x2: CGFloat, y2: CGFloat, z2: CGFloat) -> CGFloat { return sqrt(distance(x: x2 - x1, y: y2 - y1, z: z2 - z1)) }
+    
+    public class func radiansFromDegrees(degrees: CGFloat) -> CGFloat { return degrees * CGFloat(deg2rad) }
+    public class func degreesFromRadians(radians: CGFloat) -> CGFloat { return radians * CGFloat(rad2deg) }
+    
+    public class func radians(#x: CGFloat, y: CGFloat) -> CGFloat { return atan2(y, x) }
+    public class func radians(#x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) -> CGFloat { return radians(x: x2 - x1, y: y2 - y1) }
+    
+    public class func degrees(#x: CGFloat, y: CGFloat) -> CGFloat { return degreesFromRadians(radians(x: x, y: y)) }
+    public class func degrees(#x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) -> CGFloat { return degrees(x: x2 - x1, y: y2 - y1) }
+    
+    public class func area(#x: CGFloat, y: CGFloat) -> CGFloat { return x * y; }
+    public class func volume(#x: CGFloat, y: CGFloat, z: CGFloat) -> CGFloat { return x * y * z; }
+    
+    public class func dot(#x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat) -> CGFloat { return x1 * x2 + y1 * y2; }
+    public class func dot(#x1: CGFloat, y1: CGFloat, z1: CGFloat, x2: CGFloat, y2: CGFloat, z2: CGFloat) -> CGFloat { return x1 * x2 + y1 * y2 + z1 * z2; }
+    
+    public class func cross(#x1: CGFloat, y1: CGFloat, z1: CGFloat, x2: CGFloat, y2: CGFloat, z2: CGFloat) -> (x:CGFloat, y:CGFloat, z:CGFloat) {
+        return (x:z2 * y1 - y2 * z1, y:x2 * z1 - z2 * x1, z:y2 * x1 - x2 * y1)
+    }
+    
+    public class func scale(#dx: CGFloat, dy: CGFloat, s: CGFloat) -> (dx: CGFloat, dy: CGFloat) { return (dx: dx * s, dy: dy * s) }
+    public class func scale(#dx: CGFloat, dy: CGFloat, dz: CGFloat, s: CGFloat) -> (dx: CGFloat, dy: CGFloat, dz: CGFloat) { return (dx: dx * s, dy: dy * s, dz: dz * s) }
+    public class func scale(#dx: CGFloat, dy: CGFloat, sx: CGFloat, sy: CGFloat) -> (dx: CGFloat, dy: CGFloat) { return (dx: dx * sx, dy: dy * sy) }
+    public class func scale(#dx: CGFloat, dy: CGFloat, dz: CGFloat, sx: CGFloat, sy: CGFloat, sz: CGFloat) -> (dx: CGFloat, dy: CGFloat, dz: CGFloat) { return (dx: dx * sx, dy: dy * sy, dz: dz * sz) }
+    
+    public class func normalize(#x: CGFloat, y: CGFloat) -> (x: CGFloat, y: CGFloat) {
+        let d = distance(x: x, y: y); return (x: x / d, y: y / d)
+    }
+    public class func normalize(#x: CGFloat, y: CGFloat, z: CGFloat) -> (x: CGFloat, y: CGFloat, z: CGFloat) {
+        let d = distance(x: x, y: y, z: z); return (x: x / d, y: y / d, z: z / d)
+    }
+    
+    public class func normalize(#radians: CGFloat) -> CGFloat {
+        let p2 = CGFloat(twoPi)
+        
+        if radians > p2 {
+            let r2 = radians - p2
+            if r2 > p2 {
+                return r2 % p2
+            }
+        } else if radians < 0.0 {
+            let r2 = radians + p2
+            if r2 < 0.0 {
+                return r2 % p2
+            }
+        }
+        
+        return radians
+    }
+    
+    public class func normalize(#degrees: CGFloat) -> CGFloat {
+        return normalize(radians: radiansFromDegrees(degrees))
+    }
+    
+    public class func rotate<A: Angle>(#x: CGFloat, y: CGFloat, angle: A) -> (x: CGFloat, y: CGFloat) {
+        let ca = CGFloat(angle.cos)
+        let sa = CGFloat(angle.sin)
+        return (x: x * ca - y * sa, y: y * ca + x * sa)
+    }
+    
+    public class func fromPolar<A: Angle>(#radius: CGFloat, angle: A) -> (x: CGFloat, y: CGFloat) {
+        let r = Double(radius)
+        return (x: CGFloat(r * angle.cos), y: CGFloat(r * angle.sin))
+    }
+    
+    public class func interpolate(#x1: CGFloat, y1: CGFloat, x2: CGFloat, y2: CGFloat, t: CGFloat) -> (x: CGFloat, y: CGFloat) {
+        return (x: Math.interpolate(t, x1, x2), y: Math.interpolate(t, y1, y2))
+    }
+    
+    public class func scaleForAspectFit(#dxContent: CGFloat, dyContent: CGFloat, dxArea: CGFloat, dyArea: CGFloat) -> CGFloat {
+        return fmin(dxArea / dxContent, dyArea / dyContent)
+    }
+    
+    public class func scaleForAspectFill(#dxContent: CGFloat, dyContent: CGFloat, dxArea: CGFloat, dyArea: CGFloat) -> CGFloat {
+        return fmax(dxArea / dxContent, dyArea / dyContent)
+    }
+    
+    public class func aspectFit(#dxContent: CGFloat, dyContent: CGFloat, dxArea: CGFloat, dyArea: CGFloat) -> (dx: CGFloat, dy: CGFloat) {
+        let s = scaleForAspectFit(dxContent: dxContent, dyContent: dyContent, dxArea: dxArea, dyArea: dyArea)
+        return scale(dx: dxContent, dy: dyContent, s: s)
+    }
+    
+    public class func aspectFill(#dxContent: CGFloat, dyContent: CGFloat, dxArea: CGFloat, dyArea: CGFloat) -> (dx: CGFloat, dy: CGFloat) {
+        let s = scaleForAspectFill(dxContent: dxContent, dyContent: dyContent, dxArea: dxArea, dyArea: dyArea)
+        return scale(dx: dxContent, dy: dyContent, s: s)
+    }
+    
+    // These versions use parabola segments (hermite curves)
+    public class func easeOutFast(t: CGFloat) -> CGFloat { let f = Math.clamp(t); return 2 * f - f * f }
+    public class func easeInFast(t: CGFloat) -> CGFloat { let f = Math.clamp(t); return f * f }
+    public class func easeInAndOutFast(t: CGFloat) -> CGFloat { let f = Math.clamp(t); return f * f * (3.0 - 2.0 * f) }
+    
+    // These versions use sine curve segments, and are more computationally intensive
+    public class func easeOut(t: CGFloat) -> CGFloat { let f = Math.clamp(t); return sin(f * CGFloat(piOverTwo)) }
+    public class func easeIn(t: CGFloat) -> CGFloat { let f = Math.clamp(t); return 1.0 - cos(f * CGFloat(piOverTwo)) }
+    public class func easeInAndOut(t: CGFloat) -> CGFloat { let f = Math.clamp(t); return 0.5 * (1 + sin(CGFloat(pi) * (f - 0.5))) }
+    
+    public class func triangleUpThenDown(t: CGFloat) -> CGFloat { let f = Math.fract(t); return f < 0.5 ? Math.map(f, 0.0, 0.5, 0.0, 1.0) : Math.map(f, 0.5, 1.0, 1.0, 0.0) }
+    public class func triangleDownThenUp(t: CGFloat) -> CGFloat { let f = Math.fract(t); return f < 0.5 ? Math.map(f, 0.0, 0.5, 1.0, 0.0) : Math.map(f, 0.5, 1.0, 0.0, 1.0) }
+    public class func sawtoothUp(t: CGFloat) -> CGFloat { return Math.fract(t) }
+    public class func sawtoothDown(t: CGFloat) -> CGFloat { return 1.0 - Math.fract(t) }
+    
+    public class func sineUpThenDown(t: CGFloat) -> CGFloat { return sin(t * CGFloat(twoPi)) * 0.5 + 0.5 }
+    public class func sineDownThenUp(t: CGFloat) -> CGFloat { return 1.0 - sin(t * CGFloat(twoPi)) * 0.5 + 0.5 }
+    public class func cosineUpThenDown(t: CGFloat) -> CGFloat { return 1.0 - sin(t * CGFloat(twoPi)) * 0.5 + 0.5 }
+    public class func cosineDownThenUp(t: CGFloat) -> CGFloat { return sin(t * CGFloat(twoPi)) * 0.5 + 0.5 }
+    
+    public class func miterLength(#lineWidth: CGFloat, phi: CGFloat) -> CGFloat { return lineWidth * (1.0 / sin(phi / 2.0)) }
+    
+    
+    public class func binarySearch(var #min: CGFloat, var max: CGFloat, epsilon: CGFloat, test:(CGFloat) -> NSComparisonResult) {
+        var value: CGFloat
+        var done: Bool = false
+        do {
+            value = Math.denormalize(0.5, min, max)
+            let result: NSComparisonResult = test(value)
+            switch result {
+            case .OrderedAscending:
+                min = value
+            case .OrderedDescending:
+                max = value
+            case .OrderedSame:
+                min = value
+                max = value
+            }
+            if CGFloat.abs(max - min) <= epsilon {
                 done = true
             }
         } while(!done)

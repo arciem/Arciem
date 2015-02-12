@@ -23,32 +23,32 @@ let _colorParsingRegex: NSRegularExpression! = ~/"^\\s*(?:(r|h)(?:ed|ue)?:\\s*)?
 
 public extension UIColor {
     public func colorByDarkeningFraction(fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByDarkening(color: self.CGColor, fraction: fraction))
+        return UIColor(CGColor: CGColorCreateByDarkening(color: self.CGColor, fraction: fraction))!
     }
 
     public func colorByLighteningFraction(fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByLightening(color: self.CGColor, fraction: fraction))
+        return UIColor(CGColor: CGColorCreateByLightening(color: self.CGColor, fraction: fraction))!
     }
     
     public func colorByDodgingFraction(fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByDodging(color: self.CGColor, fraction: fraction))
+        return UIColor(CGColor: CGColorCreateByDodging(color: self.CGColor, fraction: fraction))!
     }
     
     public func colorByBurningFraction(fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByBurning(color: self.CGColor, fraction: fraction))
+        return UIColor(CGColor: CGColorCreateByBurning(color: self.CGColor, fraction: fraction))!
     }
     
     public func colorByInterpolatingFraction(fraction: CGFloat, toColor: UIColor) -> UIColor {
         let cgColor = CGColorCreateByInterpolating(color1: self.CGColor, color2: toColor.CGColor, fraction: fraction)
-        return UIColor(CGColor: cgColor)
+        return UIColor(CGColor: cgColor)!
     }
     
     public func randomColor() -> UIColor {
-        return UIColor(CGColor: CGColorCreateRandom())
+        return UIColor(CGColor: CGColorCreateRandom())!
     }
     
     public func convertToRGB() -> UIColor {
-        return UIColor(CGColor: CGColorConvertToRGB(self.CGColor))
+        return UIColor(CGColor: CGColorConvertToRGB(self.CGColor))!
     }
 }
 
@@ -70,19 +70,20 @@ public func colorFromRGBAValue(v: UInt32) -> UIColor {
     return UIColor(red: r, green: g, blue: b, alpha: a)
 }
 
-public func colorFromString(s: NSString) -> UIColor {
+public func colorFromString(s: String) -> UIColor {
     var components = [CGFloat]()
     var type = "r"
     
-    var textCheckingResult: NSTextCheckingResult? = _colorParsingRegex.firstMatchInString(s, options: nil, range: NSRange(0..<s.length))
+    let ss: NSString = s
+    var textCheckingResult: NSTextCheckingResult? = _colorParsingRegex.firstMatchInString(s, options: nil, range: NSRange(0..<ss.length))
     if let tcr = textCheckingResult {
         for var i = 1; i < tcr.numberOfRanges; ++i {
             let range = tcr.rangeAtIndex(i)
             if range.location != Int(Foundation.NSNotFound) {
-                let matchText: NSString = s.substringWithRange(range)
+                let matchText: NSString = ss.substringWithRange(range)
                 if matchText.length > 0 {
                     if i == 1 {
-                        type = matchText
+                        type = matchText as! String
                     } else if i > 1 {
                         components.append(matchText.cgFloatValue())
                     }

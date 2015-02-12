@@ -46,8 +46,8 @@ public class Component {
 public typealias TransformFunc = (Packet) -> Packet
 
 public class TransformComponent : Component {
-    public let inPort: InputPort!
-    public let outPort: OutputPort!
+    public private(set) var inPort: InputPort!
+    public private(set) var outPort: OutputPort!
     let transform: TransformFunc
     public init(synchronous: Bool, transform: TransformFunc) {
         self.transform = transform

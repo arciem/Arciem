@@ -23,19 +23,8 @@ public typealias ErrorBlock = (error: NSError) -> Void
 // A block that takes a Canceler. The block will not be called again if it sets the <isCanceled> variable of the Canceler to true.
 public typealias CancelableBlock = (canceler: Canceler) -> Void
 
-// This variable returns the GCD main queue, which is the queue associated with the main thread. All calls to CocoaTouch UI APIs should happen on this thread.
-public var mainQueue: DispatchQueue {
-get {
-    return dispatch_get_main_queue()
-}
-}
-
-// This variable returns a concurrent background queue, able to handle more than one concurrent background task.
-public var backgroundQueue: DispatchQueue {
-get {
-    return dispatch_queue_create("background", DISPATCH_QUEUE_CONCURRENT)
-}
-}
+public let mainQueue = dispatch_get_main_queue()
+public let backgroundQueue = dispatch_queue_create("background", DISPATCH_QUEUE_CONCURRENT)
 
 // A utility function to convert a time since now as a Double (NSTimeInterval) representing a number of seconds to a dispatch_time_t used by GCD.
 public func dispatchTimeSinceNow(offsetInSeconds: NSTimeInterval) -> dispatch_time_t {

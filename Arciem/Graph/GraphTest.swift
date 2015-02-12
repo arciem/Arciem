@@ -16,10 +16,10 @@ public func graphTest() {
 func graphTest1() {
     let g = Graph()
     
-    let n1 = Node<Float>(g).setName("n1")
+    let n1 = Node<Double>(g).setName("n1")
     let n2 = Node(lhs: n1).setName("n2")
     let n3 = (-n2).setName("n3")
-    let n4 = Node<Float>(g).setName("n4")
+    let n4 = Node<Double>(g).setName("n4")
     let n5 = (n2 * n4).setName("n5")
     let n6 = (n5 - n4).setName("n6")
     n1.result = Result(10.5)
@@ -77,11 +77,11 @@ func graphTest2() {
 func graphTest3() {
     let graph = Graph()
     
-    var a = Node<Int>(graph).setName("a").setValue(4)
-    var b = Node<Int>(graph).setName("b").setValue(25)
-    var c = Node<Int>(graph).setName("c").setValue(3)
-    var d = Node<Int>(graph).setName("d").setValue(6)
-    var e = Node<Int>(graph).setName("e").setValue(7)
+    var a = Node<Double>(graph).setName("a").setValue(4)
+    var b = Node<Double>(graph).setName("b").setValue(25)
+    var c = Node<Double>(graph).setName("c").setValue(3)
+    var d = Node<Double>(graph).setName("d").setValue(6)
+    var e = Node<Double>(graph).setName("e").setValue(7)
     
     let x = (a + b * c + d) % e
     
@@ -115,7 +115,7 @@ func graphTest4() {
         } else if let e = value as? NSError {
             result = Result(error: e)
         }
-        if let result = result? {
+        if let result = result {
             node.setOperation(delayedResult(result, t))
             node.operate()
             t += Random.randomDouble(2.0..<5.0)

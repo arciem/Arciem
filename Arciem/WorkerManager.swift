@@ -32,11 +32,11 @@ public class WorkerManager {
     
     public func addWorker(worker: Worker) {
         serializer.dispatch { [unowned self] in
-            assert(worker.state.value? as? WorkerState == WorkerState.Ready, "worker is not ready")
+            assert(worker.state.value as? WorkerState == WorkerState.Ready, "worker is not ready")
             self.workers.add(worker)
             worker.state.value = WorkerState.Queueing
             dispatchOnQueue(self.workQueue) {
-                if(worker.state.value? as? WorkerState == WorkerState.Canceled) {
+                if(worker.state.value as? WorkerState == WorkerState.Canceled) {
                     worker.state.value = WorkerState.Executing
                     worker.task?(manager: self)
                 }
@@ -54,9 +54,9 @@ public class WorkerManager {
     func workerDone(worker: Worker) {
         serializer.dispatch { [unowned self] in
             self.workers.remove(worker)
-            if(worker.state.value? as? WorkerState == WorkerState.Canceled) {
+            if(worker.state.value as? WorkerState == WorkerState.Canceled) {
                 dispatchOnQueue(self.callbackQueue) {
-                    if(worker.state.value? as? WorkerState == WorkerState.Canceled) {
+                    if(worker.state.value as? WorkerState == WorkerState.Canceled) {
                         if worker.error != nil {
                             worker.state.value = WorkerState.Failure
                             worker.😡?(error: worker.error!)

@@ -11,11 +11,11 @@ import Foundation
 // Regex matching operators
 
 public func ~= (pattern: NSRegularExpression, str: String) -> Bool {
-    return pattern.numberOfMatchesInString(str, options: nil, range: NSRange(location: 0,  length: countElements(str))) > 0
+    return pattern.numberOfMatchesInString(str, options: nil, range: NSRange(location: 0,  length: count(str))) > 0
 }
 
 public func ~= (str: String, pattern: NSRegularExpression) -> Bool {
-    return pattern.numberOfMatchesInString(str, options: nil, range: NSRange(location: 0,  length: countElements(str))) > 0
+    return pattern.numberOfMatchesInString(str, options: nil, range: NSRange(location: 0,  length: count(str))) > 0
 }
 
 // Regex creation operator

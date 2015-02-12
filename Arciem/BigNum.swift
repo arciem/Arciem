@@ -144,7 +144,7 @@ public struct BigNum {
             chars.insert(" ", atIndex: 0)
         }
         
-        return join("", chars)
+        return joinStrings("", chars)
     }
 }
 
@@ -158,7 +158,7 @@ extension BigNum : Printable {
             if(negative) {
                 digitStrings.insert("-", atIndex: 0)
             }
-            let s = join(" ", digitStrings)
+            let s = joinStrings(" ", digitStrings)
             return "BigNum:[\(s)]"
         }
     }

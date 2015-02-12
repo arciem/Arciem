@@ -46,8 +46,7 @@ class DataflowTest: XCTestCase {
         
         let paramPort = ParameterPort()
 
-        let resultPort = ResultPort()
-        resultPort.receive = receive
+        let resultPort = ResultPort(synchronous: true, receive: receive)
 
         let negateComponent = NegateComponent()
 

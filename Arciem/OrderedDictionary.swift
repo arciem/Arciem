@@ -24,14 +24,14 @@ public struct OrderedDictionary<K: Hashable, V> {
         }
         set(v) {
             if let t = dict[k] {
-                if let v = v? {
+                if let v = v {
                     dict[k] = (t.i, v)
                 } else {
                     dict[k] = nil
                     array.removeAtIndex(t.i)
                 }
             } else {
-                if let v = v? {
+                if let v = v {
                     let i = array.count
                     array.append(k)
                     dict[k] = (i, v)
@@ -61,7 +61,7 @@ extension OrderedDictionary: Printable {
                 let t = dict[k]
                 a.append("\(i): \(k): \(t!.v)")
             }
-            let aa = join(", ", a)
+            let aa = joinStrings(", ", a)
             let s = "[\(aa)]"
             return s
         }

@@ -22,7 +22,7 @@ public extension UIView {
             layoutTop ==⦿ sv.layoutTop,
             layoutBottom ==⦿ sv.layoutBottom
         ]
-        NSLayoutConstraint.activateConstraintsGlue(constraints, targetView:sv)
+        NSLayoutConstraint.activateConstraints(constraints)
         return constraints
     }
     
@@ -36,7 +36,7 @@ public extension UIView {
             layoutTop ==⦿ view.layoutTop,
             layoutBottom ==⦿ view.layoutBottom
         ]
-        NSLayoutConstraint.activateConstraintsGlue(constraints, targetView:superview!)
+        NSLayoutConstraint.activateConstraints(constraints)
         return constraints
     }
     
@@ -47,7 +47,7 @@ public extension UIView {
             layoutCenterX ==⦿ sv.layoutCenterX,
             layoutCenterY ==⦿ sv.layoutCenterY
         ]
-        NSLayoutConstraint.activateConstraintsGlue(constraints, targetView:sv)
+        NSLayoutConstraint.activateConstraints(constraints)
         return constraints
     }
     
@@ -76,13 +76,13 @@ public extension UIView {
         auxInfoStrings.append("alpha:\(view.alpha)")
         let debugName = view.debugName
         let debugNameString = debugName == nil ? "" : "\(debugName): "
-        let auxInfoString = join(" ", auxInfoStrings)
+        let auxInfoString = joinStrings(" ", auxInfoStrings)
         let prefix = "\(scrollViewPrefix) \(translatesPrefix) \(ambiguousPrefix)"
         let s = NSString(format: "%@%@%3d %@%@ %@", prefix, indent, level, debugNameString, view, auxInfoString)
         println(s)
         
         let nextIndent = indent + "  |"
-        for subview in view.subviews as [UIView] {
+        for subview in view.subviews as! [UIView] {
             printViewHierarchy(subview, indent: nextIndent, level: level + 1)
         }
     }
@@ -91,7 +91,7 @@ public extension UIView {
         printConstraintsHierarchy(self, indent: "", level: 0)
     }
     
-    private func printConstraintsHierarchy(view: UIView, indent: NSString, level: Int) {
+    private func printConstraintsHierarchy(view: UIView, indent: String, level: Int) {
         let translatesPrefix = view.translatesAutoresizingMaskIntoConstraints() ? "⬜️" : "✅"
         let ambiguousPrefix = view.hasAmbiguousLayout() ? "❓" : "⬜️"
         let prefix = "\(translatesPrefix) \(ambiguousPrefix)"
@@ -101,14 +101,14 @@ public extension UIView {
         let frameString = NSString(format: "(%g %g; %g %g)", Float(view.frame.left), Float(view.frame.top), Float(view.frame.width), Float(view.frame.height))
         let s = NSString(format: "%@ ⬜️ %@%3d %@%@ %@", prefix, indent, level, debugNameString, viewString, frameString)
         println(s)
-        for constraint in view.constraints() as [NSLayoutConstraint] {
+        for constraint in view.constraints() as! [NSLayoutConstraint] {
             let layoutGroupName = constraint.layoutGroupName
             let layoutGroupNameString = layoutGroupName == nil ? "" : "\(layoutGroupName): "
             println("⬜️ ⬜️ 🔵 \(indent)  │    \(layoutGroupNameString)\(constraint)")
         }
         
         let nextIndent = indent + "  |"
-        for subview in view.subviews as [UIView] {
+        for subview in view.subviews as! [UIView] {
             printConstraintsHierarchy(subview, indent: nextIndent, level: level + 1)
         }
     }

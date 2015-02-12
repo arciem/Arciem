@@ -39,7 +39,7 @@ public class HTTPWorker : Worker {
     
     public class func stringForStatusCode(statusCodeOpt: Int?) -> String? {
         var s: String?
-        if let statusCode = statusCodeOpt? {
+        if let statusCode = statusCodeOpt {
             let statusCodeString = NSHTTPURLResponse.localizedStringForStatusCode(statusCode)
             s = "\(statusCode) \(statusCodeString)"
         }

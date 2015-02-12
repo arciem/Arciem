@@ -52,7 +52,7 @@ public class ObservableValue /*: Valuable*/ {
         assert(newObserver.observedValue == nil, "attempting to re-add observer")
         var updatedObservers = [WeakObserverType]()
         for weakObserver in observers {
-            if let observer = weakObserver.value? {
+            if let observer = weakObserver.value {
                 updatedObservers.append(weakObserver)
             }
         }
@@ -68,7 +68,7 @@ public class ObservableValue /*: Valuable*/ {
         var updatedObservers = [WeakObserverType]()
         var found = false
         for weakObserver in observers {
-            if let observer = weakObserver.value? {
+            if let observer = weakObserver.value {
                 found = true
             } else {
                 updatedObservers.append(weakObserver)

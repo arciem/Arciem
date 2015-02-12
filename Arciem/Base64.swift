@@ -1,14 +1,14 @@
 import Foundation
 
-public func toBase64(bytes: [Byte]) -> String {
+public func toBase64(bytes: [UInt8]) -> String {
     return NSData(byteArray: bytes).base64EncodedStringWithOptions(NSDataBase64EncodingOptions(0))
 }
 
-public func fromBase64(string: String) -> [Byte]? {
+public func fromBase64(string: String) -> [UInt8]? {
     return NSData(base64EncodedString: string, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)?.toByteArray()
 }
 
-public func toBase64url(bytes: [Byte]) -> String {
+public func toBase64url(bytes: [UInt8]) -> String {
     let s = toBase64(bytes)
     var s2 = ""
     for c in s {

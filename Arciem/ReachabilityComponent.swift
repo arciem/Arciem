@@ -7,8 +7,8 @@
 //
 
 public class ReachabilityComponent : Component {
-    public let inEnabledPort: InputPort!
-    public let outStatusPort: OutputPort!
+    public private(set) var inEnabledPort: InputPort!
+    public private(set) var outStatusPort: OutputPort!
     
     private let reachability: Reachability
     
@@ -36,7 +36,7 @@ public class ReachabilityComponent : Component {
         super.init()
         
         inEnabledPort = addInputPortNamed("enabled", synchronous: true) { [unowned self] packet in
-            let _  = packet ★ { v in self.enabled = v.boolValue? ?? false }
+            let _  = packet ★ { v in self.enabled = v.boolValue ?? false }
         }
         
         outStatusPort = addOutputPortNamed("status", synchronous: true)

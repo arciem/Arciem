@@ -36,7 +36,7 @@ public class KeyboardAvoidantView : CView {
     
     func keyboardWillMove(notification: NSNotification) {
         assert(bottomConstraint != nil, "bottomConstraint not set")
-        if let superview = superview? {
+        if let superview = superview {
             let endKeyboardRectangle = endKeyboardRectangleFromNotification(notification)
             updateBottomConstraintForKeyboardRectangle(endKeyboardRectangle)
             
@@ -54,7 +54,7 @@ public class KeyboardAvoidantView : CView {
     }
     
     func updateBottomConstraintForKeyboardRectangle(keyboardRectangle: CGRect) {
-        if let superview = superview? {
+        if let superview = superview {
             let intersects = keyboardRectangle.intersects(superview.bounds)
             let newMaxY = intersects ? keyboardRectangle.top : superview.bounds.bottom
 //            println("\(self) updateBottomConstraintForKeyboardRectangle:\(keyboardRectangle) newMaxY:\(newMaxY)")
@@ -87,12 +87,12 @@ public class KeyboardAvoidantView : CView {
     func findKeyboardView() -> UIView? {
         var result: UIView? = nil
         
-        let windows = UIApplication.sharedApplication().windows as [UIWindow]
+        let windows = UIApplication.sharedApplication().windows as! [UIWindow]
         for window in windows {
             if window.description.hasPrefix("<UITextEffectsWindow") {
-                for subview in window.subviews as [UIView] {
+                for subview in window.subviews as! [UIView] {
                     if subview.description.hasPrefix("<UIInputSetContainerView") {
-                        for sv in subview.subviews as [UIView] {
+                        for sv in subview.subviews as! [UIView] {
                             if sv.description.hasPrefix("<UIInputSetHostView") {
                                 result = sv
                                 break

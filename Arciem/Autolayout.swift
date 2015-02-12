@@ -16,19 +16,14 @@ import UIKit
 public struct ProtoLayoutConstraint {
     public let view: UIView
     public let attribute: NSLayoutAttribute
-    public let multiplier: CGFloat = 1.0
-    public let constant: CGFloat = 0.0
+    public let multiplier: CGFloat
+    public let constant: CGFloat
     
-    public init(view: UIView, attribute: NSLayoutAttribute, multiplier: CGFloat, constant: CGFloat) {
+    public init(view: UIView, attribute: NSLayoutAttribute, multiplier: CGFloat = 1.0, constant: CGFloat = 0.0) {
         self.view = view
         self.attribute = attribute
         self.multiplier = multiplier
         self.constant = constant
-    }
-    
-    public init(view: UIView, attribute: NSLayoutAttribute) {
-        self.view = view
-        self.attribute = attribute
     }
     
     // relateTo(), equalTo(), greaterThanOrEqualTo(), and lessThanOrEqualTo() used to be overloaded functions
@@ -144,22 +139,12 @@ public func =⦿= (left: NSLayoutConstraint, right: UILayoutPriority) -> NSLayou
 }
 
 public extension NSLayoutConstraint {
-    public class func activateConstraintsGlue(constraints: [NSLayoutConstraint], targetView: UIView) {
-        if isOSVersionAtLeast8 {
-            NSLayoutConstraint.activateConstraints(constraints)
-        } else {
-            for constraint in constraints {
-                targetView.addConstraint(constraint)
-            }
-        }
-    }
-    
     public var layoutGroupName: String? {
         get {
-            return getAssociatedObject(object: self, key: "layoutGroupName") as String?
+            return getAssociatedObject(object: self, key: "layoutGroupName") as! String?
         }
         set {
-            setAssociatedObject(object: self, key: "layoutGroupName", value: newValue?)
+            setAssociatedObject(object: self, key: "layoutGroupName", value: newValue!)
         }
     }
 }

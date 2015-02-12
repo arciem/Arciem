@@ -44,11 +44,11 @@ extension AbstractNode {
     }
     
     public func dispatchOnBackground(f: DispatchBlock) {
-        self.dispatchOnQueue(backgroundQueue, f)
+        self.dispatchOnQueue(backgroundQueue, f: f)
     }
     
     public func dispatchOnMain(f: DispatchBlock) {
-        self.dispatchOnQueue(mainQueue, f)
+        self.dispatchOnQueue(mainQueue, f: f)
     }
     
     public func dispatchOnQueue(queue: DispatchQueue, f: DispatchBlock) {
@@ -63,7 +63,7 @@ public class Node<ValueType> : AbstractNode {
     public typealias ResultType = Result<ValueType>
     public var result: ResultType? {
         didSet {
-            for edge in outEdges as [OutEdgeType] {
+            for edge in outEdges as! [OutEdgeType] {
                 edge.transfer?()
             }
         }
@@ -97,14 +97,14 @@ public class Node<ValueType> : AbstractNode {
     }
     
     public convenience init(lhs: Node<ValueType>, operation: OperationFunc? = nil) {
-        self.init(lhs.graph, operation)
+        self.init(lhs.graph, operation: operation)
         Edge(tail: lhs, head: self) { [unowned lhs, unowned self] in lhs.result => self.result }
     }
     
     public override var dotAttributes : [String : String] {
         get {
             var attrs = super.dotAttributes
-            if let result = result? {
+            if let result = result {
                 result
                     ★ { _ in attrs["color"] = "green3" }
                     † { _ in attrs["color"] = "red" }
@@ -117,7 +117,7 @@ public class Node<ValueType> : AbstractNode {
     public override var dotLabels : [String] {
         get {
             var labels = super.dotLabels
-            if let result = result? {
+            if let result = result {
                 result
                     ★ { value in labels.append("=\(value)") }
                     † { error in labels.append("!\(error.code)") }
@@ -132,11 +132,11 @@ extension Node : Printable {
     public var description: String {
         get {
             var items = [typeNameOf(self), "eid:\(eid)"]
-            if let name = name? {
+            if let name = name {
                 items.append("name:\(name)")
             }
             items.append("result:\(result)")
-            let s = join(" ", items)
+            let s = joinStrings(" ", items)
             return "[\(s)]"
         }
     }
@@ -172,14 +172,14 @@ public class PrefixOpNode<RHSType, ValueType> : Node<ValueType> {
     }
 
     public override init(_ graph: Graph, operation: OperationFunc?) {
-        super.init(graph, operation)
+        super.init(graph, operation: operation)
     }
 }
 
 public func newPrefixOpNode<R, ValueType>(graph: Graph, name: String?, op:((R) -> ValueType))(rhs: Node<R>) -> Node<ValueType> {
     let head = PrefixOpNode<R, ValueType>(graph) { (node) in
-        let n = node as PrefixOpNode<R, ValueType>
-        if let rhs = n.rhs? {
+        let n = node as! PrefixOpNode<R, ValueType>
+        if let rhs = n.rhs {
             n.result = rhs → { op($0) }
         } else {
             n.result = nil
@@ -203,15 +203,15 @@ public class InfixOpNode<LHSType, RHSType, ValueType> : Node<ValueType> {
         }
     }
     public init(_ graph: Graph, operation: OperationFunc) {
-        super.init(graph, operation)
+        super.init(graph, operation: operation)
     }
 }
 
 public func newInfixOpNode<L, R, ValueType>(graph: Graph, name: String?, op:((l: L, r:R) -> ValueType))(lhs: Node<L>, rhs: Node<R>) -> Node<ValueType> {
     let head = InfixOpNode<L, R, ValueType>(graph) { node in
-        let n = node as InfixOpNode<L, R, ValueType>
-        if let lhs = n.lhs? {
-            if let rhs = n.rhs? {
+        let n = node as! InfixOpNode<L, R, ValueType>
+        if let lhs = n.lhs {
+            if let rhs = n.rhs {
                 switch (lhs, rhs) {
                 case (.Value(let lv), .Value(let rv)):
                     n.result = Result(op(l: lv.unbox, r: rv.unbox))
@@ -237,26 +237,26 @@ public func newInfixOpNode<L, R, ValueType>(graph: Graph, name: String?, op:((l:
     return head
 }
 
-public prefix func -<T: SignedNumberType>(rhs: Node<T>) -> Node<T> {
+public prefix func -(rhs: Node<Double>) -> Node<Double> {
     return newPrefixOpNode(rhs.graph, "-"){ return -$0 } (rhs: rhs)
 }
 
-public func +<T: ImmutableArithmeticable>(lhs: Node<T>, rhs: Node<T>) -> Node<T> {
+public func +(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
     return newInfixOpNode(lhs.graph, "+"){ return $0 + $1 } (lhs: lhs, rhs: rhs)
 }
 
-public func -<T: ImmutableArithmeticable>(lhs: Node<T>, rhs: Node<T>) -> Node<T> {
+public func -(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
     return newInfixOpNode(lhs.graph, "-"){ return $0 - $1 }(lhs: lhs, rhs: rhs)
 }
 
-public func *<T: ImmutableArithmeticable>(lhs: Node<T>, rhs: Node<T>) -> Node<T> {
+public func *(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
     return newInfixOpNode(lhs.graph, "*"){ return $0 * $1 }(lhs: lhs, rhs: rhs)
 }
 
-public func /<T: ImmutableArithmeticable>(lhs: Node<T>, rhs: Node<T>) -> Node<T> {
+public func /(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
     return newInfixOpNode(lhs.graph, "/"){ return $0 / $1 }(lhs: lhs, rhs: rhs)
 }
 
-public func %<T: ImmutableArithmeticable>(lhs: Node<T>, rhs: Node<T>) -> Node<T> {
+public func %(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
     return newInfixOpNode(lhs.graph, "%"){ return $0 % $1 }(lhs: lhs, rhs: rhs)
 }

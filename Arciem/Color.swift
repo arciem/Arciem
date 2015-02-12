@@ -19,7 +19,7 @@ public struct Color {
         self.alpha = alpha
     }
     
-    public init(redByte: Byte, greenByte: Byte, blueByte: Byte, alphaByte: Byte = 255) {
+    public init(redByte: UInt8, greenByte: UInt8, blueByte: UInt8, alphaByte: UInt8 = 255) {
         self.init(red: Float(redByte) / 255.0,
             green: Float(greenByte) / 255.0,
             blue: Float(blueByte) / 255.0,
@@ -27,11 +27,11 @@ public struct Color {
         )
     }
     
-    public init(bytes: [Byte]) {
+    public init(bytes: [UInt8]) {
         let redByte = bytes[0]
         let greenByte = bytes[1]
         let blueByte = bytes[2]
-        var alphaByte: Byte = 255
+        var alphaByte: UInt8 = 255
         if bytes.count >= 4 {
             alphaByte = bytes[3]
         }
@@ -48,11 +48,12 @@ public struct Color {
     public init(var hue h: Float, var saturation s: Float, var brightness v: Float, alpha a: Float = 1.0) {
         v = Math.clamp(v, 0.0...1.0)
         s = Math.clamp(s, 0.0...1.0)
-        red = v
-        green = v
-        blue = v
         alpha = a
-        if(s > 0.0) {
+        if(s <= 0.0) {
+            red = v
+            green = v
+            blue = v
+        } else {
             h %= 1.0
             if h < 0.0 { h += 1.0 }
             h *= 6.0
@@ -68,7 +69,7 @@ public struct Color {
             case 3: red = p; green = q; blue = v
             case 4: red = t; green = p; blue = v
             case 5: red = v; green = p; blue = q
-            default: assert(false, "unknown hue sector")
+            default: red = 0; green = 0; blue = 0; assert(false, "unknown hue sector")
             }
         }
     }

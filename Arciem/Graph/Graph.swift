@@ -69,7 +69,7 @@ extension Graph {
         for (key, value) in attrs {
             strings.append("\(key)=\"\(value)\"")
         }
-        let s = join(",", strings)
+        let s = joinStrings(",", strings)
         return "[\(s)]"
     }
     
@@ -94,12 +94,12 @@ extension Graph {
             }
             
             lines.append("}")
-            return join("\n", lines)
+            return joinStrings("\n", lines)
         }
     }
 
     public func writeDotDescriptionToFilename(filename: String) {
-        if let url = NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: false, error: nil)? {
+        if let url = NSFileManager.defaultManager().URLForDirectory(.DocumentDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: false, error: nil) {
             let data = dotDescription.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
             let path = "\(filename).dot"
             let url2 = url.URLByAppendingPathComponent(path)
@@ -125,7 +125,7 @@ public func →<T>(lhs: (graph: Graph, node: Node<T>), rhs: (T) -> Void) -> (Gra
     let graph = lhs.graph
     let n = newOutputNode(lhs.graph, "=", lhs.node)
         { [unowned graph] result in
-            if let result = result? {
+            if let result = result {
                 result
                     ★ { rhs($0) }
                     † { graph.failure?(error: $0) ?? () }

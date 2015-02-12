@@ -6,220 +6,163 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import CoreGraphics
-
-public let pi: Double = M_PI
-public let piOverTwo: Double = M_PI_2
-public let twoPi: Double = 2.0 * pi
-public let rad2deg: Double = 180.0 / pi
-public let deg2rad: Double = pi / 180.0
-
-public typealias FloatDegrees = Degrees<Float>
-public typealias DoubleDegrees = Degrees<Double>
-public typealias CGDegrees = Degrees<CGFloat>
-
-public typealias FloatRadians = Radians<Float>
-public typealias DoubleRadians = Radians<Double>
-public typealias CGRadians = Radians<CGFloat>
+import Foundation
 
 public protocol Angle {
-    typealias NativeType
-    init(degrees: NativeType)
-    init(radians: NativeType)
-    var degrees: NativeType { get }
-    var radians: NativeType { get }
-    var sin: NativeType { get }
-    var cos: NativeType { get }
+    var degrees: Double { get }
+    var radians: Double { get }
+    var sin: Double { get }
+    var cos: Double { get }
 }
 
-public struct Degrees<T: Floatable> : Angle {
-    public typealias NativeType = T
-    
-    public var degrees: T
-    
-    public init(degrees: T) { self.degrees = degrees }
-    public init(radians: T) { self.degrees = Radians.toDegrees(radians) }
 
-    public init(_ radians: Radians<T>) { self.degrees = radians.degrees }
+public struct Degrees : Angle {
+    public var degrees: Double
     
-    public static func toRadians(degrees: T) -> T { return degrees * T(deg2rad) }
+    public init(_ d: Double) { self.degrees = d }
+    public init(_ d: Float) { self.degrees = Double(d) }
+    public init(_ d: Int) { self.degrees = Double(d) }
+    public init(_ r: Radians) { self.degrees = r.degrees }
     
-    public var radians: T {
-        get {
-            return self.dynamicType.toRadians(degrees)
-        }
-    }
-    
-    public var sin: T {
-        get {
-            return T.sin(radians)
-        }
-    }
-    
-    public var cos: T {
-        get {
-            return T.cos(radians)
-        }
-    }
+    public var radians: Double { get { return degrees * deg2rad } }
+    public var sin: Double { get { return Foundation.sin(radians) } }
+    public var cos: Double { get { return Foundation.cos(radians) } }
 }
 
 extension Degrees : IntegerLiteralConvertible {
-    public init(integerLiteral value: IntegerLiteralType) {
-        self.init(degrees: T(value))
-    }
+    public init(integerLiteral value: IntegerLiteralType) { self.init(value) }
 }
 
 extension Degrees : FloatLiteralConvertible {
-    public init(floatLiteral value: FloatLiteralType) {
-        self.init(degrees: T(value))
-    }
+    public init(floatLiteral value: FloatLiteralType) { self.init(value) }
 }
 
 extension Degrees : Comparable { }
 
-public func == <T: Comparable>(lhs: Degrees<T>, rhs: Degrees<T>) -> Bool {
+public func == (lhs: Degrees, rhs: Degrees) -> Bool {
     return lhs.degrees == rhs.degrees
 }
 
-public func < <T: Comparable>(lhs: Degrees<T>, rhs: Degrees<T>) -> Bool {
+public func < (lhs: Degrees, rhs: Degrees) -> Bool {
     return lhs.degrees < rhs.degrees
 }
 
-extension Degrees : Arithmeticable { }
-
-public func + <T: Arithmeticable>(lhs: Degrees<T>, rhs: Degrees<T>) -> Degrees<T> {
-    return Degrees(degrees:lhs.degrees + rhs.degrees)
+public prefix func -(rhs: Degrees) -> Degrees {
+    return Degrees(-rhs.degrees)
 }
 
-public func - <T: Arithmeticable>(lhs: Degrees<T>, rhs: Degrees<T>) -> Degrees<T> {
-    return Degrees(degrees:lhs.degrees - rhs.degrees)
+public func +(lhs: Degrees, rhs: Degrees) -> Degrees {
+    return Degrees(lhs.degrees + rhs.degrees)
 }
 
-public func * <T: Arithmeticable>(lhs: Degrees<T>, rhs: Degrees<T>) -> Degrees<T> {
-    return Degrees(degrees:lhs.degrees * rhs.degrees)
+public func -(lhs: Degrees, rhs: Degrees) -> Degrees {
+    return Degrees(lhs.degrees - rhs.degrees)
 }
 
-public func / <T: Arithmeticable>(lhs: Degrees<T>, rhs: Degrees<T>) -> Degrees<T> {
-    return Degrees(degrees:lhs.degrees / rhs.degrees)
+public func *(lhs: Degrees, rhs: Degrees) -> Degrees {
+    return Degrees(lhs.degrees * rhs.degrees)
 }
 
-public func % <T: Arithmeticable>(lhs: Degrees<T>, rhs: Degrees<T>) -> Degrees<T> {
-    return Degrees(degrees:lhs.degrees % rhs.degrees)
+public func /(lhs: Degrees, rhs: Degrees) -> Degrees {
+    return Degrees(lhs.degrees / rhs.degrees)
 }
 
-public func += <T: Arithmeticable>(inout lhs: Degrees<T>, rhs: Degrees<T>) {
+public func %(lhs: Degrees, rhs: Degrees) -> Degrees {
+    return Degrees(lhs.degrees % rhs.degrees)
+}
+
+public func +=(inout lhs: Degrees, rhs: Degrees) {
     lhs.degrees += rhs.degrees
 }
 
-public func -= <T: Arithmeticable>(inout lhs: Degrees<T>, rhs: Degrees<T>) {
+public func -=(inout lhs: Degrees, rhs: Degrees) {
     lhs.degrees -= rhs.degrees
 }
 
-public func *= <T: Arithmeticable>(inout lhs: Degrees<T>, rhs: Degrees<T>) {
+public func *=(inout lhs: Degrees, rhs: Degrees) {
     lhs.degrees *= rhs.degrees
 }
 
-public func /= <T: Arithmeticable>(inout lhs: Degrees<T>, rhs: Degrees<T>) {
+public func /=(inout lhs: Degrees, rhs: Degrees) {
     lhs.degrees /= rhs.degrees
 }
 
-public func %= <T: Arithmeticable>(inout lhs: Degrees<T>, rhs: Degrees<T>) {
+public func %=(inout lhs: Degrees, rhs: Degrees) {
     lhs.degrees %= rhs.degrees
 }
 
 
-public struct Radians<T: Floatable> : Angle {
-    public typealias NativeType = T
+public struct Radians : Angle {
+    public var radians: Double
     
-    public var radians: T
+    public init(_ r: Double) { self.radians = r }
+    public init(_ r: Float) { self.radians = Double(r) }
+    public init(_ r: Int) { self.radians = Double(r) }
+    public init(_ d: Degrees) { self.radians = d.radians }
     
-    public init(radians: T) { self.radians = radians }
-    public init(degrees: T) { self.radians = Degrees.toRadians(degrees) }
-
-    public init(_ degrees: Degrees<T>) { self.radians = degrees.radians }
-    
-    public static func toDegrees(radians: T) -> T { return radians * T(rad2deg) }
-    
-    public var degrees: T {
-        get {
-            return self.dynamicType.toDegrees(radians)
-        }
-    }
-    
-    public var sin: T {
-        get {
-            return T.sin(radians)
-        }
-    }
-    
-    public var cos: T {
-        get {
-            return T.cos(radians)
-        }
-    }
+    public var degrees: Double { get { return radians * rad2deg } }
+    public var sin: Double { get { return Foundation.sin(radians) } }
+    public var cos: Double { get { return Foundation.cos(radians) } }
 }
 
 extension Radians : IntegerLiteralConvertible {
-    public init(integerLiteral value: IntegerLiteralType) {
-        self.init(radians: T(value))
-    }
+    public init(integerLiteral value: IntegerLiteralType) { self.init(value) }
 }
 
 extension Radians : FloatLiteralConvertible {
-    public init(floatLiteral value: FloatLiteralType) {
-        self.init(radians: T(value))
-    }
+    public init(floatLiteral value: FloatLiteralType) { self.init(value) }
 }
 
-extension Radians : Comparable {
-}
+extension Radians : Comparable { }
 
-public func == <T: Comparable>(lhs: Radians<T>, rhs: Radians<T>) -> Bool {
+public func == (lhs: Radians, rhs: Radians) -> Bool {
     return lhs.radians == rhs.radians
 }
 
-public func < <T: Comparable>(lhs: Radians<T>, rhs: Radians<T>) -> Bool {
+public func < (lhs: Radians, rhs: Radians) -> Bool {
     return lhs.radians < rhs.radians
 }
 
-extension Radians : Arithmeticable { }
-
-public func + <T: Arithmeticable>(lhs: Radians<T>, rhs: Radians<T>) -> Radians<T> {
-    return Radians(radians: lhs.radians + rhs.radians)
+public prefix func -(rhs: Radians) -> Radians {
+    return Radians(-rhs.radians)
 }
 
-public func - <T: Arithmeticable>(lhs: Radians<T>, rhs: Radians<T>) -> Radians<T> {
-    return Radians(radians: lhs.radians - rhs.radians)
+public func +(lhs: Radians, rhs: Radians) -> Radians {
+    return Radians(lhs.radians + rhs.radians)
 }
 
-public func * <T: Arithmeticable>(lhs: Radians<T>, rhs: Radians<T>) -> Radians<T> {
-    return Radians(radians: lhs.radians * rhs.radians)
+public func -(lhs: Radians, rhs: Radians) -> Radians {
+    return Radians(lhs.radians - rhs.radians)
 }
 
-public func / <T: Arithmeticable>(lhs: Radians<T>, rhs: Radians<T>) -> Radians<T> {
-    return Radians(radians: lhs.radians / rhs.radians)
+public func *(lhs: Radians, rhs: Radians) -> Radians {
+    return Radians(lhs.radians * rhs.radians)
 }
 
-public func % <T: Arithmeticable>(lhs: Radians<T>, rhs: Radians<T>) -> Radians<T> {
-    return Radians(radians: lhs.radians % rhs.radians)
+public func /(lhs: Radians, rhs: Radians) -> Radians {
+    return Radians(lhs.radians / rhs.radians)
 }
 
-public func += <T: Arithmeticable>(inout lhs: Radians<T>, rhs: Radians<T>) {
+public func %(lhs: Radians, rhs: Radians) -> Radians {
+    return Radians(lhs.radians % rhs.radians)
+}
+
+public func +=(inout lhs: Radians, rhs: Radians) {
     lhs.radians += rhs.radians
 }
 
-public func -= <T: Arithmeticable>(inout lhs: Radians<T>, rhs: Radians<T>) {
+public func -=(inout lhs: Radians, rhs: Radians) {
     lhs.radians -= rhs.radians
 }
 
-public func *= <T: Arithmeticable>(inout lhs: Radians<T>, rhs: Radians<T>) {
+public func *=(inout lhs: Radians, rhs: Radians) {
     lhs.radians *= rhs.radians
 }
 
-public func /= <T: Arithmeticable>(inout lhs: Radians<T>, rhs: Radians<T>) {
+public func /=(inout lhs: Radians, rhs: Radians) {
     lhs.radians /= rhs.radians
 }
 
-public func %= <T: Arithmeticable>(inout lhs: Radians<T>, rhs: Radians<T>) {
+public func %=(inout lhs: Radians, rhs: Radians) {
     lhs.radians %= rhs.radians
 }

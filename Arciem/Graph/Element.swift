@@ -30,7 +30,7 @@ public class Element {
         get {
             var attrs = [String : String]()
             let labels = dotLabels
-            let labelString = join("\\n", labels)
+            let labelString = joinStrings("\\n", labels)
             if labelString != "" {
                 attrs["label"] = labelString
             }
@@ -42,7 +42,7 @@ public class Element {
     public var dotLabels : [String] {
         get {
             var labels = [String]()
-            if let name = self.name? {
+            if let name = self.name {
                 labels.append(name)
             }
             return labels

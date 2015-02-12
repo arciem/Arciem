@@ -49,10 +49,10 @@ public func log(message: String, _ level: LogLevel? = .Info, _ tag: String? = ni
                 logSerializer.dispatch() {
                     let d = logDateFormatter.stringFromDate(date)
                     var s = "[\(d)"
-                    if let lev = level? {
+                    if let lev = level {
                         s += " \(lev)"
                     }
-                    if let t = tag? {
+                    if let t = tag {
                         s += " \(t)"
                     }
                     s += "]"
@@ -70,7 +70,7 @@ public class Logger {
         if logLevel == nil || !enabled {
             return nil
         }
-        if let t = tag? {
+        if let t = tag {
             self.tag = tag
         }
     }

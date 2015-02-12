@@ -42,7 +42,7 @@ public class DepthFirstSearch {
     }
     
     public func start(startNode: AbstractNode? = nil) {
-        if let node = startNode? {
+        if let node = startNode {
             nodeVisitorStart?(node)
             visitNode(node)
         }

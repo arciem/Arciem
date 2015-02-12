@@ -30,8 +30,8 @@ public extension String {
         return scanner.scanCharactersFromSet(String._tChars, intoString: nil)
     }
     
-    public func toUTF8Bytes() -> [Byte] {
-        var a = [Byte]()
+    public func toUTF8Bytes() -> [UInt8] {
+        var a = [UInt8]()
         for c in self.utf8 {
             a.append(c)
         }
@@ -54,8 +54,8 @@ public extension String {
     }
     
     public func truncatedAtLength(maxLength: Int, ellipsis: String = "…") -> String {
-        let length = countElements(self)
-        let ellipsisLength = countElements(ellipsis)
+        let length = count(self)
+        let ellipsisLength = count(ellipsis)
         let truncLength = max(0, maxLength - ellipsisLength)
         let realMaxLength = min(length, truncLength)
         var t = self[0..<realMaxLength]
@@ -66,23 +66,41 @@ public extension String {
     }
 }
 
-public func stringFromUTF8Bytes(bytes: [Byte]) -> String? {
-    return NSString(bytes: bytes, length: bytes.count, encoding: NSUTF8StringEncoding)
+public func stringFromUTF8Bytes(bytes: [UInt8]) -> String? {
+    return NSString(bytes: bytes, length: bytes.count, encoding: NSUTF8StringEncoding) as? String
 }
 
 public func stringFromUTF8Data(data: NSData) -> String? {
-    return NSString(data: data, encoding: NSUTF8StringEncoding)
+    return NSString(data: data, encoding: NSUTF8StringEncoding) as? String
 }
 
-public func hexStringFromByte(byte: Byte) -> String {
-    return NSString(format: "0x%02x", byte)
+public func hexStringFromByte(byte: UInt8) -> String {
+    return NSString(format: "0x%02x", byte) as! String
 }
 
-public func hexStringFromBytes(bytes: [Byte]) -> String {
+public func hexStringFromBytes(bytes: [UInt8]) -> String {
     var strings = [String]()
     for byte in bytes {
         strings.append(hexStringFromByte(byte))
     }
-    let s = join(", ", strings)
+    let s = joinStrings(", ", strings)
     return "[\(s)]"
+}
+
+// KLUDGE: The Swift standard library "join" function should work, and did until Swift beta 1.2. But then it started messing up Emoji, breaking 4-byte characters into two, 2-byte characters.
+public func joinStrings(separator: String, elements: [String]) -> String {
+    var s = String()
+    for (index, elem) in enumerate(elements) {
+        s += elem
+        if index < elements.count {
+            s += separator
+        }
+    }
+    return s
+}
+
+extension String {
+    public func joinStrings(elements: [String]) -> String {
+        return Arciem.joinStrings(self, elements)
+    }
 }

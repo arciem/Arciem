@@ -64,7 +64,7 @@ public func jsonTypeForObject(object: AnyObject) -> Result<JSONType> {
         break
     }
     
-    if let jsonType = jsonType? {
+    if let jsonType = jsonType {
         return Result(jsonType)
     } else {
         return .Error(NSError(domain: JSONErrorDomain, code: JSONErrorCode.UnsupportedType.rawValue, localizedDescription: "Unsupported JSON type for: \(object)"))
@@ -87,14 +87,14 @@ extension JSON {
     public static func createWithData(data: NSData, options: NSJSONReadingOptions = JSONDefaultReadingOptions) -> Result<JSON> {
         var error: NSError?
         var object: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: options, error: &error)
-        if let error = error? {
+        if let error = error {
             return .Error(error)
         } else {
             return Result(JSON(object!))
         }
     }
     
-    public static func createWithBytes(bytes: [Byte], options: NSJSONReadingOptions = JSONDefaultReadingOptions) -> Result<JSON> {
+    public static func createWithBytes(bytes: [UInt8], options: NSJSONReadingOptions = JSONDefaultReadingOptions) -> Result<JSON> {
         return createWithData(NSData(byteArray: bytes), options: options)
     }
     
@@ -121,13 +121,13 @@ extension JSON {
         let options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : NSJSONWritingOptions(0)
         var error: NSError?
         let jsonData = NSJSONSerialization.dataWithJSONObject(object, options: options, error: &error)
-        if let error = error? {
+        if let error = error {
             return .Error(error)
         }
         return Result(jsonData!)
     }
     
-    public func rawBytes(prettyPrinted: Bool = false) -> Result<[Byte]> {
+    public func rawBytes(prettyPrinted: Bool = false) -> Result<[UInt8]> {
         return rawData(prettyPrinted: prettyPrinted) → { data in data.toByteArray() }
     }
     
@@ -175,14 +175,14 @@ extension JSON {
 // MARK: - Getting Values
 
 extension JSON {
-    public var int: Int { get { return object as Int } set { object = newValue } }
-    public var float: Float { get { return object as Float } set { object = newValue } }
-    public var double: Double { get { return object as Double } set { object = newValue } }
-    public var number: Double { get { return object as Double } set { object = newValue } }
-    public var bool: Bool { get { return object as Bool } set { object = newValue } }
-    public var string: String { get { return object as String } set { object = newValue } }
-    public var array: JSONArray { get { return object as JSONArray } set { object = newValue } }
-    public var dictionary: JSONDictionary { get { return object as JSONDictionary } set { object = newValue } }
+    public var int: Int { get { return object as! Int } set { object = newValue } }
+    public var float: Float { get { return object as! Float } set { object = newValue } }
+    public var double: Double { get { return object as! Double } set { object = newValue } }
+    public var number: Double { get { return object as! Double } set { object = newValue } }
+    public var bool: Bool { get { return object as! Bool } set { object = newValue } }
+    public var string: String { get { return object as! String } set { object = newValue } }
+    public var array: JSONArray { get { return object as! JSONArray } set { object = newValue } }
+    public var dictionary: JSONDictionary { get { return object as! JSONDictionary } set { object = newValue } }
     
     public var intValue: Int? { return (object as? NSNumber)?.integerValue }
     public var floatValue: Float? { return (object as? NSNumber)?.floatValue }
@@ -298,16 +298,16 @@ extension JSON {
     private subscript(#sub: JSONSubscriptType) -> JSON? {
         get {
             if sub is String {
-                return self[key: sub as String]
+                return self[key: sub as! String]
             } else {
-                return self[index: sub as Int]
+                return self[index: sub as! Int]
             }
         }
         set {
             if sub is String {
-                self[key: sub as String] = newValue!
+                self[key: sub as! String] = newValue!
             } else {
-                self[index: sub as Int] = newValue!
+                self[index: sub as! Int] = newValue!
             }
         }
     }
@@ -373,7 +373,7 @@ public class JSON {
         return Result(jsonData!)
     }
     
-    public class func bytesWithObject(obj: JSONObject, prettyPrinted: Bool = false) -> Result<[Byte]> {
+    public class func bytesWithObject(obj: JSONObject, prettyPrinted: Bool = false) -> Result<[UInt8]> {
         return dataWithObject(obj, prettyPrinted: prettyPrinted) ¿ { data in data.toByteArray() }
     }
     
@@ -398,7 +398,7 @@ public class JSON {
         }
     }
     
-    public class func objectWithBytes(bytes: [Byte]) -> Result<JSONObject> {
+    public class func objectWithBytes(bytes: [UInt8]) -> Result<JSONObject> {
         return objectWithData(NSData(byteArray: bytes))
     }
     

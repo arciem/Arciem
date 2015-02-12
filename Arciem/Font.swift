@@ -9,7 +9,7 @@
 public extension UIFont {
     
     public func variantWithTraits(traits: UIFontDescriptorSymbolicTraits) -> UIFont {
-        let desc: UIFontDescriptor = fontDescriptor().fontDescriptorWithSymbolicTraits(traits)
+        let desc: UIFontDescriptor = fontDescriptor().fontDescriptorWithSymbolicTraits(traits)!
         return UIFont(descriptor: desc, size: 0.0)
     }
 

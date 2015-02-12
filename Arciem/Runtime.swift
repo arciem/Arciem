@@ -9,11 +9,11 @@
 import Foundation
 
 public func setAssociatedObject(#object: NSObject, #key: NSString, #value: NSObject?) {
-    setAssociatedObject_glue(object, key, value)
+    setAssociatedObject_glue(object, key as! String, value)
 }
 
 public func getAssociatedObject(#object: NSObject, #key: NSString) -> NSObject? {
-    return getAssociatedObject_glue(object, key)
+    return getAssociatedObject_glue(object, key as! String)
 }
 
 public func toUnsafePointer<T>(inout t: T) -> UnsafePointer<T> {
@@ -57,10 +57,10 @@ public func identifierOfObject(obj: AnyObject) -> String {
 public extension NSObject {
     public var debugName: String? {
         get {
-            return getAssociatedObject(object: self, key: "debugName") as String?
+            return getAssociatedObject(object: self, key: "debugName") as! String?
         }
         set {
-            setAssociatedObject(object: self, key: "debugName", value: newValue?)
+            setAssociatedObject(object: self, key: "debugName", value: newValue)
         }
     }
     
