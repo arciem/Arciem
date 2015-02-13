@@ -31,10 +31,10 @@ public extension UIView {
         assert(view.superview != nil, "View must have a superview.")
         assert(superview == view.superview, "Views must have same superview.")
         var constraints = [
-            layoutLeft ==⦿ view.layoutLeft,
-            layoutRight ==⦿ view.layoutRight,
-            layoutTop ==⦿ view.layoutTop,
-            layoutBottom ==⦿ view.layoutBottom
+            layoutCenterX ==⦿ view.layoutCenterX,
+            layoutCenterY ==⦿ view.layoutCenterY,
+            layoutWidth ==⦿ view.layoutWidth,
+            layoutHeight ==⦿ view.layoutHeight
         ]
         NSLayoutConstraint.activateConstraints(constraints)
         return constraints

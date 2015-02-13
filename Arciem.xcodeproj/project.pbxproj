@@ -92,7 +92,6 @@
 		03D79CD519F04B76002AFF01 /* WorkerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D79CD419F04B76002AFF01 /* WorkerManager.swift */; };
 		03D79CD719F07071002AFF01 /* ObservableValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D79CD619F07071002AFF01 /* ObservableValue.swift */; };
 		03D79CD919F07153002AFF01 /* Valuable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D79CD819F07153002AFF01 /* Valuable.swift */; };
-		03D79CDB19F08038002AFF01 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D79CDA19F08038002AFF01 /* Set.swift */; };
 		03D865451A733A010045C549 /* Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D865441A733A010045C549 /* Font.swift */; };
 		03D865471A7468BF0045C549 /* TextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03D865461A7468BF0045C549 /* TextView.swift */; };
 		03F0682C1A85C06600F148A5 /* PacketQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03F0682B1A85C06600F148A5 /* PacketQueue.swift */; };
@@ -559,7 +558,6 @@
 			files = (
 				03B106B619D0E76A004EB814 /* CalculatedValue.swift in Sources */,
 				035FE3371990A6CF00421433 /* KVOObserver.swift in Sources */,
-				03D79CDB19F08038002AFF01 /* Set.swift in Sources */,
 				036D8F7C1989BC6C003FCB35 /* CGColorGlue.m in Sources */,
 				03A3D8B119A4006C002C67AF /* Autolayout.swift in Sources */,
 				035FE3321990A6BD00421433 /* Serializer.swift in Sources */,

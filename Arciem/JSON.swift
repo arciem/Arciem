@@ -42,14 +42,12 @@ public func jsonTypeForObject(object: AnyObject) -> Result<JSONType> {
     
     switch object {
     case let n as NSNumber:
-        if let s = String.fromCString(object.objCType) {
-            if let objCType = JSONObjCType(rawValue: s) {
-                switch objCType {
-                case .Bool:
-                    jsonType = .Bool
-                case .Int, .Float, .Double:
-                    jsonType = .Number
-                }
+        if let s = String.fromCString(object.objCType), objCType = JSONObjCType(rawValue: s) {
+            switch objCType {
+            case .Bool:
+                jsonType = .Bool
+            case .Int, .Float, .Double:
+                jsonType = .Number
             }
         }
     case let s as NSString:

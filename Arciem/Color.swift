@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
+import CoreGraphics
+
 public struct Color {
     let red: Float
     let green: Float
@@ -72,6 +74,10 @@ public struct Color {
             default: red = 0; green = 0; blue = 0; assert(false, "unknown hue sector")
             }
         }
+    }
+    
+    public var cgColor: CGColor {
+        return CGColorCreate(sharedColorSpaceRGB, [CGFloat(red), CGFloat(green), CGFloat(blue), CGFloat(alpha)])
     }
     
     public static func randomColor(random: Random = Random.sharedInstance, alpha: Float = 1.0) -> Color {

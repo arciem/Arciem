@@ -21,11 +21,11 @@ public class Graph {
     }
     
     func addEdge(edge: AbstractEdge) {
-        edges.add(edge)
+        edges.insert(edge)
     }
     
     func addNode(node: AbstractNode) {
-        nodes.add(node)
+        nodes.insert(node)
     }
     
     public func cancel() {

@@ -34,12 +34,10 @@ public class Edge<ResultType> : AbstractEdge {
     public override var dotAttributes : [String : String] {
         get {
             var attrs = super.dotAttributes
-            if let t = tail as? TailNodeType {
-                if let result = t.result {
-                    result
-                        ★ { _ in attrs["color"] = "green3" }
-                        † { _ in attrs["color"] = "red" }
-                }
+            if let t = tail as? TailNodeType, result = t.result {
+                result
+                    ★ { _ in attrs["color"] = "green3" }
+                    † { _ in attrs["color"] = "red" }
             }
             return attrs
         }

@@ -33,7 +33,7 @@ public class WorkerManager {
     public func addWorker(worker: Worker) {
         serializer.dispatch { [unowned self] in
             assert(worker.state.value as? WorkerState == WorkerState.Ready, "worker is not ready")
-            self.workers.add(worker)
+            self.workers.insert(worker)
             worker.state.value = WorkerState.Queueing
             dispatchOnQueue(self.workQueue) {
                 if(worker.state.value as? WorkerState == WorkerState.Canceled) {

@@ -210,19 +210,15 @@ public class InfixOpNode<LHSType, RHSType, ValueType> : Node<ValueType> {
 public func newInfixOpNode<L, R, ValueType>(graph: Graph, name: String?, op:((l: L, r:R) -> ValueType))(lhs: Node<L>, rhs: Node<R>) -> Node<ValueType> {
     let head = InfixOpNode<L, R, ValueType>(graph) { node in
         let n = node as! InfixOpNode<L, R, ValueType>
-        if let lhs = n.lhs {
-            if let rhs = n.rhs {
-                switch (lhs, rhs) {
-                case (.Value(let lv), .Value(let rv)):
-                    n.result = Result(op(l: lv.unbox, r: rv.unbox))
-                case (.Error(let e), _):
-                    n.result = .Error(e)
-                case (_, .Error(let e)):
-                    n.result = .Error(e)
-                default:
-                    n.result = nil
-                }
-            } else {
+        if let lhs = n.lhs, rhs = n.rhs {
+            switch (lhs, rhs) {
+            case (.Value(let lv), .Value(let rv)):
+                n.result = Result(op(l: lv.unbox, r: rv.unbox))
+            case (.Error(let e), _):
+                n.result = .Error(e)
+            case (_, .Error(let e)):
+                n.result = .Error(e)
+            default:
                 n.result = nil
             }
         } else {

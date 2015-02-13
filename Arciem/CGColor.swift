@@ -177,3 +177,13 @@ public func CGColorConvertToRGB(color: CGColor) -> CGColor! {
     
     return result
 }
+
+public func CGGradientWithColors(colorFracs:[ColorFrac]) -> CGGradient {
+    var cgColors = [CGColor]()
+    var locations = [CGFloat]()
+    for colorFrac in colorFracs {
+        cgColors.append(colorFrac.color.cgColor)
+        locations.append(CGFloat(colorFrac.frac))
+    }
+    return CGGradientCreateWithColors(sharedColorSpaceRGB, cgColors, locations)
+}
