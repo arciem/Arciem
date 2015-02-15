@@ -109,6 +109,12 @@ public func colorFromString(s: String) -> UIColor {
     return color
 }
 
+public func colorWithPatternImageNamed(name: String) -> UIColor {
+    let image = UIImage(named: name)!
+    let color = UIColor(patternImage: image)
+    return color
+}
+
 /*
 public func testColorFromString() {
     let s = [
