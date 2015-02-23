@@ -61,6 +61,6 @@ extension Element : Hashable {
     }
 }
 
-public func ==(lhs: Element, rhs: Element) -> Bool {
-    return lhs.eid == rhs.eid
+public func ==(🅛: Element, 🅡: Element) -> Bool {
+    return 🅛.eid == 🅡.eid
 }

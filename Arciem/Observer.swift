@@ -40,8 +40,8 @@ extension Observer : Printable {
 //extension Observer : Equatable {
 //}
 
-//public func ==<T>(lhs: Observer<T>, rhs: Observer<T>) -> Bool {
-//    return lhs == rhs
+//public func ==<🍒>(🅛: Observer<🍒>, 🅡: Observer<🍒>) -> Bool {
+//    return 🅛 == 🅡
 //}
 
 //extension Observer : Hashable {

@@ -85,6 +85,6 @@ extension ObservableValue : Printable {
     }
 }
 
-//public func == (lhs: ObservableValue, rhs: Any?) {
-//    return lhs.value == rhs
+//public func == (🅛: ObservableValue, 🅡: Any?) {
+//    return 🅛.value == 🅡
 //}

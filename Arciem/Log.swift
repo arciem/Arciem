@@ -42,11 +42,11 @@ public var logDateFormatter: NSDateFormatter = {
 }()
 
 public func log(message: String, _ level: LogLevel? = .Info, _ tag: String? = nil) {
-    if logLevel != nil {
-        if level == nil || level!.rawValue >= logLevel!.rawValue {
-            if tag == nil || logTags.contains(tag!) {
-                let date = NSDate()
-                logSerializer.dispatch() {
+    logSerializer.dispatch {
+        if logLevel != nil {
+            if level == nil || level!.rawValue >= logLevel!.rawValue {
+                if tag == nil || logTags.contains(tag!) {
+                    let date = NSDate()
                     let d = logDateFormatter.stringFromDate(date)
                     var s = "[\(d)"
                     if let lev = level {
@@ -56,7 +56,9 @@ public func log(message: String, _ level: LogLevel? = .Info, _ tag: String? = ni
                         s += " \(t)"
                     }
                     s += "]"
-                    println("\(s) \(message)")
+                    dispatchOnMain {
+                        println("\(s) \(message)")
+                    }
                 }
             }
         }
@@ -95,15 +97,15 @@ public class Logger {
         log(message, .Error, tag)
     }
     
-    public func error(error err: NSError) {
-        error(err.description)
+    public func error(🚫: NSError) {
+        error(🚫.localizedDescription)
     }
     
     public func fatal(message: String) {
         log(message, .Fatal, tag)
     }
     
-    public func fatal(error: NSError) {
-        fatal(error.description)
+    public func fatal(🚫: NSError) {
+        fatal(🚫.description)
     }
 }

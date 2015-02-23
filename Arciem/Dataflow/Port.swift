@@ -2,95 +2,86 @@
 //  Port.swift
 //  Arciem
 //
-//  Created by Robert McNally on 2/3/15.
+//  Created by Robert McNally on 2/16/15.
 //  Copyright (c) 2015 Arciem LLC. All rights reserved.
 //
 
-public typealias ReceiveFunc = (Packet) -> Void
-
-public class Port {
-    private let serializer = Serializer()
-    public var name: String? = nil
-    public internal(set) weak var component: Component? = nil
-    public internal(set) var connections = [Connection]()
-    public let synchronous: Bool
+public class PortⒶ {
+    public let name: String
+    public weak var component: Component?
     
-    init(synchronous: Bool) {
-        self.synchronous = synchronous
-    }
+    let serial = Serializer()
     
-    public func addConnection(connection: Connection) {
-        serializer.dispatch() {
-            assert((self.connections.filter() { $0 === connection }).isEmpty, "Port is already bound to connection.")
-            self.connections.append(connection)
-        }
+    init(_ name: String, _ component: Component) {
+        self.name = name
+        self.component = component
+        dfLogger?.trace("init \(self)")
     }
     
     deinit {
-        dataflowLogger?.trace("deinit \(self)")
+        dfLogger?.trace("deinit \(self)")
     }
 }
 
-public class InputPort: Port {
-    public var receive: ReceiveFunc? = nil
-
-    public override init(synchronous: Bool) {
-        super.init(synchronous: synchronous)
-    }
+public protocol DataflowⓋ: Any, Equatable {
+    init()
 }
-    
-public class OutputPort: Port {
-    public override init(synchronous: Bool) {
-        super.init(synchronous: synchronous)
-    }
 
-    public func send(packet: Packet) {
-        serializer.dispatch() {
-            for connection in self.connections {
-                connection.send(packet)
+extension Bool: DataflowⓋ {}
+extension Float: DataflowⓋ {}
+extension Double: DataflowⓋ {}
+extension String: DataflowⓋ {}
+
+public class Port<🍒: DataflowⓋ>: PortⒶ {
+    public let oid = OID()
+    private var _🅥: 🎁<🍒>
+    public var 🅥: 🎁<🍒> {
+        get {
+            return serial.dispatchWithReturn { [unowned self] in
+                return self._🅥
+            }
+        }
+        
+        set {
+            serial.dispatch { [unowned self] in
+                let equals: Bool
+                
+                switch (self._🅥, newValue) {
+                case (.😄(let 📫1), .😄(let 📫2)):
+                    let 💌1 = 📫1⬆️
+                    let 💌2 = 📫2⬆️
+                    equals = 💌1 == 💌2
+                case (.😡(let 🚫1), .😡(let 🚫2)):
+                    equals = 🚫1.code == 🚫2.code && 🚫1.domain == 🚫2.domain
+                default:
+                    equals = false
+                }
+                
+                if !equals {
+                    if let dfLogger = dfLogger {
+                        let parentComponentName = self.component?.component?.name ?? "TOP"
+                        dfLogger.debug("NEW VALUE: \(parentComponentName).\(self.component?.name).\(self.name) = \(newValue)")
+                    }
+                    self._🅥 = newValue
+                    self.🅥DidChange(newValue)
+                }
             }
         }
     }
-
-    public func sendJSON(json: JSON) {
-        send(Packet(json))
-    }
     
-    public func sendObject(obj: JSONObject) {
-        sendJSON(JSON(obj))
-    }
+    // serialized
+    func 🅥DidChange(newValue: 🎁<🍒>) { }
     
-    public func sendError(err: NSError) {
-        send(Packet(error: err))
+    public override init(_ name: String, _ component: Component) {
+        _🅥 = 🎁(🍒())
+        super.init(name, component)
     }
 }
 
-public class ResultPort: InputPort {
-    public convenience init(synchronous: Bool = true, receive: ReceiveFunc) {
-        self.init(synchronous: synchronous)
-        self.receive = receive
+extension Port: Printable {
+    public var description: String {
+        get {
+            return "\(oid): Port '\(name)' in '\(component?.name)'"
+        }
     }
-}
-
-public class ParameterPort: OutputPort {
-    public override init(synchronous: Bool = true) {
-        super.init(synchronous: synchronous)
-    }
-}
-
-public func ≈>(tail: OutputPort, head: InputPort) -> Connection {
-    return Connection(tail: tail, head: head)
-}
-
-public func ≈>(obj: JSONObject, head: InputPort) -> Connection {
-    let tail = ParameterPort()
-    let connection = Connection(tail: tail, head: head)
-    tail.sendObject(obj)
-    return connection
-}
-
-public func ≈>(tail: OutputPort, receive: ReceiveFunc) -> Connection {
-    let head = ResultPort(receive: receive)
-    let connection = Connection(tail: tail, head: head)
-    return connection
 }

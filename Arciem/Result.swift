@@ -8,101 +8,101 @@
 
 import Foundation
 
-public enum Result<T> {
-    case Value(Box<T>)
-    case Error(NSError)
+public enum 🎁<🍒> {
+    case 😄(📦<🍒>)
+    case 😡(NSError)
     
-    public init(_ value: T) {
-        self = .Value(Box(value))
+    public init(_ 💌: 🍒) {
+        self = .😄(💌⬇️)
     }
     
-    public init(error: NSError) {
-        self = .Error(error)
+    public init(🚫: NSError) {
+        self = .😡(🚫)
     }
 }
 
-extension Result : Printable {
+extension 🎁: Printable {
     public var description: String {
         get {
             switch self {
-            case .Value(let v):
-                return ".Value: \(v.unbox)"
-            case .Error(let e):
-                return ".Error: \(e.localizedDescription)"
+            case .😄(let 📫):
+                return ".😄: \(📫⬆️)"
+            case .😡(let 🚫):
+                return ".😡: \(🚫.localizedDescription)"
             }
         }
     }
 }
 
 // "next"
-public func →<A, B>(lhs: Result<A>, rhs:(A) -> B) -> Result<B> {
-    switch lhs {
-    case .Value(let v):
-        return Result(rhs(v.unbox))
-    case .Error(let e):
-        return .Error(e)
+public func →<🍒, 🍋>(🅛: 🎁<🍒>, 🅡:(🍒) -> 🍋) -> 🎁<🍋> {
+    switch 🅛 {
+    case .😄(let 📫):
+        return 🎁(🅡(📫⬆️))
+    case .😡(let 🚫):
+        return .😡(🚫)
     }
 }
 
-// "mutate Result"
-public func ¿<A>(lhs: Result<A>, rhs:(Result<A>) -> Result<A>) -> Result<A> {
-    return rhs(lhs)
+// "mutate 🎁"
+public func ¿<🍒>(🅛: 🎁<🍒>, 🅡:(🎁<🍒>) -> 🎁<🍒>) -> 🎁<🍒> {
+    return 🅡(🅛)
 }
 
 // "success"
-public func ★<A>(lhs: Result<A>, rhs:(A) -> Void) -> Result<A> {
-    switch lhs {
-    case .Value(let v):
-        rhs(v.unbox)
+public func ★<🍒>(🅛: 🎁<🍒>, 🅡:(🍒) -> Void) -> 🎁<🍒> {
+    switch 🅛 {
+    case .😄(let 📫):
+        🅡(📫⬆️)
     default:
         break
     }
-    return lhs
+    return 🅛
 }
 
 // "failure"
-public func †<T>(lhs: Result<T>, rhs:(NSError) -> Void) -> Result<T> {
-    switch lhs {
-    case .Error(let error):
-        rhs(error)
+public func †<🍒>(🅛: 🎁<🍒>, 🅡:(NSError) -> Void) -> 🎁<🍒> {
+    switch 🅛 {
+    case .😡(let 🚫):
+        🅡(🚫)
     default:
         break
     }
-    return lhs
+    return 🅛
 }
 
 // "finally"
-public func ‡<T>(lhs: Result<T>, rhs:(Result<T>) -> Void) -> Void {
-    rhs(lhs)
+public func ‡<🍒>(🅛: 🎁<🍒>, 🅡:() -> Void) -> Void {
+    🅡()
 }
 
-func testResult<T>(results: Result<T>) {
+func testResult<🍒>(results: 🎁<🍒>) {
     switch results {
-    case .Value(let v) where v.unbox is Void:
-        println("Value:Void")
-    case .Value(let v):
-        println("Value:\(v.unbox)")
-    case .Error(let e):
-        println("Error:\(e.localizedDescription)")
+    case .😄(let 📫) where 📫⬆️ is Void:
+        println("😄:Void")
+    case .😄(let 📫):
+        println("😄:\(📫⬆️)")
+    case .😡(let 🚫):
+        println("Error:\(🚫.localizedDescription)")
     }
 }
 
 public func testResults() {
-    testResult(Result(false))
-    testResult(Result(0))
-    testResult(Result("Dog"))
-    testResult(Result<String?>(nil))
-    testResult(Result<String?>("Dog"))
-    testResult(Result( () ))
-    let e = NSError(domain: "FooDomain", code: 10, userInfo: nil)
-    testResult(Result<String>(error: e))
+    testResult(🎁(false))
+    testResult(🎁(0))
+    testResult(🎁("Dog"))
+    testResult(🎁<String?>(nil))
+    testResult(🎁<String?>("Dog"))
+    testResult(🎁( () ))
+    let 🚫 = NSError(domain: "FooDomain", code: 10, userInfo: nil)
+    testResult(🎁<String>(🚫: 🚫))
     
     // Prints:
-    //    Value:false
-    //    Value:0
-    //    Value:Dog
-    //    Value:nil
-    //    Value:Optional("Dog")
-    //    Value:Void
+    //    😄:false
+    //    😄:0
+    //    😄:Dog
+    //    😄:nil
+    //    😄:Optional("Dog")
+    //    😄:Void
     //    Error:The operation couldn’t be completed. (FooDomain error 10.)
 }

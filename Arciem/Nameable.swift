@@ -11,12 +11,12 @@
 //}
 
 //// "name assign"
-//public func ¶=<D: Nameable>(var lhs: D, rhs: String) -> D {
-//    lhs.name = rhs
-//    return lhs
+//public func ¶=<D: Nameable>(var 🅛: D, 🅡: String) -> D {
+//    🅛.name = 🅡
+//    return 🅛
 //}
 //
 //// "name extract"
-//public postfix func ¶<D: Nameable>(lhs: D) -> String? {
-//    return lhs.name
+//public postfix func ¶<D: Nameable>(🅛: D) -> String? {
+//    return 🅛.name
 //}

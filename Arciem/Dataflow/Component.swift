@@ -2,68 +2,99 @@
 //  Component.swift
 //  Arciem
 //
-//  Created by Robert McNally on 2/6/15.
+//  Created by Robert McNally on 2/17/15.
 //  Copyright (c) 2015 Arciem LLC. All rights reserved.
 //
 
-var dataflowLogger = Logger(tag: "DATAFLOW")
+var dfLogger = Logger(tag: "DATAFLOW")
+
 
 public class Component {
-    private var inputPorts = [InputPort]()
-    private var outputPorts = [OutputPort]()
-    private var namedPorts = [String: Port]()
+    public let oid = OID()
+    public let name: String
+    public internal(set) weak var component: Component?
+    var cables = [CableⒶ]()
+    var components = [Component]()
     
-    func addInputPortNamed(name: String, synchronous: Bool, receive: ReceiveFunc) -> InputPort {
-        let port = InputPort(synchronous: synchronous)
-        port.name = name
-        port.component = self
-        port.receive = receive
-        inputPorts.append(port)
-        namedPorts[name] = port
-        return port
+    public func addCable<🍋: CableⒶ>(cable: 🍋) {
+        cables.append(cable)
     }
     
-    func addOutputPortNamed(name: String, synchronous: Bool) -> OutputPort {
-        let port = OutputPort(synchronous: synchronous)
-        port.name = name
-        port.component = self
-        outputPorts.append(port)
-        namedPorts[name] = port
-        return port
+    public func addComponent<🍒: Component>(component: 🍒) {
+        components.append(component)
     }
     
-    public subscript(name: String) -> Port? {
-        get {
-            return namedPorts[name]
-        }
+    public init(name: String, _ component: Component? = nil) {
+        self.name = name
+        self.component = component
+        component?.addComponent(self)
+        dfLogger?.trace("init \(self)")
     }
     
     deinit {
-        dataflowLogger?.trace("deinit \(self)")
+        dfLogger?.trace("deinit \(self)")
     }
 }
 
-public typealias TransformFunc = (Packet) -> Packet
-
-public class TransformComponent : Component {
-    public private(set) var inPort: InputPort!
-    public private(set) var outPort: OutputPort!
-    let transform: TransformFunc
-    public init(synchronous: Bool, transform: TransformFunc) {
-        self.transform = transform
-        super.init()
-        inPort = addInputPortNamed("in", synchronous: synchronous) { [unowned self] inPacket in
-            let outPacket = transform(inPacket)
-            self.outPort.send(outPacket)
+extension Component: Printable {
+    public var description: String {
+        get {
+            if let component = component {
+                return "\(oid): Component '\(name)' in '\(component.name)'"
+            } else {
+                return "\(oid): Component '\(name)' at top"
+            }
         }
-        outPort = addOutputPortNamed("out", synchronous: synchronous)
     }
 }
 
-public class NegateComponent : TransformComponent {
-    public init() {
-        super.init(synchronous: false, transform: { packet in
-            packet → { json in JSON(-json.number) }
-        })
+public func +><🍇>(🅛: OutPort<🍇>, 🅡: InPort<🍇>) -> Cable<🍇> {
+    return Cable(tail: 🅛, head: 🅡)
+}
+
+public class DFTransform💌Ⓒ<🍋: DataflowⓋ, 🍇: DataflowⓋ>: Component {
+    public typealias InPortⓉ = InPort<🍋>
+    public typealias OutPortⓉ = OutPort<🍇>
+    
+    public typealias TransformⒻ = (🍋) -> 🍇
+    
+    public private(set) var input: InPortⓉ!
+    public private(set) var output: OutPortⓉ!
+    
+    public init(_ name: String?, _ component: Component?, transform: TransformⒻ) {
+        super.init(name: name ?? "Transform💌", component)
+        
+        let inPlug: InPortⓉ.InPlugⒻ = { [unowned self] r in
+            switch r {
+            case .😄(let 📫):
+                self.output.🅥 = 🎁(transform(📫⬆️))
+            case .😡(let 🚫):
+                self.output.🅥 = 🎁(🚫: 🚫)
+            }
+        }
+        
+        input = InPort("in", self, inPlug: inPlug)
+        output = OutPort("out", self)
+    }
+}
+
+public class DFTransform🎁Ⓒ<🍋: DataflowⓋ, 🍇: DataflowⓋ>: Component {
+    public typealias InPortⓉ = InPort<🍋>
+    public typealias OutPortⓉ = OutPort<🍇>
+    
+    public typealias TransformⓉ = (🎁<🍋>) -> 🎁<🍇>
+    
+    public private(set) var input: InPortⓉ!
+    public private(set) var output: OutPortⓉ!
+    
+    public init(_ name: String?, _ component: Component?, transform: TransformⓉ) {
+        super.init(name: name ?? "Transform🎁", component)
+        
+        let inPlug: InPortⓉ.InPlugⒻ = { [unowned self] 📫 in
+            self.output.🅥 = transform(📫)
+        }
+        
+        input = InPort("in", self, inPlug: inPlug)
+        output = OutPort("out", self)
     }
 }

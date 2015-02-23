@@ -8,16 +8,6 @@
 
 import Foundation
 
-public enum HTTPMethod: String {
-    case GET = "GET"
-    case POST = "POST"
-    case PUT = "PUT"
-    case HEAD = "HEAD"
-    case DELETE = "DELETE"
-}
-
-public let HTTPErrorDomain = "HTTPErrorDomain"
-
 public class HTTPWorker : Worker {
     public let request: NSURLRequest
     public let session: NSURLSession
@@ -60,25 +50,25 @@ public class HTTPWorker : Worker {
         self.allowUntrustedCertificate = allowUntrustedCertificate
         self.task = { [unowned self] (unowned manager: WorkerManager) -> Void in
             self.networkActivity = NetworkActivityIndicator.instance().makeActivity()
-            self.sessionTask = self.session.dataTaskWithRequest(self.request, completionHandler: { (data: NSData!, responseOpt: NSURLResponse!, error: NSError!) -> Void in
+            self.sessionTask = self.session.dataTaskWithRequest(self.request, completionHandler: { (data: NSData!, responseOpt: NSURLResponse!, 🚫: NSError!) -> Void in
                 self.data = data
                 self.httpResponse = responseOpt as? NSHTTPURLResponse
-                if error != nil {
-                    self.error = error
+                if 🚫 != nil {
+                    self.🚫 = 🚫
                 } else {
                     if self.httpResponse.MIMEType == JSONMIMEType {
                         var jsonError: NSError?
                         self.json = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: &jsonError)
                         if jsonError != nil {
-                            self.error = jsonError!
+                            self.🚫 = jsonError!
                         }
                     }
                     
-                    if error == nil {
+                    if 🚫 == nil {
                         let statusCode = self.httpResponse.statusCode
                         if !(200...299 ~= statusCode) {
                             let httpError = NSError(domain: HTTPErrorDomain, code: statusCode, localizedDescription: self.statusCodeString)
-                            self.error = httpError
+                            self.🚫 = httpError
                         }
                     }
                 }

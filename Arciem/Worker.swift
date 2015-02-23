@@ -36,7 +36,7 @@ public class Worker {
     public var 😎: DispatchBlock?   // "finally"
 
     public var state = ObservableValue(WorkerState.Ready)
-    public var error: NSError?
+    public var 🚫: NSError?
 
     var log: Logger? { get { return workerLogger } }
 
@@ -61,8 +61,8 @@ extension Worker : Printable {
 extension Worker : Equatable {
 }
 
-public func ==(lhs: Worker, rhs: Worker) -> Bool {
-    return lhs === rhs
+public func ==(🅛: Worker, 🅡: Worker) -> Bool {
+    return 🅛 === 🅡
 }
 
 extension Worker : Hashable {

@@ -40,17 +40,17 @@ extension CGFloat : MathematicType { }
 //}
 
 //public protocol MathematicType: Comparable, SignedNumberType, IntegerLiteralConvertible, FloatLiteralConvertible {
-//    prefix func -(rhs: Self) -> Self
-//    func +(lhs: Self, rhs: Self) -> Self
-//    func -(lhs: Self, rhs: Self) -> Self
-//    func *(lhs: Self, rhs: Self) -> Self
-//    func /(lhs: Self, rhs: Self) -> Self
-//    func %(lhs: Self, rhs: Self) -> Self
-//    func += (inout lhs: Self, rhs: Self)
-//    func -= (inout lhs: Self, rhs: Self)
-//    func *= (inout lhs: Self, rhs: Self)
-//    func /= (inout lhs: Self, rhs: Self)
-//    func %= (inout lhs: Self, rhs: Self)
+//    prefix func -(🅡: Self) -> Self
+//    func +(🅛: Self, 🅡: Self) -> Self
+//    func -(🅛: Self, 🅡: Self) -> Self
+//    func *(🅛: Self, 🅡: Self) -> Self
+//    func /(🅛: Self, 🅡: Self) -> Self
+//    func %(🅛: Self, 🅡: Self) -> Self
+//    func += (inout 🅛: Self, 🅡: Self)
+//    func -= (inout 🅛: Self, 🅡: Self)
+//    func *= (inout 🅛: Self, 🅡: Self)
+//    func /= (inout 🅛: Self, 🅡: Self)
+//    func %= (inout 🅛: Self, 🅡: Self)
 //    
 //    init(_ v: Int)
 //    init(_ v: Float)

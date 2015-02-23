@@ -110,38 +110,38 @@ extension Graph {
 }
 
 
-public prefix func •<T>(rhs:(Graph) -> Node<T>) -> (Graph, Node<T>) {
+public prefix func •<🍒>(🅡:(Graph) -> Node<🍒>) -> (Graph, Node<🍒>) {
     let graph = Graph()
-    let node = rhs(graph)
+    let node = 🅡(graph)
     graph.root = node
     return (graph, node)
 }
 
-//public prefix func •<T, A>(rhs:(Graph) -> ((A) -> Node<T>)) -> ((A) -> Node<T>) {
-//    return rhs(Graph())
+//public prefix func •<🍒, A>(🅡:(Graph) -> ((A) -> Node<🍒>)) -> ((A) -> Node<🍒>) {
+//    return 🅡(Graph())
 //}
 
-public func →<T>(lhs: (graph: Graph, node: Node<T>), rhs: (T) -> Void) -> (Graph, Node<T>) {
-    let graph = lhs.graph
-    let n = newOutputNode(lhs.graph, "=", lhs.node)
+public func →<🍒>(🅛: (graph: Graph, node: Node<🍒>), 🅡: (🍒) -> Void) -> (Graph, Node<🍒>) {
+    let graph = 🅛.graph
+    let n = newOutputNode(🅛.graph, "=", 🅛.node)
         { [unowned graph] result in
             if let result = result {
                 result
-                    ★ { rhs($0) }
-                    † { graph.failure?(error: $0) ?? () }
+                    ★ { 🅡($0) }
+                    † { graph.failure?(🚫: $0) ?? () }
             }
             graph.finally?()
     }
-    return (lhs.graph, n)
+    return (🅛.graph, n)
 }
 
-public func †<T>(lhs: (graph: Graph, node: Node<T>), rhs: ErrorBlock) -> (Graph, Node<T>) {
-    lhs.graph.failure = rhs
-    return lhs
+public func †<🍒>(🅛: (graph: Graph, node: Node<🍒>), 🅡: ErrorBlock) -> (Graph, Node<🍒>) {
+    🅛.graph.failure = 🅡
+    return 🅛
 }
 
-public func ‡<T>(lhs: (graph: Graph, node: Node<T>), rhs: DispatchBlock) -> Graph {
-    lhs.graph.finally = rhs
-    lhs.graph.root?.operate()
-    return lhs.graph
+public func ‡<🍒>(🅛: (graph: Graph, node: Node<🍒>), 🅡: DispatchBlock) -> Graph {
+    🅛.graph.finally = 🅡
+    🅛.graph.root?.operate()
+    return 🅛.graph
 }

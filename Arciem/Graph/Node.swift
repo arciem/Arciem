@@ -58,10 +58,10 @@ extension AbstractNode {
     }
 }
 
-public class Node<ValueType> : AbstractNode {
-    public typealias OutEdgeType = Edge<ValueType>
-    public typealias ResultType = Result<ValueType>
-    public var result: ResultType? {
+public class Node<🍒> : AbstractNode {
+    public typealias OutEdgeType = Edge<🍒>
+    public typealias 🎁Type = 🎁<🍒>
+    public var result: 🎁Type? {
         didSet {
             for edge in outEdges as! [OutEdgeType] {
                 edge.transfer?()
@@ -69,16 +69,16 @@ public class Node<ValueType> : AbstractNode {
         }
     }
 
-    public func setResult(result: ResultType) -> Self {
+    public func set🎁(result: 🎁Type) -> Self {
         self.result = result
         return self
     }
     
-    public func setValue(value: ValueType) -> Self {
-        return setResult(Result(value))
+    public func setValue(value: 🍒) -> Self {
+        return set🎁(🎁(value))
     }
     
-    public typealias OperationFunc = (Node<ValueType>) -> Void
+    public typealias OperationFunc = (Node<🍒>) -> Void
     public var operation: OperationFunc?
     
     public override func operate() -> Self {
@@ -96,9 +96,9 @@ public class Node<ValueType> : AbstractNode {
         super.init(graph)
     }
     
-    public convenience init(lhs: Node<ValueType>, operation: OperationFunc? = nil) {
-        self.init(lhs.graph, operation: operation)
-        Edge(tail: lhs, head: self) { [unowned lhs, unowned self] in lhs.result => self.result }
+    public convenience init(🅛: Node<🍒>, operation: OperationFunc? = nil) {
+        self.init(🅛.graph, operation: operation)
+        Edge(tail: 🅛, head: self) { [unowned 🅛, unowned self] in 🅛.result => self.result }
     }
     
     public override var dotAttributes : [String : String] {
@@ -119,8 +119,8 @@ public class Node<ValueType> : AbstractNode {
             var labels = super.dotLabels
             if let result = result {
                 result
-                    ★ { value in labels.append("=\(value)") }
-                    † { error in labels.append("!\(error.code)") }
+                    ★ { 🍒 in labels.append("=\(🍒)") }
+                    † { 🚫 in labels.append("!\(🚫.code)") }
             }
             return labels
         }
@@ -142,10 +142,10 @@ extension Node : Printable {
     }
 }
 
-public class OutputNode<ValueType> : Node<ValueType> {
-    public typealias OutputFunc = (ResultType?) -> Void
+public class OutputNode<🍒> : Node<🍒> {
+    public typealias OutputFunc = (🎁Type?) -> Void
     public var output: OutputFunc
-    public override var result: ResultType? {
+    public override var result: 🎁Type? {
         didSet {
             output(result)
         }
@@ -157,15 +157,15 @@ public class OutputNode<ValueType> : Node<ValueType> {
     }
 }
 
-public func newOutputNode<ValueType>(graph: Graph, name: String?, lhs: Node<ValueType>, output:(Result<ValueType>?) -> Void) -> Node<ValueType> {
-    let head = OutputNode<ValueType>(graph, output: output)
+public func newOutputNode<🍒>(graph: Graph, name: String?, 🅛: Node<🍒>, output:(🎁<🍒>?) -> Void) -> Node<🍒> {
+    let head = OutputNode<🍒>(graph, output: output)
     head.name = name
-    Edge(tail: lhs, head: head) { [unowned lhs, unowned head] in lhs.result => head.result }
+    Edge(tail: 🅛, head: head) { [unowned 🅛, unowned head] in 🅛.result => head.result }
     return head
 }
 
-public class PrefixOpNode<RHSType, ValueType> : Node<ValueType> {
-    public var rhs: Result<RHSType>? {
+public class PrefixOpNode<🍇R, 🍒> : Node<🍒> {
+    public var 🅡: 🎁<🍇R>? {
         didSet {
             operate()
         }
@@ -176,28 +176,28 @@ public class PrefixOpNode<RHSType, ValueType> : Node<ValueType> {
     }
 }
 
-public func newPrefixOpNode<R, ValueType>(graph: Graph, name: String?, op:((R) -> ValueType))(rhs: Node<R>) -> Node<ValueType> {
-    let head = PrefixOpNode<R, ValueType>(graph) { (node) in
-        let n = node as! PrefixOpNode<R, ValueType>
-        if let rhs = n.rhs {
-            n.result = rhs → { op($0) }
+public func newPrefixOpNode<🍇R, 🍒>(graph: Graph, name: String?, op:((🍇R) -> 🍒))(🅡: Node<🍇R>) -> Node<🍒> {
+    let head = PrefixOpNode<🍇R, 🍒>(graph) { (node) in
+        let n = node as! PrefixOpNode<🍇R, 🍒>
+        if let 🅡 = n.🅡 {
+            n.result = 🅡 → { op($0) }
         } else {
             n.result = nil
         }
     }
     head.name = name
-    let e = Edge(tail: rhs, head: head) { [unowned rhs, unowned head] in rhs.result => head.rhs }
+    let e = Edge(tail: 🅡, head: head) { [unowned 🅡, unowned head] in 🅡.result => head.🅡 }
     e.transfer?()
     return head
 }
 
-public class InfixOpNode<LHSType, RHSType, ValueType> : Node<ValueType> {
-    public var rhs: Result<RHSType>? {
+public class InfixOpNode<🍋L, 🍇R, 🍒> : Node<🍒> {
+    public var 🅡: 🎁<🍇R>? {
         didSet {
             operate()
         }
     }
-    public var lhs: Result<LHSType>? {
+    public var 🅛: 🎁<🍋L>? {
         didSet {
             operate()
         }
@@ -207,17 +207,17 @@ public class InfixOpNode<LHSType, RHSType, ValueType> : Node<ValueType> {
     }
 }
 
-public func newInfixOpNode<L, R, ValueType>(graph: Graph, name: String?, op:((l: L, r:R) -> ValueType))(lhs: Node<L>, rhs: Node<R>) -> Node<ValueType> {
-    let head = InfixOpNode<L, R, ValueType>(graph) { node in
-        let n = node as! InfixOpNode<L, R, ValueType>
-        if let lhs = n.lhs, rhs = n.rhs {
-            switch (lhs, rhs) {
-            case (.Value(let lv), .Value(let rv)):
-                n.result = Result(op(l: lv.unbox, r: rv.unbox))
-            case (.Error(let e), _):
-                n.result = .Error(e)
-            case (_, .Error(let e)):
-                n.result = .Error(e)
+public func newInfixOpNode<🍋L, 🍇R, 🍒>(graph: Graph, name: String?, op:((l: 🍋L, r:🍇R) -> 🍒))(🅛: Node<🍋L>, 🅡: Node<🍇R>) -> Node<🍒> {
+    let head = InfixOpNode<🍋L, 🍇R, 🍒>(graph) { node in
+        let n = node as! InfixOpNode<🍋L, 🍇R, 🍒>
+        if let 🅛 = n.🅛, 🅡 = n.🅡 {
+            switch (🅛, 🅡) {
+            case (.😄(let 📫l), .😄(let 📫r)):
+                n.result = 🎁(op(l: 📫l⬆️, r: 📫r⬆️))
+            case (.😡(let 🚫), _):
+                n.result = .😡(🚫)
+            case (_, .😡(let 🚫)):
+                n.result = .😡(🚫)
             default:
                 n.result = nil
             }
@@ -226,33 +226,33 @@ public func newInfixOpNode<L, R, ValueType>(graph: Graph, name: String?, op:((l:
         }
     }
     head.name = name
-    let e1 = Edge(tail: rhs, head: head) { [unowned rhs, unowned head] in rhs.result => head.rhs }.setName("rhs")
+    let e1 = Edge(tail: 🅡, head: head) { [unowned 🅡, unowned head] in 🅡.result => head.🅡 }.setName("🅡")
     e1.transfer?()
-    let e2 = Edge(tail: lhs, head: head) { [unowned lhs, unowned head] in lhs.result => head.lhs }.setName("lhs")
+    let e2 = Edge(tail: 🅛, head: head) { [unowned 🅛, unowned head] in 🅛.result => head.🅛 }.setName("🅛")
     e2.transfer?()
     return head
 }
 
-public prefix func -(rhs: Node<Double>) -> Node<Double> {
-    return newPrefixOpNode(rhs.graph, "-"){ return -$0 } (rhs: rhs)
+public prefix func -(🅡: Node<Double>) -> Node<Double> {
+    return newPrefixOpNode(🅡.graph, "-"){ return -$0 } (🅡: 🅡)
 }
 
-public func +(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
-    return newInfixOpNode(lhs.graph, "+"){ return $0 + $1 } (lhs: lhs, rhs: rhs)
+public func +(🅛: Node<Double>, 🅡: Node<Double>) -> Node<Double> {
+    return newInfixOpNode(🅛.graph, "+"){ return $0 + $1 } (🅛: 🅛, 🅡: 🅡)
 }
 
-public func -(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
-    return newInfixOpNode(lhs.graph, "-"){ return $0 - $1 }(lhs: lhs, rhs: rhs)
+public func -(🅛: Node<Double>, 🅡: Node<Double>) -> Node<Double> {
+    return newInfixOpNode(🅛.graph, "-"){ return $0 - $1 }(🅛: 🅛, 🅡: 🅡)
 }
 
-public func *(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
-    return newInfixOpNode(lhs.graph, "*"){ return $0 * $1 }(lhs: lhs, rhs: rhs)
+public func *(🅛: Node<Double>, 🅡: Node<Double>) -> Node<Double> {
+    return newInfixOpNode(🅛.graph, "*"){ return $0 * $1 }(🅛: 🅛, 🅡: 🅡)
 }
 
-public func /(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
-    return newInfixOpNode(lhs.graph, "/"){ return $0 / $1 }(lhs: lhs, rhs: rhs)
+public func /(🅛: Node<Double>, 🅡: Node<Double>) -> Node<Double> {
+    return newInfixOpNode(🅛.graph, "/"){ return $0 / $1 }(🅛: 🅛, 🅡: 🅡)
 }
 
-public func %(lhs: Node<Double>, rhs: Node<Double>) -> Node<Double> {
-    return newInfixOpNode(lhs.graph, "%"){ return $0 % $1 }(lhs: lhs, rhs: rhs)
+public func %(🅛: Node<Double>, 🅡: Node<Double>) -> Node<Double> {
+    return newInfixOpNode(🅛.graph, "%"){ return $0 % $1 }(🅛: 🅛, 🅡: 🅡)
 }

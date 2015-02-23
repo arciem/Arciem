@@ -20,7 +20,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 // SOFTWARE.
 
-public struct Set<T: Hashable> : Equatable {
+public struct Set🍒: Hashable> : Equatable {
     typealias Element = T
     private var contents: [Element: Bool]
     public init() {
@@ -57,7 +57,7 @@ public struct Set<T: Hashable> : Equatable {
     }
     
     /// Returns a new Set including only those elements `x` where `includeElement(x)` is true.
-    public func filter(includeElement: (T) -> Bool) -> Set<T> {
+    public func filter(includeElement: (T) -> Bool) -> Set🍒> {
         return Set(self.contents.keys.filter(includeElement))
     }
     
@@ -75,7 +75,7 @@ public struct Set<T: Hashable> : Equatable {
 // MARK: SequenceType
 
 extension Set : SequenceType {
-    typealias Generator = MapSequenceGenerator<DictionaryGenerator<T, Bool>, T>
+    typealias Generator = MapSequenceGenerator<DictionaryGenerator🍒, Bool>, T>
     /// Creates a generator for the items of the set.
     public func generate() -> Generator {
         return contents.keys.generate()
@@ -94,11 +94,11 @@ extension Set : ArrayLiteralConvertible {
 
 extension Set {
     /// Returns `true` if the Set has the exact same members as `set`.
-    public func isEqualToSet(set: Set<T>) -> Bool {
+    public func isEqualToSet(set: Set🍒>) -> Bool {
         return self.contents == set.contents
     }
     /// Returns `true` if the Set shares any members with `set`.
-    public func intersectsWithSet(set: Set<T>) -> Bool {
+    public func intersectsWithSet(set: Set🍒>) -> Bool {
         for elem in self {
             if set.contains(elem) {
                 return true
@@ -108,7 +108,7 @@ extension Set {
     }
     
     /// Returns `true` if all members of the Set are part of `set`.
-    public func isSubsetOfSet(set: Set<T>) -> Bool {
+    public func isSubsetOfSet(set: Set🍒>) -> Bool {
         for elem in self {
             if !set.contains(elem) {
                 return false
@@ -118,41 +118,41 @@ extension Set {
     }
     
     /// Returns `true` if all members of `set` are part of the Set.
-    public func isSupersetOfSet(set: Set<T>) -> Bool {
+    public func isSupersetOfSet(set: Set🍒>) -> Bool {
         return set.isSubsetOfSet(self)
     }
     
     /// Modifies the Set to add all members of `set`.
-    public mutating func unionSet(set: Set<T>) {
+    public mutating func unionSet(set: Set🍒>) {
         for elem in set {
             self.add(elem)
         }
     }
     
     /// Modifies the Set to remove any members also in `set`.
-    public mutating func subtractSet(set: Set<T>) {
+    public mutating func subtractSet(set: Set🍒>) {
         for elem in set {
             self.remove(elem)
         }
     }
     /// Modifies the Set to include only members that are also in `set`.
-    public mutating func intersectSet(set: Set<T>) {
+    public mutating func intersectSet(set: Set🍒>) {
         self = self.filter { set.contains($0) }
     }
     /// Returns a new Set that contains all the elements of both this set and the set passed in.
-    public func setByUnionWithSet(var set: Set<T>) -> Set<T> {
+    public func setByUnionWithSet(var set: Set🍒>) -> Set🍒> {
         set.extend(self)
         return set
     }
     
     /// Returns a new Set that contains only the elements in both this set and the set passed in.
-    public func setByIntersectionWithSet(var set: Set<T>) -> Set<T> {
+    public func setByIntersectionWithSet(var set: Set🍒>) -> Set🍒> {
         set.intersectSet(self)
         return set
     }
     
     /// Returns a new Set that contains only the elements in this set *not* also in the set passed in.
-    public func setBySubtractingSet(set: Set<T>) -> Set<T> {
+    public func setBySubtractingSet(set: Set🍒>) -> Set🍒> {
         var newSet = self
         newSet.subtractSet(set)
         return newSet
@@ -197,18 +197,18 @@ extension Set : Printable, DebugPrintable {
 
 // MARK: Operators
 
-public func +=<T>(inout lhs: Set<T>, rhs: T) {
-    lhs.add(rhs)
+public func +=🍒>(inout 🅛: Set🍒>, 🅡: T) {
+    🅛.add(🅡)
 }
 
-public func +=<T>(inout lhs: Set<T>, rhs: Set<T>) {
-    lhs.unionSet(rhs)
+public func +=🍒>(inout 🅛: Set🍒>, 🅡: Set🍒>) {
+    🅛.unionSet(🅡)
 }
 
-public func +<T>(lhs: Set<T>, rhs: Set<T>) -> Set<T> {
-    return lhs.setByUnionWithSet(rhs)
+public func +🍒>(🅛: Set🍒>, 🅡: Set🍒>) -> Set🍒> {
+    return 🅛.setByUnionWithSet(🅡)
 }
 
-public func ==<T>(lhs: Set<T>, rhs: Set<T>) -> Bool {
-    return lhs.isEqualToSet(rhs)
+public func ==🍒>(🅛: Set🍒>, 🅡: Set🍒>) -> Bool {
+    return 🅛.isEqualToSet(🅡)
 }

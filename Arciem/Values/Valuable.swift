@@ -12,14 +12,14 @@
 //}
 
 //// "value assign"
-//public func ^= <V: Valuable>(inout lhs: V, rhs: V.ValueType) -> V {
-//    lhs.value = rhs
-//    return lhs
+//public func ^= <V: Valuable>(inout 🅛: V, 🅡: V.ValueType) -> V {
+//    🅛.value = 🅡
+//    return 🅛
 //}
 //
 //// "value extract"
-//public postfix func ^ <V: Valuable>(lhs: V) -> V.ValueType? {
-//    return lhs.value
+//public postfix func ^ <V: Valuable>(🅛: V) -> V.ValueType? {
+//    return 🅛.value
 //}
 //
 //// "value equals"

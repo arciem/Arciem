@@ -18,7 +18,7 @@ public class Canceler {
 // Convenience types for symmetry with Swift naming conventions
 public typealias DispatchBlock = dispatch_block_t
 public typealias DispatchQueue = dispatch_queue_t
-public typealias ErrorBlock = (error: NSError) -> Void
+public typealias ErrorBlock = (🚫: NSError) -> Void
 
 // A block that takes a Canceler. The block will not be called again if it sets the <isCanceled> variable of the Canceler to true.
 public typealias CancelableBlock = (canceler: Canceler) -> Void
@@ -118,9 +118,19 @@ func _dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: NSTimeI
     }
 }
 
+// Dispatch the block immediately, and then again after each interval passes. An interval of 0.0 means dispatch the block only once.
 public func dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: NSTimeInterval, f:CancelableBlock) -> Canceler {
     let canceler = Canceler()
-    _dispatchRepeatedOnQueue(queue, atInterval: interval, canceler, f)
+    _dispatchOnQueue(queue, canceler) { canceler in
+        if !canceler.isCanceled {
+            f(canceler: canceler)
+        }
+        if interval > 0.0 {
+            if !canceler.isCanceled {
+                _dispatchRepeatedOnQueue(queue, atInterval: interval, canceler, f)
+            }
+        }
+    }
     return canceler
 }
 

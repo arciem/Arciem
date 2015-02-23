@@ -57,9 +57,9 @@ public class WorkerManager {
             if(worker.state.value as? WorkerState == WorkerState.Canceled) {
                 dispatchOnQueue(self.callbackQueue) {
                     if(worker.state.value as? WorkerState == WorkerState.Canceled) {
-                        if worker.error != nil {
+                        if worker.🚫 != nil {
                             worker.state.value = WorkerState.Failure
-                            worker.😡?(error: worker.error!)
+                            worker.😡?(🚫: worker.🚫!)
                         } else {
                             worker.state.value = WorkerState.Success
                             worker.😄?()

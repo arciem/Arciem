@@ -75,24 +75,24 @@ public struct BigNum {
         return result
     }
     
-    public static func add(#lhs: BigNum, rhs: BigNum) -> BigNum {
-        assert(lhs.radix == rhs.radix, "Radices must be the same.")
+    public static func add(#🅛: BigNum, 🅡: BigNum) -> BigNum {
+        assert(🅛.radix == 🅡.radix, "Radices must be the same.")
         
-        let radix = lhs.radix
+        let radix = 🅛.radix
         
-        let lsp = min(lhs.leastSignificantPosition, rhs.leastSignificantPosition)
-        let msp = max(lhs.mostSignificantPosition, rhs.mostSignificantPosition)
+        let lsp = min(🅛.leastSignificantPosition, 🅡.leastSignificantPosition)
+        let msp = max(🅛.mostSignificantPosition, 🅡.mostSignificantPosition)
         
         var resultDigits = [Int]()
         var carry = 0
         for position in lsp...msp {
-            let lhsDigit = lhs.digitAtPosition(position)
+            let lhsDigit = 🅛.digitAtPosition(position)
             println("\nlhsDigit:\(lhsDigit)")
-            let rhsDigit = rhs.digitAtPosition(position)
+            let rhsDigit = 🅡.digitAtPosition(position)
             println("rhsDigit:\(rhsDigit)")
-            let lhsSignedDigit = lhs.negative ? -lhsDigit : lhsDigit
+            let lhsSignedDigit = 🅛.negative ? -lhsDigit : lhsDigit
             println("lhsSignedDigit:\(lhsSignedDigit)")
-            let rhsSignedDigit = rhs.negative ? -rhsDigit : rhsDigit
+            let rhsSignedDigit = 🅡.negative ? -rhsDigit : rhsDigit
             println("rhsSignedDigit:\(rhsSignedDigit)")
             let accum = lhsSignedDigit + rhsSignedDigit + carry
             println("accum:\(accum)")
@@ -106,15 +106,15 @@ public struct BigNum {
         if(carry > 0) {
             resultDigits.append(carry)
         }
-        return BigNum(digits: resultDigits, decimalIndex: -lsp, negative: lhs.negative, radix: radix)
+        return BigNum(digits: resultDigits, decimalIndex: -lsp, negative: 🅛.negative, radix: radix)
     }
     
-    public static func negate(#rhs: BigNum) -> BigNum {
-        return BigNum(digits: rhs.digits, decimalIndex: rhs.decimalIndex, negative: !rhs.negative, radix: rhs.radix)
+    public static func negate(#🅡: BigNum) -> BigNum {
+        return BigNum(digits: 🅡.digits, decimalIndex: 🅡.decimalIndex, negative: !🅡.negative, radix: 🅡.radix)
     }
     
-    public func add(rhs: BigNum) -> BigNum {
-        return BigNum.add(lhs: self, rhs: rhs)
+    public func add(🅡: BigNum) -> BigNum {
+        return BigNum.add(🅛: self, 🅡: 🅡)
     }
     
     public func toString(leadingPlaces: Int? = nil, trailingPlaces: Int? = nil, blankLeadingZeros: Bool = true, blankMinusSign: Bool = true) -> String {
@@ -171,12 +171,12 @@ extension BigNum : IntegerLiteralConvertible {
     }
 }
 
-public func + (lhs: BigNum, rhs: BigNum) -> BigNum {
-    return BigNum.add(lhs: lhs, rhs: rhs)
+public func + (🅛: BigNum, 🅡: BigNum) -> BigNum {
+    return BigNum.add(🅛: 🅛, 🅡: 🅡)
 }
 
-public prefix func - (rhs: BigNum) -> BigNum {
-    return BigNum.negate(rhs: rhs)
+public prefix func - (🅡: BigNum) -> BigNum {
+    return BigNum.negate(🅡: 🅡)
 }
 
 public func testBigNum() {

@@ -6,13 +6,16 @@
 //  Copyright (c) 2015 Arciem LLC. All rights reserved.
 //
 
-public class ReachabilityComponent : Component {
-    public private(set) var inEnabledPort: InputPort!
-    public private(set) var outStatusPort: OutputPort!
-    
+public class ReachabilityⒸ : Component {
+    public typealias OutStringPortⓉ = OutPort<String>
+    public var outString🅟: OutStringPortⓉ!
+
+    public typealias OutStatusPortⓉ = OutPort<Reachability.NetworkStatus>
+    public var outStatus🅟: OutStatusPortⓉ!
+
     private let reachability: Reachability
     
-    private var enabled: Bool = false {
+    public var enabled: Bool = false {
         willSet {
             if enabled != newValue {
                 if newValue {
@@ -26,20 +29,16 @@ public class ReachabilityComponent : Component {
     }
     
     private func sendReachability() {
-        let s = reachability.currentReachabilityString
-        outStatusPort.sendObject(s)
+        outString🅟.send(reachability.currentReachabilityString)
     }
 
-    public init(hostname: String) {
+    public init(_ name: String?, _ component: Component?, hostname: String) {
         reachability = Reachability(hostname: hostname)
+
+        super.init(name: name ?? "Reachability", component)
         
-        super.init()
-        
-        inEnabledPort = addInputPortNamed("enabled", synchronous: true) { [unowned self] packet in
-            let _  = packet ★ { v in self.enabled = v.boolValue ?? false }
-        }
-        
-        outStatusPort = addOutputPortNamed("status", synchronous: true)
+        outString🅟 = OutStringPortⓉ("outString", self)
+        outStatus🅟 = OutStatusPortⓉ("outStatus", self)
 
         reachability.whenReachable = { [unowned self] _ in
             self.sendReachability()
@@ -48,5 +47,9 @@ public class ReachabilityComponent : Component {
         reachability.whenUnreachable = { [unowned self] _ in
             self.sendReachability()
         }
+    }
+    
+    deinit {
+        reachability.stopNotifier()
     }
 }

@@ -43,6 +43,10 @@ public extension String {
             return $0
         }
     }
+    
+    public func toData() -> NSData {
+        return NSData(byteArray: toUTF8Bytes())
+    }
 
     public subscript (r: Range<Int>) -> String {
         get {
@@ -92,7 +96,7 @@ public func joinStrings(separator: String, elements: [String]) -> String {
     var s = String()
     for (index, elem) in enumerate(elements) {
         s += elem
-        if index < elements.count {
+        if index < elements.count - 1 {
             s += separator
         }
     }
@@ -104,3 +108,25 @@ extension String {
         return Arciem.joinStrings(self, elements)
     }
 }
+
+public func joinKeysToValues<🍒, 🍋>(separator: String, dict: [🍒 : 🍋]) -> [String] {
+    var a = [String]()
+    for (key, value) in dict {
+        a.append(separator.joinStrings(["\(key)", "\(value)"]))
+    }
+    return a
+}
+
+public func macRomanToUnicodeString(s: String) -> String {
+    let s1 = s as NSString
+    let len = s1.lengthOfBytesUsingEncoding(NSMacOSRomanStringEncoding)
+    let s2: String
+    if len > 0 {
+        let d = s1.dataUsingEncoding(NSMacOSRomanStringEncoding)!
+        s2 = d.toString()!
+    } else {
+        s2 = s
+    }
+    return s2
+}
+

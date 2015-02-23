@@ -7,6 +7,10 @@ extension NSData {
         return a
     }
     
+    public func toString() -> String? {
+        return stringFromUTF8Bytes(toByteArray())
+    }
+    
     public convenience init(byteArray: [UInt8]) {
         self.init(bytes: byteArray, length: byteArray.count)
     }

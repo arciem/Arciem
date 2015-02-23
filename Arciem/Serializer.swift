@@ -11,8 +11,6 @@ import Foundation
 let serializerKey:String = "Serializer"
 var nextQueueContext: Int = 1
 
-public typealias SerializerBlock = (Void) -> Any?
-
 public class Serializer {
     let queue: DispatchQueue
     let queueContext: NSNumber
@@ -38,8 +36,8 @@ public class Serializer {
         }
     }
     
-    public func dispatchWithReturn(f: SerializerBlock) -> Any? {
-        var result: Any?
+    public func dispatchWithReturn<🍒>(f: () -> 🍒) -> 🍒 {
+        var result: 🍒!
         
         if(self.isExecutingOnMyQueue) {
             result = f()
@@ -49,21 +47,21 @@ public class Serializer {
             }
         }
         
-        return result
+        return result!
     }
     
     public func dispatchOnMain(f: DispatchBlock) {
         dispatchSyncOnMain(f)
     }
     
-    public func dispatchOnMainWithReturn(f: SerializerBlock) -> Any? {
-        var result: Any?
+    public func dispatchOnMainWithReturn<🍒>(f: () -> 🍒) -> 🍒 {
+        var result: 🍒!
         
         dispatchSyncOnMain() {
             result = f()
         }
         
-        return result
+        return result!
     }
 }
 

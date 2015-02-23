@@ -16,13 +16,13 @@ public func getAssociatedObject(#object: NSObject, #key: NSString) -> NSObject? 
     return getAssociatedObject_glue(object, key as! String)
 }
 
-public func toUnsafePointer<T>(inout t: T) -> UnsafePointer<T> {
+public func toUnsafePointer<🍒>(inout t: 🍒) -> UnsafePointer<🍒> {
     return withUnsafePointer(&t) {
         return $0
     }
 }
 
-public func toUnsafeMutablePointer<T>(inout t: T) -> UnsafeMutablePointer<T> {
+public func toUnsafeMutablePointer<🍒>(inout t: 🍒) -> UnsafeMutablePointer<🍒> {
     return withUnsafeMutablePointer(&t) {
         return $0
     }

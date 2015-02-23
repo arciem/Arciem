@@ -102,10 +102,10 @@ public class PixelMatrix {
     public var image: UIImage {
         get {
             if self._image == nil {
-                var error = vImageConvert_PlanarFToARGB8888(&alphaF, &redF, &greenF, &blueF, &argb8, &maxPixelValues, &minPixelValues, UInt32(kvImageNoFlags))
-                assert(error == kvImageNoError, "Error when converting canvas to chunky")
-                error = vImagePremultiplyData_ARGB8888(&argb8, &argb8Premultiplied, UInt32(kvImageNoFlags))
-                assert(error == kvImageNoError, "Error when premultiplying canvas")
+                var 🚫 = vImageConvert_PlanarFToARGB8888(&alphaF, &redF, &greenF, &blueF, &argb8, &maxPixelValues, &minPixelValues, UInt32(kvImageNoFlags))
+                assert(🚫 == kvImageNoError, "Error when converting canvas to chunky")
+                🚫 = vImagePremultiplyData_ARGB8888(&argb8, &argb8Premultiplied, UInt32(kvImageNoFlags))
+                assert(🚫 == kvImageNoError, "Error when premultiplying canvas")
                 let cgImage = CGBitmapContextCreateImage(self.context)
                 self._image = UIImage(CGImage: cgImage)
                 assert(self._image != nil, "Error when converting")

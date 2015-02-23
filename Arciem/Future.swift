@@ -89,56 +89,56 @@ public class Future {
 }
 
 // "new"
-public prefix func • <A>(lhs: Promise<Void, A>) -> Promise<Void, A> {
+public prefix func • <A>(🅛: Promise<Void, A>) -> Promise<Void, A> {
     FutureLogger?.trace("•Promise<Void, A> → Promise<Void, A>")
-    return Future().then(lhs)
+    return Future().then(🅛)
 }
 
 // "successor"
-public func → <A, B>(lhs: Promise<Void, A>, rhs: Promise<A, B>) -> Promise<A, B> {
+public func → <A, B>(🅛: Promise<Void, A>, 🅡: Promise<A, B>) -> Promise<A, B> {
     FutureLogger?.trace("Promise<Void, A> → Promise<A, B>")
-    return lhs.then(rhs)
+    return 🅛.then(🅡)
 }
 
 // "successor"
-public func → <A, B, C>(lhs: Promise<A, B>, rhs: Promise<B, C>) -> Promise<B, C> {
+public func → <A, B, C>(🅛: Promise<A, B>, 🅡: Promise<B, C>) -> Promise<B, C> {
     FutureLogger?.trace("Promise<A, B> → Promise<B, C>")
-    return lhs.then(rhs)
+    return 🅛.then(🅡)
 }
 
 // "successor"
-public func → <A, B>(lhs: Promise<A, B>, rhs: (B) -> Void) -> Promise<B, Void> {
+public func → <A, B>(🅛: Promise<A, B>, 🅡: (B) -> Void) -> Promise<B, Void> {
     FutureLogger?.trace("Promise<A, B> → (B)->Void")
     let d = Promise<B, Void>()
     d.task = { val in
-        rhs(val)
+        🅡(val)
         d.😄(Void())
     }
-    return lhs.then(d)
+    return 🅛.then(d)
 }
 
 // "successor"
-public func → <A, B, C>(lhs: Promise<A, B>, rhs: (B) -> C) -> Promise<B, C> {
+public func → <A, B, C>(🅛: Promise<A, B>, 🅡: (B) -> C) -> Promise<B, C> {
     FutureLogger?.trace("Promise<A, B> → (B)->C")
     let d = Promise<B, C>()
     d.task = { val in
-        d.😄(rhs(val))
+        d.😄(🅡(val))
     }
-    return lhs.then(d)
+    return 🅛.then(d)
 }
 
 // "failure"
-public func † <A, B>(lhs: Promise<A, B>, rhs: ErrorBlock) -> Promise<A, B> {
+public func † <A, B>(🅛: Promise<A, B>, 🅡: ErrorBlock) -> Promise<A, B> {
     FutureLogger?.trace("Promise<A, B> † ErrorBlock")
-    lhs.future.failure = rhs
-    return lhs
+    🅛.future.failure = 🅡
+    return 🅛
 }
 
 // "finally"
-public func ‡ <A, B>(lhs: Promise<A, B>, rhs: DispatchBlock) -> Future {
+public func ‡ <A, B>(🅛: Promise<A, B>, 🅡: DispatchBlock) -> Future {
     FutureLogger?.trace("Promise<A, B> ‡ DispatchBlock")
-    lhs.future.finally = rhs
-    return lhs.future.go()
+    🅛.future.finally = 🅡
+    return 🅛.future.go()
 }
 
 public func testFuture() {

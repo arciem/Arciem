@@ -39,56 +39,56 @@ extension Degrees : FloatLiteralConvertible {
 
 extension Degrees : Comparable { }
 
-public func == (lhs: Degrees, rhs: Degrees) -> Bool {
-    return lhs.degrees == rhs.degrees
+public func == (🅛: Degrees, 🅡: Degrees) -> Bool {
+    return 🅛.degrees == 🅡.degrees
 }
 
-public func < (lhs: Degrees, rhs: Degrees) -> Bool {
-    return lhs.degrees < rhs.degrees
+public func < (🅛: Degrees, 🅡: Degrees) -> Bool {
+    return 🅛.degrees < 🅡.degrees
 }
 
-public prefix func -(rhs: Degrees) -> Degrees {
-    return Degrees(-rhs.degrees)
+public prefix func -(🅡: Degrees) -> Degrees {
+    return Degrees(-🅡.degrees)
 }
 
-public func +(lhs: Degrees, rhs: Degrees) -> Degrees {
-    return Degrees(lhs.degrees + rhs.degrees)
+public func +(🅛: Degrees, 🅡: Degrees) -> Degrees {
+    return Degrees(🅛.degrees + 🅡.degrees)
 }
 
-public func -(lhs: Degrees, rhs: Degrees) -> Degrees {
-    return Degrees(lhs.degrees - rhs.degrees)
+public func -(🅛: Degrees, 🅡: Degrees) -> Degrees {
+    return Degrees(🅛.degrees - 🅡.degrees)
 }
 
-public func *(lhs: Degrees, rhs: Degrees) -> Degrees {
-    return Degrees(lhs.degrees * rhs.degrees)
+public func *(🅛: Degrees, 🅡: Degrees) -> Degrees {
+    return Degrees(🅛.degrees * 🅡.degrees)
 }
 
-public func /(lhs: Degrees, rhs: Degrees) -> Degrees {
-    return Degrees(lhs.degrees / rhs.degrees)
+public func /(🅛: Degrees, 🅡: Degrees) -> Degrees {
+    return Degrees(🅛.degrees / 🅡.degrees)
 }
 
-public func %(lhs: Degrees, rhs: Degrees) -> Degrees {
-    return Degrees(lhs.degrees % rhs.degrees)
+public func %(🅛: Degrees, 🅡: Degrees) -> Degrees {
+    return Degrees(🅛.degrees % 🅡.degrees)
 }
 
-public func +=(inout lhs: Degrees, rhs: Degrees) {
-    lhs.degrees += rhs.degrees
+public func +=(inout 🅛: Degrees, 🅡: Degrees) {
+    🅛.degrees += 🅡.degrees
 }
 
-public func -=(inout lhs: Degrees, rhs: Degrees) {
-    lhs.degrees -= rhs.degrees
+public func -=(inout 🅛: Degrees, 🅡: Degrees) {
+    🅛.degrees -= 🅡.degrees
 }
 
-public func *=(inout lhs: Degrees, rhs: Degrees) {
-    lhs.degrees *= rhs.degrees
+public func *=(inout 🅛: Degrees, 🅡: Degrees) {
+    🅛.degrees *= 🅡.degrees
 }
 
-public func /=(inout lhs: Degrees, rhs: Degrees) {
-    lhs.degrees /= rhs.degrees
+public func /=(inout 🅛: Degrees, 🅡: Degrees) {
+    🅛.degrees /= 🅡.degrees
 }
 
-public func %=(inout lhs: Degrees, rhs: Degrees) {
-    lhs.degrees %= rhs.degrees
+public func %=(inout 🅛: Degrees, 🅡: Degrees) {
+    🅛.degrees %= 🅡.degrees
 }
 
 
@@ -115,54 +115,54 @@ extension Radians : FloatLiteralConvertible {
 
 extension Radians : Comparable { }
 
-public func == (lhs: Radians, rhs: Radians) -> Bool {
-    return lhs.radians == rhs.radians
+public func == (🅛: Radians, 🅡: Radians) -> Bool {
+    return 🅛.radians == 🅡.radians
 }
 
-public func < (lhs: Radians, rhs: Radians) -> Bool {
-    return lhs.radians < rhs.radians
+public func < (🅛: Radians, 🅡: Radians) -> Bool {
+    return 🅛.radians < 🅡.radians
 }
 
-public prefix func -(rhs: Radians) -> Radians {
-    return Radians(-rhs.radians)
+public prefix func -(🅡: Radians) -> Radians {
+    return Radians(-🅡.radians)
 }
 
-public func +(lhs: Radians, rhs: Radians) -> Radians {
-    return Radians(lhs.radians + rhs.radians)
+public func +(🅛: Radians, 🅡: Radians) -> Radians {
+    return Radians(🅛.radians + 🅡.radians)
 }
 
-public func -(lhs: Radians, rhs: Radians) -> Radians {
-    return Radians(lhs.radians - rhs.radians)
+public func -(🅛: Radians, 🅡: Radians) -> Radians {
+    return Radians(🅛.radians - 🅡.radians)
 }
 
-public func *(lhs: Radians, rhs: Radians) -> Radians {
-    return Radians(lhs.radians * rhs.radians)
+public func *(🅛: Radians, 🅡: Radians) -> Radians {
+    return Radians(🅛.radians * 🅡.radians)
 }
 
-public func /(lhs: Radians, rhs: Radians) -> Radians {
-    return Radians(lhs.radians / rhs.radians)
+public func /(🅛: Radians, 🅡: Radians) -> Radians {
+    return Radians(🅛.radians / 🅡.radians)
 }
 
-public func %(lhs: Radians, rhs: Radians) -> Radians {
-    return Radians(lhs.radians % rhs.radians)
+public func %(🅛: Radians, 🅡: Radians) -> Radians {
+    return Radians(🅛.radians % 🅡.radians)
 }
 
-public func +=(inout lhs: Radians, rhs: Radians) {
-    lhs.radians += rhs.radians
+public func +=(inout 🅛: Radians, 🅡: Radians) {
+    🅛.radians += 🅡.radians
 }
 
-public func -=(inout lhs: Radians, rhs: Radians) {
-    lhs.radians -= rhs.radians
+public func -=(inout 🅛: Radians, 🅡: Radians) {
+    🅛.radians -= 🅡.radians
 }
 
-public func *=(inout lhs: Radians, rhs: Radians) {
-    lhs.radians *= rhs.radians
+public func *=(inout 🅛: Radians, 🅡: Radians) {
+    🅛.radians *= 🅡.radians
 }
 
-public func /=(inout lhs: Radians, rhs: Radians) {
-    lhs.radians /= rhs.radians
+public func /=(inout 🅛: Radians, 🅡: Radians) {
+    🅛.radians /= 🅡.radians
 }
 
-public func %=(inout lhs: Radians, rhs: Radians) {
-    lhs.radians %= rhs.radians
+public func %=(inout 🅛: Radians, 🅡: Radians) {
+    🅛.radians %= 🅡.radians
 }

@@ -23,14 +23,20 @@ prefix operator • { }
 // "name extract"
 postfix operator ¶ { }
 
+// "unbox"
+postfix operator ⬆️ { }
+
+// "box"
+postfix operator ⬇️ { }
+
 // "value extract"
-postfix operator ^ { }
+//postfix operator ^ { }
 
 // "value equals"
-infix operator ^== { precedence 130 }
+//infix operator ^== { precedence 130 }
 
 // "value not equals"
-infix operator ^!= { precedence 130 }
+//infix operator ^!= { precedence 130 }
 
 // "successor", "next"
 infix operator → { associativity left precedence 170 }
@@ -48,7 +54,7 @@ infix operator † { associativity left precedence 170 }
 infix operator ‡ { associativity left precedence 170 }
 
 // "bind"
-infix operator ≈> { associativity left precedence 170 }
+infix operator +> { associativity left precedence 170 }
 
 // "chaining"
 infix operator ⁂ { associativity left precedence 108 }
@@ -74,21 +80,21 @@ infix operator <=⦿ { }
 // "priority assign"
 infix operator =⦿= { associativity left precedence 95 }
 
-public func ⁂<A, B>(lhs: A, rhs: B) -> A {
-    return lhs
+public func ⁂<A, B>(🅛: A, 🅡: B) -> A {
+    return 🅛
 }
 
 // "rightward assign"
 infix operator => { associativity right precedence 95 }
 
-public func =><T>(lhs:T, inout rhs:T) {
-    rhs = lhs
+public func =><🍒>(🅛:🍒, inout 🅡:🍒) {
+    🅡 = 🅛
 }
 
 // "throw away"
 prefix operator ⏏ { }
 
-public prefix func ⏏<T>(lhs: T) -> Void { }
+public prefix func ⏏<🍒>(🅛: 🍒) -> Void { }
 
 //
 // Variable and Method Names

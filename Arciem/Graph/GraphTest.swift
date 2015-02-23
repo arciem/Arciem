@@ -17,7 +17,7 @@ func graphTest1() {
     let g = Graph()
     
     let n1 = Node<Double>(g).setName("n1")
-    let n2 = Node(lhs: n1).setName("n2")
+    let n2 = Node(🅛: n1).setName("n2")
     let n3 = (-n2).setName("n3")
     let n4 = Node<Double>(g).setName("n4")
     let n5 = (n2 * n4).setName("n5")
@@ -112,8 +112,8 @@ func graphTest4() {
         var result: Result<Double>?
         if let f = value as? Double {
             result = Result(f)
-        } else if let e = value as? NSError {
-            result = Result(error: e)
+        } else if let 🚫 = value as? NSError {
+            result = Result(error: 🚫)
         }
         if let result = result {
             node.setOperation(delayedResult(result, t))

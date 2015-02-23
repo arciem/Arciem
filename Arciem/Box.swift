@@ -1,5 +1,5 @@
 //
-//  Box.swift
+//  Envelope.swift
 //  Arciem
 //
 //  Created by Robert McNally on 1/29/15.
@@ -7,15 +7,18 @@
 //
 
 // Used to work around some Swift compiler issues.
-public final class Box<T> {
-    public let unbox: T
-    public init(_ value: T) { unbox = value }
+public final class 📦<🍒> {
+    public let unbox: 🍒
+    public init(_ value: 🍒) { unbox = value }
 }
 
-extension Box : Printable {
+extension 📦 : Printable {
     public var description: String {
         get {
-            return "Box(\(unbox))"
+            return "📦(\(unbox))"
         }
     }
 }
+
+public postfix func ⬇️<🍒>(🅛: 🍒) -> 📦<🍒> { return 📦(🅛) }
+public postfix func ⬆️<🍒>(🅛: 📦<🍒>) -> 🍒 { return 🅛.unbox }

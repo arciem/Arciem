@@ -1004,19 +1004,19 @@ extension JSON {
 //MARK: - Comparable
 extension JSON: Comparable {}
 
-public func ==(lhs: JSON, rhs: JSON) -> Bool {
+public func ==(🅛: JSON, 🅡: JSON) -> Bool {
     
-    switch (lhs.type, rhs.type) {
+    switch (🅛.type, 🅡.type) {
     case (.Number, .Number):
-        return (lhs.object as NSNumber) == (rhs.object as NSNumber)
+        return (🅛.object as NSNumber) == (🅡.object as NSNumber)
     case (.String, .String):
-        return (lhs.object as String) == (rhs.object as String)
+        return (🅛.object as String) == (🅡.object as String)
     case (.Bool, .Bool):
-        return (lhs.object as Bool) == (rhs.object as Bool)
+        return (🅛.object as Bool) == (🅡.object as Bool)
     case (.Array, .Array):
-        return (lhs.object as NSArray) == (rhs.object as NSArray)
+        return (🅛.object as NSArray) == (🅡.object as NSArray)
     case (.Dictionary, .Dictionary):
-        return (lhs.object as NSDictionary) == (rhs.object as NSDictionary)
+        return (🅛.object as NSDictionary) == (🅡.object as NSDictionary)
     case (.Null, .Null):
         return true
     default:
@@ -1024,19 +1024,19 @@ public func ==(lhs: JSON, rhs: JSON) -> Bool {
     }
 }
 
-public func <=(lhs: JSON, rhs: JSON) -> Bool {
+public func <=(🅛: JSON, 🅡: JSON) -> Bool {
     
-    switch (lhs.type, rhs.type) {
+    switch (🅛.type, 🅡.type) {
     case (.Number, .Number):
-        return (lhs.object as NSNumber) <= (rhs.object as NSNumber)
+        return (🅛.object as NSNumber) <= (🅡.object as NSNumber)
     case (.String, .String):
-        return (lhs.object as String) <= (rhs.object as String)
+        return (🅛.object as String) <= (🅡.object as String)
     case (.Bool, .Bool):
-        return (lhs.object as Bool) == (rhs.object as Bool)
+        return (🅛.object as Bool) == (🅡.object as Bool)
     case (.Array, .Array):
-        return (lhs.object as NSArray) == (rhs.object as NSArray)
+        return (🅛.object as NSArray) == (🅡.object as NSArray)
     case (.Dictionary, .Dictionary):
-        return (lhs.object as NSDictionary) == (rhs.object as NSDictionary)
+        return (🅛.object as NSDictionary) == (🅡.object as NSDictionary)
     case (.Null, .Null):
         return true
     default:
@@ -1044,19 +1044,19 @@ public func <=(lhs: JSON, rhs: JSON) -> Bool {
     }
 }
 
-public func >=(lhs: JSON, rhs: JSON) -> Bool {
+public func >=(🅛: JSON, 🅡: JSON) -> Bool {
     
-    switch (lhs.type, rhs.type) {
+    switch (🅛.type, 🅡.type) {
     case (.Number, .Number):
-        return (lhs.object as NSNumber) >= (rhs.object as NSNumber)
+        return (🅛.object as NSNumber) >= (🅡.object as NSNumber)
     case (.String, .String):
-        return (lhs.object as String) >= (rhs.object as String)
+        return (🅛.object as String) >= (🅡.object as String)
     case (.Bool, .Bool):
-        return (lhs.object as Bool) == (rhs.object as Bool)
+        return (🅛.object as Bool) == (🅡.object as Bool)
     case (.Array, .Array):
-        return (lhs.object as NSArray) == (rhs.object as NSArray)
+        return (🅛.object as NSArray) == (🅡.object as NSArray)
     case (.Dictionary, .Dictionary):
-        return (lhs.object as NSDictionary) == (rhs.object as NSDictionary)
+        return (🅛.object as NSDictionary) == (🅡.object as NSDictionary)
     case (.Null, .Null):
         return true
     default:
@@ -1064,25 +1064,25 @@ public func >=(lhs: JSON, rhs: JSON) -> Bool {
     }
 }
 
-public func >(lhs: JSON, rhs: JSON) -> Bool {
+public func >(🅛: JSON, 🅡: JSON) -> Bool {
     
-    switch (lhs.type, rhs.type) {
+    switch (🅛.type, 🅡.type) {
     case (.Number, .Number):
-        return (lhs.object as NSNumber) > (rhs.object as NSNumber)
+        return (🅛.object as NSNumber) > (🅡.object as NSNumber)
     case (.String, .String):
-        return (lhs.object as String) > (rhs.object as String)
+        return (🅛.object as String) > (🅡.object as String)
     default:
         return false
     }
 }
 
-public func <(lhs: JSON, rhs: JSON) -> Bool {
+public func <(🅛: JSON, 🅡: JSON) -> Bool {
     
-    switch (lhs.type, rhs.type) {
+    switch (🅛.type, 🅡.type) {
     case (.Number, .Number):
-        return (lhs.object as NSNumber) < (rhs.object as NSNumber)
+        return (🅛.object as NSNumber) < (🅡.object as NSNumber)
     case (.String, .String):
-        return (lhs.object as String) < (rhs.object as String)
+        return (🅛.object as String) < (🅡.object as String)
     default:
         return false
     }
@@ -1108,66 +1108,66 @@ extension NSNumber: Comparable {
     }
 }
 
-public func ==(lhs: NSNumber, rhs: NSNumber) -> Bool {
-    switch (lhs.isBool, rhs.isBool) {
+public func ==(🅛: NSNumber, 🅡: NSNumber) -> Bool {
+    switch (🅛.isBool, 🅡.isBool) {
     case (false, true):
         return false
     case (true, false):
         return false
     default:
-        return lhs.compare(rhs) == NSComparisonResult.OrderedSame
+        return 🅛.compare(🅡) == NSComparisonResult.OrderedSame
     }
 }
 
-public func !=(lhs: NSNumber, rhs: NSNumber) -> Bool {
-    return !(lhs == rhs)
+public func !=(🅛: NSNumber, 🅡: NSNumber) -> Bool {
+    return !(🅛 == 🅡)
 }
 
-public func <(lhs: NSNumber, rhs: NSNumber) -> Bool {
+public func <(🅛: NSNumber, 🅡: NSNumber) -> Bool {
     
-    switch (lhs.isBool, rhs.isBool) {
+    switch (🅛.isBool, 🅡.isBool) {
     case (false, true):
         return false
     case (true, false):
         return false
     default:
-        return lhs.compare(rhs) == NSComparisonResult.OrderedAscending
+        return 🅛.compare(🅡) == NSComparisonResult.OrderedAscending
     }
 }
 
-public func >(lhs: NSNumber, rhs: NSNumber) -> Bool {
+public func >(🅛: NSNumber, 🅡: NSNumber) -> Bool {
     
-    switch (lhs.isBool, rhs.isBool) {
+    switch (🅛.isBool, 🅡.isBool) {
     case (false, true):
         return false
     case (true, false):
         return false
     default:
-        return lhs.compare(rhs) == NSComparisonResult.OrderedDescending
+        return 🅛.compare(🅡) == NSComparisonResult.OrderedDescending
     }
 }
 
-public func <=(lhs: NSNumber, rhs: NSNumber) -> Bool {
+public func <=(🅛: NSNumber, 🅡: NSNumber) -> Bool {
 
-    switch (lhs.isBool, rhs.isBool) {
+    switch (🅛.isBool, 🅡.isBool) {
     case (false, true):
         return false
     case (true, false):
         return false
     default:
-        return lhs.compare(rhs) != NSComparisonResult.OrderedDescending
+        return 🅛.compare(🅡) != NSComparisonResult.OrderedDescending
     }
 }
 
-public func >=(lhs: NSNumber, rhs: NSNumber) -> Bool {
+public func >=(🅛: NSNumber, 🅡: NSNumber) -> Bool {
 
-    switch (lhs.isBool, rhs.isBool) {
+    switch (🅛.isBool, 🅡.isBool) {
     case (false, true):
         return false
     case (true, false):
         return false
     default:
-        return lhs.compare(rhs) != NSComparisonResult.OrderedAscending
+        return 🅛.compare(🅡) != NSComparisonResult.OrderedAscending
     }
 }
 

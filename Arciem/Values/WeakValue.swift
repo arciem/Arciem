@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-public struct WeakValue<T: AnyObject> /*: Valuable*/ {
-    typealias ValueType = T?
-    weak public var value: ValueType
+public struct WeakValue<🍒: AnyObject> /*: Valuable*/ {
+    typealias 🍋 = 🍒?
+    weak public var value: 🍋
     
-    init(_ value: ValueType) {
+    init(_ value: 🍋) {
         self.value = value
     }
 }

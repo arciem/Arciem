@@ -6,17 +6,17 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-public func randomIndex<T>(array: Array<T>, random: Random = Random.sharedInstance) -> Int {
+public func randomIndex<🍒>(array: Array<🍒>, random: Random = Random.sharedInstance) -> Int {
     return random.randomInt(0..<array.count)
 }
 
-public func randomElement<T>(array: Array<T>, random: Random = Random.sharedInstance) -> T {
+public func randomElement<🍒>(array: Array<🍒>, random: Random = Random.sharedInstance) -> 🍒 {
     return array[randomIndex(array)]
 }
 
 // Fisher–Yates shuffle
 // http://datagenetics.com/blog/november42014/index.html
-public func shuffled<T>(array: Array<T>, random: Random = Random.sharedInstance) -> Array<T> {
+public func shuffled<🍒>(array: Array<🍒>, random: Random = Random.sharedInstance) -> Array<🍒> {
     var result = array
     var hi = result.count - 1
     for var a = 0; a < hi; ++a {
@@ -39,10 +39,10 @@ public func shuffledTest() {
     println(shuffledDeck)
 }
 
-public func hasElement<T: Equatable>(array: Array<T>, obj: T) -> Bool {
+public func hasElement<🍒: Equatable>(array: Array<🍒>, obj: 🍒) -> Bool {
     return array.filter { $0 == obj }.count > 0
 }
 
-public func hasObject<T: AnyObject>(array: Array<T>, obj: T) -> Bool {
+public func hasObject<🍒: AnyObject>(array: Array<🍒>, obj: 🍒) -> Bool {
     return array.filter { $0 === obj }.count > 0
 }

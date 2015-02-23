@@ -89,12 +89,12 @@ public struct Color {
         )
     }
     
-    public func multipliedBy(rhs: Float) -> Color {
-        return Color(red: red * rhs, green: green * rhs, blue: blue * rhs, alpha: alpha * rhs)
+    public func multipliedBy(🅡: Float) -> Color {
+        return Color(red: red * 🅡, green: green * 🅡, blue: blue * 🅡, alpha: alpha * 🅡)
     }
     
-    public func addedTo(rhs: Color) -> Color {
-        return Color(red: red + rhs.red, green: green + rhs.green, blue: blue + rhs.blue, alpha: alpha + rhs.alpha)
+    public func addedTo(🅡: Color) -> Color {
+        return Color(red: red + 🅡.red, green: green + 🅡.green, blue: blue + 🅡.blue, alpha: alpha + 🅡.alpha)
     }
     
     public func lightened(frac: Float) -> Color {
@@ -145,10 +145,10 @@ extension Color : Printable {
     }
 }
 
-public func *(lhs: Color, rhs: Float) -> Color {
-    return lhs.multipliedBy(rhs)
+public func *(🅛: Color, 🅡: Float) -> Color {
+    return 🅛.multipliedBy(🅡)
 }
 
-public func +(lhs: Color, rhs: Color) -> Color {
-    return lhs.addedTo(rhs)
+public func +(🅛: Color, 🅡: Color) -> Color {
+    return 🅛.addedTo(🅡)
 }

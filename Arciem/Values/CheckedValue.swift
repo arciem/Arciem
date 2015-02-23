@@ -8,9 +8,9 @@
 
 public typealias CheckBlock = () -> Bool
 
-//public class CheckedValue<T> /*: Valuable*/ {
-//    typealias ValueType = T?
-//    var _value : ValueType = nil
+//public class CheckedValue<🍒> /*: Valuable*/ {
+//    typealias 🍋 = 🍒?
+//    var _value : 🍋 = nil
 //    var setCheck : CheckBlock
 //    
 //    public init(_ setCheck: CheckBlock) {
@@ -18,7 +18,7 @@ public typealias CheckBlock = () -> Bool
 //    }
 //    
 //    // conformance to Valuable
-//    public var value : ValueType {
+//    public var value : 🍋 {
 //        get {
 //            return _value
 //        }
