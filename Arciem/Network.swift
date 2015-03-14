@@ -20,7 +20,7 @@ public extension sockaddr_in {
     public func to_sockaddr() -> sockaddr {
         var addr = sockaddr()
         var in_addr = self
-        memcpy(&addr, &in_addr, UInt(sizeof(sockaddr)))
+        memcpy(&addr, &in_addr, sizeof(sockaddr))
         return addr
     }
 }

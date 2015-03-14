@@ -31,7 +31,7 @@ public struct URLComposer {
             if pathComponents.count > 0 {
                 path = "/" + "/".joinStrings(pathComponents)
             } else {
-                path = ""
+                path = "/"
             }
             
             let query: String

@@ -11,9 +11,9 @@ var observerLogger : Logger? = Logger(tag: "OBSERVER", enabled: true)
 
 public class Observer {
     let id: Int
-    var didChange: ((newValue: Any) -> Void)?
-    var willChange: ((oldValue: Any) -> Void)?
-    var didInitialize: ((initialValue: Any) -> Void)?
+    var didChange: ((newValue: Any?) -> Void)?
+    var willChange: ((oldValue: Any?) -> Void)?
+    var didInitialize: ((initialValue: Any?) -> Void)?
     weak var observedValue: ObservableValue?
 
     var log: Logger? { get { return observerLogger } }

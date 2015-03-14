@@ -9,7 +9,7 @@
 public class TriggerPortⒶ<🍒: DataflowⓋ> : InPort<Bool> {
     public override init(_ name: String, _ component: Component, inPlug: InPlugⒻ) {
         let myPlug: InPlugⒻ = { 📫 in
-            📫
+            let _ = 📫
                 ★ { if $0 == true { inPlug(📫) } }
                 † { 🚫 in inPlug(📫) }
         }

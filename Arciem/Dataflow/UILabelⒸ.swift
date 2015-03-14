@@ -21,7 +21,7 @@ public class UILabelⒸ: Component {
         super.init(name: name ?? "UILabel", component)
         
         inText🅟 = InPort("inText", self) { [weak self] 🅥 in
-            dispatchOnMain {
+            let _ = dispatchOnMain {
                 if let slf = self, label = slf.label {
                     switch 🅥 {
                     case .😄(let 📫):

@@ -29,10 +29,10 @@ public class Cable<🍒: DataflowⓋ>: CableⒶ {
         self.tail = tail
         self.head = head
         super.init(component: tail.component!)
-        tail.addPlug() { [unowned head, unowned self] result in
-            dispatchOnBackground() {
-                dfLogger?.debug("TRANSMIT: \(self.headTailDescription)")
-                head.🅥 = result
+        tail.addPlug() { [unowned self] result in
+            let _ = dispatchOnBackground() {
+                dfLogger?.debug("TRANSMIT: \(self)")
+                self.head?.🅥 = result
             }
         }
     }

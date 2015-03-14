@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  RectSetter.swift
 //  Arciem
 //
 //  Created by Robert McNally on 6/10/14.

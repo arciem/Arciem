@@ -23,15 +23,6 @@ public class PortⒶ {
     }
 }
 
-public protocol DataflowⓋ: Any, Equatable {
-    init()
-}
-
-extension Bool: DataflowⓋ {}
-extension Float: DataflowⓋ {}
-extension Double: DataflowⓋ {}
-extension String: DataflowⓋ {}
-
 public class Port<🍒: DataflowⓋ>: PortⒶ {
     public let oid = OID()
     private var _🅥: 🎁<🍒>

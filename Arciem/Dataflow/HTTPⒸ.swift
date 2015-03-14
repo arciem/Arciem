@@ -75,9 +75,9 @@ public class HTTPⒸ : Component {
                         }
                        
                         if 🚫 == nil {
-                            if let expectedMIMEType = request🅥.expectedMIMEType {
-                                if response.MIMEType != expectedMIMEType {
-                                    🚫 = NSError(domain: HTTPⒸErrorDomain, code: HTTPⒸError.MIMETypeMismatch.rawValue, localizedDescription: "Expected MIME Type: \(expectedMIMEType), got:\(response.MIMEType).")
+                            if let expectedMIMEType = request🅥.expectedMIMEType, mimeType = response.MIMEType {
+                                if mimeType != expectedMIMEType {
+                                    🚫 = NSError(domain: HTTPⒸErrorDomain, code: HTTPⒸError.MIMETypeMismatch.rawValue, localizedDescription: "Expected MIME Type: \(expectedMIMEType), got:\(mimeType).")
                                 }
                             }
                         }

@@ -73,15 +73,15 @@ public class PixelMatrix {
         greenFData = UnsafeMutablePointer<Float>.alloc(planarFloatsCount)
         blueFData = UnsafeMutablePointer<Float>.alloc(planarFloatsCount)
         
-        argb8 = vImage_Buffer(data: argb8Data, height: UInt(height), width: UInt(width), rowBytes: UInt(chunkyBytesPerRow))
-        argb8Premultiplied = vImage_Buffer(data: argb8PremultipliedData, height: UInt(height), width: UInt(width), rowBytes: UInt(chunkyBytesPerRow))
-        alphaF = vImage_Buffer(data: alphaFData, height: UInt(height), width: UInt(width), rowBytes: UInt(planarBytesPerRow))
-        redF = vImage_Buffer(data: redFData, height: UInt(height), width: UInt(width), rowBytes: UInt(planarBytesPerRow))
-        greenF = vImage_Buffer(data: greenFData, height: UInt(height), width: UInt(width), rowBytes: UInt(planarBytesPerRow))
-        blueF = vImage_Buffer(data: blueFData, height: UInt(height), width: UInt(width), rowBytes: UInt(planarBytesPerRow))
+        argb8 = vImage_Buffer(data: argb8Data, height: UInt(height), width: UInt(width), rowBytes: chunkyBytesPerRow)
+        argb8Premultiplied = vImage_Buffer(data: argb8PremultipliedData, height: UInt(height), width: UInt(width), rowBytes: chunkyBytesPerRow)
+        alphaF = vImage_Buffer(data: alphaFData, height: UInt(height), width: UInt(width), rowBytes: planarBytesPerRow)
+        redF = vImage_Buffer(data: redFData, height: UInt(height), width: UInt(width), rowBytes: planarBytesPerRow)
+        greenF = vImage_Buffer(data: greenFData, height: UInt(height), width: UInt(width), rowBytes: planarBytesPerRow)
+        blueF = vImage_Buffer(data: blueFData, height: UInt(height), width: UInt(width), rowBytes: planarBytesPerRow)
         
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
-        context = CGBitmapContextCreate(argb8PremultipliedData, UInt(width), UInt(height), UInt(chunkyBitsPerComponent), UInt(chunkyBytesPerRow), colorSpace, bitmapInfo)
+        context = CGBitmapContextCreate(argb8PremultipliedData, width, height, chunkyBitsPerComponent, chunkyBytesPerRow, colorSpace, bitmapInfo)
         
         //println("width:\(width) height:\(height) componentsPerPixel:\(componentsPerPixel) chunkyBytesPerComponent:\(chunkyBytesPerComponent) chunkyBitsPerComponent:\(chunkyBitsPerComponent) chunkyBytesPerPixel:\(chunkyBytesPerPixel) chunkyBytesPerRow:\(chunkyBytesPerRow) chunkyBytesCount:\(chunkyBytesCount)")
         

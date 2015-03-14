@@ -128,9 +128,8 @@ public class CView : UIView {
         _setup()
     }
     
-    override public init() {
-        super.init()
-        _setup()
+    public convenience init() {
+        self.init(frame: CGRect.zeroRect)
     }
     
     override public init(frame: CGRect) {
