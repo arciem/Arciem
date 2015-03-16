@@ -5,7 +5,11 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import UIKit
+#if os(OSX)
+    import Cocoa
+    #elseif os(iOS)
+    import UIKit
+#endif
 import Accelerate
 
 public class PixelMatrix {
@@ -38,7 +42,7 @@ public class PixelMatrix {
     private var maxPixelValues: [Float] = [1, 1, 1, 1]
     private var minPixelValues: [Float] = [0, 0, 0, 0]
     private let context: CGContext
-    private var _image: UIImage?
+    private var _image: OSImage?
     
     public init(size: IntSize) {
         assert(size.width > 0, "width must be > 0")
@@ -99,7 +103,7 @@ public class PixelMatrix {
         blueFData.dealloc(Int(planarFloatsCount))
     }
     
-    public var image: UIImage {
+    public var image: OSImage {
         get {
             if self._image == nil {
                 var 🚫 = vImageConvert_PlanarFToARGB8888(&alphaF, &redF, &greenF, &blueF, &argb8, &maxPixelValues, &minPixelValues, UInt32(kvImageNoFlags))
@@ -107,7 +111,11 @@ public class PixelMatrix {
                 🚫 = vImagePremultiplyData_ARGB8888(&argb8, &argb8Premultiplied, UInt32(kvImageNoFlags))
                 assert(🚫 == kvImageNoError, "Error when premultiplying canvas")
                 let cgImage = CGBitmapContextCreateImage(self.context)
-                self._image = UIImage(CGImage: cgImage)
+                #if os(iOS)
+                    self._image = UIImage(CGImage: cgImage)
+                    #elseif os(OSX)
+                    self._image = NSImage(CGImage: cgImage, size: NSZeroSize)
+                #endif
                 assert(self._image != nil, "Error when converting")
             }
             return self._image!

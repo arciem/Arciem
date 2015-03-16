@@ -6,22 +6,28 @@
 //  Copyright (c) 2015 Arciem LLC. All rights reserved.
 //
 
-public extension UIFont {
+#if os(iOS)
+    import UIKit
+    #elseif os(OSX)
+    import Cocoa
+#endif
+
+public extension OSFont {
     
-    public func variantWithTraits(traits: UIFontDescriptorSymbolicTraits) -> UIFont {
+    public func variantWithTraits(traits: UIFontDescriptorSymbolicTraits) -> OSFont {
         let desc: UIFontDescriptor = fontDescriptor().fontDescriptorWithSymbolicTraits(traits)!
-        return UIFont(descriptor: desc, size: 0.0)
+        return OSFont(descriptor: desc, size: 0.0)
     }
 
-    public func boldVariant() -> UIFont {
+    public func boldVariant() -> OSFont {
         return variantWithTraits(.TraitBold)
     }
 
-    public func italicVariant() -> UIFont {
+    public func italicVariant() -> OSFont {
         return variantWithTraits(.TraitItalic)
     }
     
-    public func boldItalicVariant() -> UIFont {
+    public func boldItalicVariant() -> OSFont {
         return variantWithTraits(.TraitBold | .TraitItalic)
     }
 }

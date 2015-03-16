@@ -11,15 +11,19 @@
 // Copyright (c) 2014 Indragie Karunaratne. All rights reserved.
 // Licensed under the MIT license, see LICENSE file for more info.
 
-import UIKit
+#if os(OSX)
+    import Cocoa
+    #elseif os(iOS)
+    import UIKit
+#endif
 
 public struct ProtoLayoutConstraint {
-    public let view: UIView
+    public let view: OSView
     public let attribute: NSLayoutAttribute
     public let multiplier: CGFloat
     public let constant: CGFloat
     
-    public init(view: UIView, attribute: NSLayoutAttribute, multiplier: CGFloat = 1.0, constant: CGFloat = 0.0) {
+    public init(view: OSView, attribute: NSLayoutAttribute, multiplier: CGFloat = 1.0, constant: CGFloat = 0.0) {
         self.view = view
         self.attribute = attribute
         self.multiplier = multiplier
@@ -133,7 +137,7 @@ public func <=⦿ (left: ProtoLayoutConstraint, right: CGFloat) -> NSLayoutConst
     return left.lessThanOrEqualTo(right)
 }
 
-public func =⦿= (left: NSLayoutConstraint, right: UILayoutPriority) -> NSLayoutConstraint {
+public func =⦿= (left: NSLayoutConstraint, right: OSLayoutPriority) -> NSLayoutConstraint {
     left.priority = right
     return left
 }
@@ -149,7 +153,7 @@ public extension NSLayoutConstraint {
     }
 }
 
-public extension UIView {
+public extension OSView {
 
     func layoutAttribute(attribute: NSLayoutAttribute) -> ProtoLayoutConstraint {
         return ProtoLayoutConstraint(view: self, attribute: attribute)
@@ -214,7 +218,7 @@ public extension UIView {
 
 // Current SDK gives a linker error when using UILayoutPriorityRequired and similar, so these are duplicate constants.
 
-public let LayoutPriorityDefaultRequired: UILayoutPriority = 1000 // A required constraint.  Do not exceed this.
-public let LayoutPriorityDefaultHigh: UILayoutPriority = 750 // This is the priority level with which a button resists compressing its content.
-public let LayoutPriorityDefaultLow: UILayoutPriority = 250 // This is the priority level at which a button hugs its contents horizontally.
-public let LayoutPriorityFittingSizeLevel: UILayoutPriority = 50 // When you send -[UIView systemLayoutSizeFittingSize:], the size fitting most closely to the target size (the argument) is computed.  UILayoutPriorityFittingSizeLevel is the priority level with which the view wants to conform to the target size in that computation.  It's quite low.  It is generally not appropriate to make a constraint at exactly this priority.  You want to be higher or lower.
+public let LayoutPriorityDefaultRequired: OSLayoutPriority = 1000 // A required constraint.  Do not exceed this.
+public let LayoutPriorityDefaultHigh: OSLayoutPriority = 750 // This is the priority level with which a button resists compressing its content.
+public let LayoutPriorityDefaultLow: OSLayoutPriority = 250 // This is the priority level at which a button hugs its contents horizontally.
+public let LayoutPriorityFittingSizeLevel: OSLayoutPriority = 50 // When you send -[UIView systemLayoutSizeFittingSize:], the size fitting most closely to the target size (the argument) is computed.  UILayoutPriorityFittingSizeLevel is the priority level with which the view wants to conform to the target size in that computation.  It's quite low.  It is generally not appropriate to make a constraint at exactly this priority.  You want to be higher or lower.

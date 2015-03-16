@@ -49,7 +49,6 @@ public class HTTPⒸ : Component {
                 sessionDelegate.allowUntrustedCertificate = self.allowUntrustedCertificate
                 
                 let session = NSURLSession(configuration: NSURLSessionConfiguration.ephemeralSessionConfiguration(), delegate: sessionDelegate, delegateQueue: nil)
-                
                 var networkActivity: NetworkActivityIndicator.Activity? = NetworkActivityIndicator.instance().makeActivity()
                 
                 let sessionTask = session.dataTaskWithRequest(request) { (data: NSData!, response🅐: NSURLResponse!, 🚫: NSError!) -> Void in
@@ -64,7 +63,7 @@ public class HTTPⒸ : Component {
                         response🅥.response = response
                         
                         var 🚫: NSError?
-
+                        
                         if response.MIMEType == JSONMIMEType {
                             switch JSON.createWithData(data) {
                             case .😄(let 📫):
@@ -73,7 +72,7 @@ public class HTTPⒸ : Component {
                                 🚫 = 🚫2
                             }
                         }
-                       
+                        
                         if 🚫 == nil {
                             if let expectedMIMEType = request🅥.expectedMIMEType, mimeType = response.MIMEType {
                                 if mimeType != expectedMIMEType {
@@ -91,7 +90,7 @@ public class HTTPⒸ : Component {
                                 🚫 = NSError(domain: HTTPErrorDomain, code: statusCode, localizedDescription: NSHTTPURLResponse.localizedStringForStatusCode(statusCode))
                             }
                         }
-
+                        
                         if let 🚫 = 🚫 {
                             self.outResponse🅟.🅥 = 🎁(🚫: 🚫)
                         } else {

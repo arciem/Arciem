@@ -6,7 +6,11 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import UIKit
+#if os(OSX)
+    import Cocoa
+    #elseif os(iOS)
+    import UIKit
+#endif
 
 // The regex below should match all these strings
 /*
@@ -21,56 +25,56 @@ hue: .1 saturation: 0.512 brightness: 0.9 alpha: 1
 // ^\s*(?:(r|h)(?:ed|ue)?:\s*)?(\d*(?:\.\d*)?)\s+(?:(?:g|s)(?:reen|aturation)?:\s*)?(\d*(?:\.\d*)?)\s+(?:(?:b)(?:lue|rightness)?:\s*)?(\d*(?:\.\d*)?)(?:\s+(?:a(?:lpha)?:\s*)?(\d*(?:\.\d*)?))?\s*$
 let _colorParsingRegex: NSRegularExpression! = ~/"^\\s*(?:(r|h)(?:ed|ue)?:\\s*)?(\\d*(?:\\.\\d*)?)\\s+(?:(?:g|s)(?:reen|aturation)?:\\s*)?(\\d*(?:\\.\\d*)?)\\s+(?:(?:b)(?:lue|rightness)?:\\s*)?(\\d*(?:\\.\\d*)?)(?:\\s+(?:a(?:lpha)?:\\s*)?(\\d*(?:\\.\\d*)?))?\\s*$"
 
-public extension UIColor {
-    public func colorByDarkeningFraction(fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByDarkening(color: self.CGColor, fraction: fraction))!
+public extension OSColor {
+    public func colorByDarkeningFraction(fraction: CGFloat) -> OSColor {
+        return OSColor(CGColor: CGColorCreateByDarkening(color: self.CGColor, fraction: fraction))!
     }
 
-    public func colorByLighteningFraction(fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByLightening(color: self.CGColor, fraction: fraction))!
+    public func colorByLighteningFraction(fraction: CGFloat) -> OSColor {
+        return OSColor(CGColor: CGColorCreateByLightening(color: self.CGColor, fraction: fraction))!
     }
     
-    public func colorByDodgingFraction(fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByDodging(color: self.CGColor, fraction: fraction))!
+    public func colorByDodgingFraction(fraction: CGFloat) -> OSColor {
+        return OSColor(CGColor: CGColorCreateByDodging(color: self.CGColor, fraction: fraction))!
     }
     
-    public func colorByBurningFraction(fraction: CGFloat) -> UIColor {
-        return UIColor(CGColor: CGColorCreateByBurning(color: self.CGColor, fraction: fraction))!
+    public func colorByBurningFraction(fraction: CGFloat) -> OSColor {
+        return OSColor(CGColor: CGColorCreateByBurning(color: self.CGColor, fraction: fraction))!
     }
     
-    public func colorByInterpolatingFraction(fraction: CGFloat, toColor: UIColor) -> UIColor {
+    public func colorByInterpolatingFraction(fraction: CGFloat, toColor: OSColor) -> OSColor {
         let cgColor = CGColorCreateByInterpolating(color1: self.CGColor, color2: toColor.CGColor, fraction: fraction)
-        return UIColor(CGColor: cgColor)!
+        return OSColor(CGColor: cgColor)!
     }
     
-    public func randomColor() -> UIColor {
-        return UIColor(CGColor: CGColorCreateRandom())!
+    public func randomColor() -> OSColor {
+        return OSColor(CGColor: CGColorCreateRandom())!
     }
     
-    public func convertToRGB() -> UIColor {
-        return UIColor(CGColor: CGColorConvertToRGB(self.CGColor))!
+    public func convertToRGB() -> OSColor {
+        return OSColor(CGColor: CGColorConvertToRGB(self.CGColor))!
     }
 }
 
 // rrggbb eg. 0x3c001b
-public func colorFromRGBValue(v: UInt32) -> UIColor {
+public func colorFromRGBValue(v: UInt32) -> OSColor {
     let r = CGFloat((v & 0xFF0000) >> 16) / 255.0
     let g = CGFloat((v & 0xFF00) >> 8) / 255.0
     let b = CGFloat(v & 0xFF) / 255.0
     let a = CGFloat(1.0)
-    return UIColor(red: r, green: g, blue: b, alpha: a)
+    return OSColor(red: r, green: g, blue: b, alpha: a)
 }
 
 // rrggbbaa eg. 0x3c001bff
-public func colorFromRGBAValue(v: UInt32) -> UIColor {
+public func colorFromRGBAValue(v: UInt32) -> OSColor {
     let r = CGFloat((v & 0xFF000000) >> 24) / 255.0
     let g = CGFloat((v & 0xFF0000) >> 16) / 255.0
     let b = CGFloat((v & 0xFF00) >> 8) / 255.0
     let a = CGFloat(v & 0xFF) / 255.0
-    return UIColor(red: r, green: g, blue: b, alpha: a)
+    return OSColor(red: r, green: g, blue: b, alpha: a)
 }
 
-public func colorFromString(s: String) -> UIColor {
+public func colorFromString(s: String) -> OSColor {
     var components = [CGFloat]()
     var type = "r"
     
@@ -96,22 +100,22 @@ public func colorFromString(s: String) -> UIColor {
         components.append(1)
     }
     
-    var color: UIColor!
+    var color: OSColor!
     switch type {
     case "r":
-        color = UIColor(red: components[0], green: components[1], blue: components[2], alpha: components[3])
+        color = OSColor(red: components[0], green: components[1], blue: components[2], alpha: components[3])
         break
     default:
-        color = UIColor(hue: components[0], saturation: components[1], brightness: components[2], alpha: components[3])
+        color = OSColor(hue: components[0], saturation: components[1], brightness: components[2], alpha: components[3])
         break
     }
     
     return color
 }
 
-public func colorWithPatternImageNamed(name: String) -> UIColor {
-    let image = UIImage(named: name)!
-    let color = UIColor(patternImage: image)
+public func colorWithPatternImageNamed(name: String) -> OSColor {
+    let image = OSImage(named: name)!
+    let color = OSColor(patternImage: image)
     return color
 }
 

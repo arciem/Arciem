@@ -6,9 +6,13 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import UIKit
+#if os(iOS)
+    import UIKit
+    #elseif os(OSX)
+    import Cocoa
+#endif
 
-public extension UIView {
+public extension OSView {
     public func frameSetter() -> RectSetter {
         return RectSetter(rect: frame) { [unowned self] (r) in self.frame = r }
     }
@@ -26,7 +30,7 @@ public extension UIView {
         return constraints
     }
     
-    public func constrainToView(view: UIView) -> [NSLayoutConstraint] {
+    public func constrainToView(view: OSView) -> [NSLayoutConstraint] {
         assert(superview != nil, "View must have a superview.")
         assert(view.superview != nil, "View must have a superview.")
         assert(superview == view.superview, "Views must have same superview.")
@@ -55,25 +59,29 @@ public extension UIView {
         printViewHierarchy(self, indent: "", level: 0)
     }
     
-    private func printViewHierarchy(view: UIView, indent: String, level: Int) {
+    private func printViewHierarchy(view: OSView, indent: String, level: Int) {
         var scrollViewPrefix = "⬜️"
-        if let scrollView = view as? UIScrollView {
-            scrollViewPrefix = "🔃"
-            if scrollView.scrollsToTop {
-                scrollViewPrefix = "🔝"
+        #if os(iOS)
+            if let scrollView = view as? UIScrollView {
+                scrollViewPrefix = "🔃"
+                if scrollView.scrollsToTop {
+                    scrollViewPrefix = "🔝"
+                }
             }
-        }
-        let translatesPrefix = view.translatesAutoresizingMaskIntoConstraints() ? "⬜️" : "✅"
-        let ambiguousPrefix = view.hasAmbiguousLayout() ? "❓" : "⬜️"
+        #endif
+        let translatesPrefix = view.osTranslatesAutoresizingMaskIntoConstraints ? "⬜️" : "✅"
+        let ambiguousPrefix = view.osHasAmbiguousLayout ? "❓" : "⬜️"
         var auxInfoStrings = [String]()
         
         auxInfoStrings.append("opaque:\(view.opaque)")
-        auxInfoStrings.append("backgroundColor:\(view.backgroundColor)")
-        if let label = view as? UILabel {
-            auxInfoStrings.append("textColor:\(label.textColor)")
-        }
-        auxInfoStrings.append("tintColor:\(view.tintColor)")
-        auxInfoStrings.append("alpha:\(view.alpha)")
+        #if os(iOS)
+            auxInfoStrings.append("backgroundColor:\(view.backgroundColor)")
+            if let label = view as? UILabel {
+                auxInfoStrings.append("textColor:\(label.textColor)")
+            }
+            auxInfoStrings.append("tintColor:\(view.tintColor)")
+        #endif
+        auxInfoStrings.append("alpha:\(view.osAlpha)")
         let debugName = view.debugName
         let debugNameString = debugName == nil ? "" : "\(debugName): "
         let auxInfoString = joinStrings(" ", auxInfoStrings)
@@ -82,7 +90,7 @@ public extension UIView {
         println(s)
         
         let nextIndent = indent + "  |"
-        for subview in view.subviews as! [UIView] {
+        for subview in view.subviews as! [OSView] {
             printViewHierarchy(subview, indent: nextIndent, level: level + 1)
         }
     }
@@ -91,9 +99,9 @@ public extension UIView {
         printConstraintsHierarchy(self, indent: "", level: 0)
     }
     
-    private func printConstraintsHierarchy(view: UIView, indent: String, level: Int) {
-        let translatesPrefix = view.translatesAutoresizingMaskIntoConstraints() ? "⬜️" : "✅"
-        let ambiguousPrefix = view.hasAmbiguousLayout() ? "❓" : "⬜️"
+    private func printConstraintsHierarchy(view: OSView, indent: String, level: Int) {
+        let translatesPrefix = view.osTranslatesAutoresizingMaskIntoConstraints ? "⬜️" : "✅"
+        let ambiguousPrefix = view.osHasAmbiguousLayout ? "❓" : "⬜️"
         let prefix = "\(translatesPrefix) \(ambiguousPrefix)"
         let debugName = view.debugName
         let debugNameString = debugName == nil ? "" : "\(debugName): "
@@ -101,14 +109,14 @@ public extension UIView {
         let frameString = NSString(format: "(%g %g; %g %g)", Float(view.frame.left), Float(view.frame.top), Float(view.frame.width), Float(view.frame.height))
         let s = NSString(format: "%@ ⬜️ %@%3d %@%@ %@", prefix, indent, level, debugNameString, viewString, frameString)
         println(s)
-        for constraint in view.constraints() as! [NSLayoutConstraint] {
+        for constraint in view.osConstraints as! [NSLayoutConstraint] {
             let layoutGroupName = constraint.layoutGroupName
             let layoutGroupNameString = layoutGroupName == nil ? "" : "\(layoutGroupName): "
             println("⬜️ ⬜️ 🔵 \(indent)  │    \(layoutGroupNameString)\(constraint)")
         }
         
         let nextIndent = indent + "  |"
-        for subview in view.subviews as! [UIView] {
+        for subview in view.subviews as! [OSView] {
             printConstraintsHierarchy(subview, indent: nextIndent, level: level + 1)
         }
     }
@@ -116,17 +124,34 @@ public extension UIView {
 
 //prefix operator ~ { }
 
-public prefix func ~<V: UIView>(v: V) -> V {
-    v.setTranslatesAutoresizingMaskIntoConstraints(false)
-    v.opaque = false
+public prefix func ~<V: OSView>(v: V) -> V {
+    #if os(iOS)
+        v.setTranslatesAutoresizingMaskIntoConstraints(false)
+        v.opaque = false
+    #elseif os(OSX)
+        v.translatesAutoresizingMaskIntoConstraints = false
+//        v.wantsLayer = true
+    #endif
     return v
 }
 
-public class CView : UIView {
+public class CView : OSView {
+    #if os(iOS)
     required public init(coder aDecoder: NSCoder)  {
         super.init(coder: aDecoder)
         _setup()
     }
+    #elseif os(OSX)
+    public required init?(coder: NSCoder)  {
+        super.init(coder: coder)
+        _setup()
+    }
+    public override var flipped: Bool {
+        get {
+            return true
+        }
+    }
+    #endif
     
     public convenience init() {
         self.init(frame: CGRect.zeroRect)
@@ -145,6 +170,38 @@ public class CView : UIView {
     public func setup() {
     }
     
+    public func osDidSetNeedsDisplay() {
+    }
+    
+    #if os(iOS)
+    override public func setNeedsDisplay() {
+        super.setNeedsDisplay()
+        osDidSetNeedsDisplay()
+    }
+    
+    public func osSetNeedsDisplay() {
+        setNeedsDisplay()
+    }
+    #endif
+    
+    #if os(OSX)
+    override public var needsDisplay: Bool {
+        didSet {
+            osDidSetNeedsDisplay()
+        }
+    }
+
+    public func osSetNeedsDisplay() {
+        needsDisplay = true
+    }
+    
+    public override func setNeedsDisplayInRect(rect: CGRect) {
+        super.setNeedsDisplayInRect(rect)
+        osDidSetNeedsDisplay()
+    }
+    #endif
+    
+    #if os(iOS)
     public var backgroundColorLocked = false
     public override var backgroundColor: UIColor? {
         get {
@@ -157,7 +214,10 @@ public class CView : UIView {
             }
         }
     }
+    #endif
 }
+
+#if os(iOS)
 
 public class CImageView : UIImageView {
     public required init(coder aDecoder: NSCoder)  {
@@ -174,7 +234,7 @@ public class CImageView : UIImageView {
         super.init(image: image)
         _setup()
     }
-    
+
     override init(image: UIImage!, highlightedImage: UIImage!) {
         super.init(image: image, highlightedImage: highlightedImage)
         _setup()
@@ -201,3 +261,4 @@ public class CImageView : UIImageView {
         }
     }
 }
+#endif

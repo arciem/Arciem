@@ -6,8 +6,13 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
+#if os(OSX)
+    import Cocoa
+    #elseif os(iOS)
+    import UIKit
+#endif
+
 import CoreGraphics
-import UIKit
 
 public var sharedColorSpaceRGB = CGColorSpaceCreateDeviceRGB()
 public var sharedColorSpaceGray = CGColorSpaceCreateDeviceGray()

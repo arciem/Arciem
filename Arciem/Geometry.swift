@@ -6,7 +6,11 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import UIKit
+#if os(OSX)
+    import Cocoa
+    #elseif os(iOS)
+    import UIKit
+#endif
 
 public let goldenRatio: Double = 1.61803398874989484820
 public let pointsPerInch: Double = 72.0

@@ -6,7 +6,11 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import UIKit
+#if os(iOS)
+    import UIKit
+    #elseif os(OSX)
+    import Cocoa
+#endif
 
 private var _networkActivityIndicator = NetworkActivityIndicator()
 
@@ -15,9 +19,13 @@ public class NetworkActivityIndicator {
     
     private init() {
         hysteresis = Hysteresis(effectStart: {
+            #if os(iOS)
             UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+            #endif
         }, effectEnd: {
+            #if os(iOS)
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            #endif
         }, effectStartLag: 0.0, effectEndLag: 0.2)
     }
     

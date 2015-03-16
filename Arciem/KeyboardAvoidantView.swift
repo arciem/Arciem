@@ -6,6 +6,10 @@
 //  Copyright (c) 2015 Arciem LLC. All rights reserved.
 //
 
+#if os(iOS)
+    import UIKit
+#endif
+
 public class KeyboardAvoidantView : CView {
     // Superview.bottom Equal KeyboardAvoidantView.bottom
     // A positive constant should move the bottom of the KeyboardAvoidantView up.

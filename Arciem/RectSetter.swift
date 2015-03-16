@@ -6,11 +6,15 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import UIKit
+#if os(OSX)
+    import Cocoa
+    #elseif os(iOS)
+    import UIKit
+#endif
 
 infix operator <- {}
 
-public func <- ( v: UIView, f: (inout frame: CGRect) -> () ) {
+public func <- ( v: OSView, f: (inout frame: CGRect) -> () ) {
     var r = v.frame
     f(frame: &r)
     v.frame = r

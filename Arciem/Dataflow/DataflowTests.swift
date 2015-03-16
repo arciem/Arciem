@@ -25,6 +25,7 @@ class DataflowTests: XCTestCase {
         super.tearDown()
     }
 
+    #if os(iOS)
     func test1() {
         var expectations = SafeQueue<XCTestExpectation>()
 
@@ -46,6 +47,7 @@ class DataflowTests: XCTestCase {
         
         waitForExpectationsWithTimeout(5, handler: nil)
     }
+    #endif
 }
 
 public class DFNegJSONComponent<A>: DFTransform🎁Ⓒ<JSON, JSON> {

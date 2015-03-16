@@ -30,13 +30,13 @@ postfix operator ⬆️ { }
 postfix operator ⬇️ { }
 
 // "value extract"
-//postfix operator ^ { }
+postfix operator ^ { }
 
 // "value equals"
-//infix operator ^== { precedence 130 }
+infix operator ^== { precedence 130 }
 
 // "value not equals"
-//infix operator ^!= { precedence 130 }
+infix operator ^!= { precedence 130 }
 
 // "successor", "next"
 infix operator → { associativity left precedence 170 }

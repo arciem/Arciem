@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-public class CalculatedValue<🍒> /*: Valuable*/ {
+public class CalculatedValue<🍒> : Valuable {
     var _value : 🍒? = nil
     var i : () -> 🍒
     
