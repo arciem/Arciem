@@ -150,7 +150,7 @@ public struct Gradient {
         ])
  
     // Spectra
-    public static let hues = { (frac: Float) -> Color in return Color(hue: frac, saturation: 1, brightness: 1) }
+    //public static let hues = { (#frac: Float) -> Color in return Color(hue: frac, saturation: 1, brightness: 1) }
     public static let redYellowBlue = threeColor(.Red, .Yellow, .Blue)
     public static let spectrum = blend(colors:[
         Color(redByte:   0, greenByte: 168, blueByte: 222),
@@ -161,6 +161,10 @@ public struct Gradient {
         Color(redByte:   0, greenByte: 158, blueByte:  84)
         ])
 
+    
+    public static func hues(#frac: Float) -> Color {
+        return Color(hue: frac, saturation: 1, brightness: 1)
+    }
     
     public static let gradients = [
         Gradient.grayscale,

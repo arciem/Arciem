@@ -9,10 +9,10 @@
 import CoreGraphics
 
 public struct Color {
-    let red: Float
-    let green: Float
-    let blue: Float
-    let alpha: Float
+    public let red: Float
+    public let green: Float
+    public let blue: Float
+    public let alpha: Float
     
     public init(red: Float, green: Float, blue: Float, alpha: Float = 1.0) {
         self.red = red
