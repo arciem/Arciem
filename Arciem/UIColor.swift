@@ -27,32 +27,32 @@ let _colorParsingRegex: NSRegularExpression! = ~/"^\\s*(?:(r|h)(?:ed|ue)?:\\s*)?
 
 public extension OSColor {
     public func colorByDarkeningFraction(fraction: CGFloat) -> OSColor {
-        return OSColor(CGColor: CGColorCreateByDarkening(color: self.CGColor, fraction: fraction))!
+        return OSColor.osColorWithCGColor(CGColorCreateByDarkening(color: self.CGColor, fraction: fraction))
     }
 
     public func colorByLighteningFraction(fraction: CGFloat) -> OSColor {
-        return OSColor(CGColor: CGColorCreateByLightening(color: self.CGColor, fraction: fraction))!
+        return OSColor.osColorWithCGColor(CGColorCreateByLightening(color: self.CGColor, fraction: fraction))
     }
     
     public func colorByDodgingFraction(fraction: CGFloat) -> OSColor {
-        return OSColor(CGColor: CGColorCreateByDodging(color: self.CGColor, fraction: fraction))!
+        return OSColor.osColorWithCGColor(CGColorCreateByDodging(color: self.CGColor, fraction: fraction))
     }
     
     public func colorByBurningFraction(fraction: CGFloat) -> OSColor {
-        return OSColor(CGColor: CGColorCreateByBurning(color: self.CGColor, fraction: fraction))!
+        return OSColor.osColorWithCGColor(CGColorCreateByBurning(color: self.CGColor, fraction: fraction))
     }
     
     public func colorByInterpolatingFraction(fraction: CGFloat, toColor: OSColor) -> OSColor {
         let cgColor = CGColorCreateByInterpolating(color1: self.CGColor, color2: toColor.CGColor, fraction: fraction)
-        return OSColor(CGColor: cgColor)!
+        return OSColor.osColorWithCGColor(cgColor)
     }
     
     public func randomColor() -> OSColor {
-        return OSColor(CGColor: CGColorCreateRandom())!
+        return OSColor.osColorWithCGColor(CGColorCreateRandom())
     }
     
     public func convertToRGB() -> OSColor {
-        return OSColor(CGColor: CGColorConvertToRGB(self.CGColor))!
+        return OSColor.osColorWithCGColor(CGColorConvertToRGB(self.CGColor))
     }
 }
 
@@ -79,7 +79,7 @@ public func colorFromString(s: String) -> OSColor {
     var type = "r"
     
     let ss: NSString = s
-    var textCheckingResult: NSTextCheckingResult? = _colorParsingRegex.firstMatchInString(s, options: nil, range: NSRange(0..<ss.length))
+    let textCheckingResult: NSTextCheckingResult? = _colorParsingRegex.firstMatchInString(s, options: [], range: NSRange(0..<ss.length))
     if let tcr = textCheckingResult {
         for var i = 1; i < tcr.numberOfRanges; ++i {
             let range = tcr.rangeAtIndex(i)
@@ -87,7 +87,7 @@ public func colorFromString(s: String) -> OSColor {
                 let matchText: NSString = ss.substringWithRange(range)
                 if matchText.length > 0 {
                     if i == 1 {
-                        type = matchText as! String
+                        type = matchText as String
                     } else if i > 1 {
                         components.append(matchText.cgFloatValue())
                     }

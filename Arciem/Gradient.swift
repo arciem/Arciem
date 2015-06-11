@@ -162,7 +162,7 @@ public struct Gradient {
         ])
 
     
-    public static func hues(#frac: Float) -> Color {
+    public static func hues(frac frac: Float) -> Color {
         return Color(hue: frac, saturation: 1, brightness: 1)
     }
     

@@ -42,7 +42,7 @@ public class Cable<🍒: DataflowⓋ>: CableⒶ {
     }
 }
 
-extension Cable: Printable {
+extension Cable: CustomStringConvertible {
     public var description: String {
         get {
             return "\(oid): Cable in '\(component?.name)' (\(headTailDescription))"

@@ -17,6 +17,6 @@ public struct OID {
     }
 }
 
-extension OID: Printable {
+extension OID: CustomStringConvertible {
     public var description: String { return "OID(\(oid))" }
 }

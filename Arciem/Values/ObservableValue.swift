@@ -52,7 +52,7 @@ public class ObservableValue /*: Valuable*/ {
         assert(newObserver.observedValue == nil, "attempting to re-add observer")
         var updatedObservers = [WeakObserverType]()
         for weakObserver in observers {
-            if let observer = weakObserver.value {
+            if weakObserver.value != nil {
                 updatedObservers.append(weakObserver)
             }
         }
@@ -66,11 +66,8 @@ public class ObservableValue /*: Valuable*/ {
         assert(observer.observedValue != nil, "attempting to remove non-added observer")
         assert(observer.observedValue! === self, "attempting to remove observer never added to self")
         var updatedObservers = [WeakObserverType]()
-        var found = false
         for weakObserver in observers {
-            if let observer = weakObserver.value {
-                found = true
-            } else {
+            if weakObserver.value == nil {
                 updatedObservers.append(weakObserver)
             }
         }
@@ -79,7 +76,7 @@ public class ObservableValue /*: Valuable*/ {
     }
 }
 
-extension ObservableValue : Printable {
+extension ObservableValue : CustomStringConvertible {
     public var description : String {
         return identifierOfObject(self)
     }

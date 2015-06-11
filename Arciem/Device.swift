@@ -19,7 +19,7 @@ public class Device {
         let currSysVer = UIDevice.currentDevice().systemVersion
         return currSysVer.compare(minVerStr, options: NSStringCompareOptions.NumericSearch) != NSComparisonResult.OrderedAscending
     }
-    public static let documentDirectoryPath = (NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask) as! [NSURL]).last!
+    public static let documentDirectoryPath = (NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask) as [NSURL]).last!
     public static let orientationsPadAllPhonePortrait = Int(interfaceOrientationMaskValue_glue(isPad ? UIInterfaceOrientationMask.All : UIInterfaceOrientationMask.Portrait))
     public static let orientationsPadAllPhoneAllButUpsideDown = Int(interfaceOrientationMaskValue_glue(isPad ? UIInterfaceOrientationMask.All : UIInterfaceOrientationMask.AllButUpsideDown))
 }

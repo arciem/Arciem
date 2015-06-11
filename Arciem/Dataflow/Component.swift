@@ -36,7 +36,7 @@ public class Component {
     }
 }
 
-extension Component: Printable {
+extension Component: CustomStringConvertible {
     public var description: String {
         get {
             if let component = component {
@@ -67,7 +67,7 @@ public class DFTransform💌Ⓒ<🍋: DataflowⓋ, 🍇: DataflowⓋ>: Component
         let inPlug: InPortⓉ.InPlugⒻ = { [unowned self] r in
             switch r {
             case .😄(let 📫):
-                self.output.🅥 = 🎁(transform(📫⬆️))
+                self.output.🅥 = 🎁(transform(📫))
             case .😡(let 🚫):
                 self.output.🅥 = 🎁(🚫: 🚫)
             }

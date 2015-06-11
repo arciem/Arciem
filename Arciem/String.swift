@@ -58,8 +58,8 @@ public extension String {
     }
     
     public func truncatedAtLength(maxLength: Int, ellipsis: String = "…") -> String {
-        let length = count(self)
-        let ellipsisLength = count(ellipsis)
+        let length = self.characters.count
+        let ellipsisLength = ellipsis.characters.count
         let truncLength = max(0, maxLength - ellipsisLength)
         let realMaxLength = min(length, truncLength)
         var t = self[0..<realMaxLength]
@@ -79,7 +79,7 @@ public func stringFromUTF8Data(data: NSData) -> String? {
 }
 
 public func hexStringFromByte(byte: UInt8) -> String {
-    return NSString(format: "0x%02x", byte) as! String
+    return NSString(format: "0x%02x", byte) as String
 }
 
 public func hexStringFromBytes(bytes: [UInt8]) -> String {
@@ -87,14 +87,14 @@ public func hexStringFromBytes(bytes: [UInt8]) -> String {
     for byte in bytes {
         strings.append(hexStringFromByte(byte))
     }
-    let s = joinStrings(", ", strings)
+    let s = joinStrings(", ", elements: strings)
     return "[\(s)]"
 }
 
 // KLUDGE: The Swift standard library "join" function should work, and did until Swift beta 1.2. But then it started messing up Emoji, breaking 4-byte characters into two, 2-byte characters.
 public func joinStrings(separator: String, elements: [String]) -> String {
     var s = String()
-    for (index, elem) in enumerate(elements) {
+    for (index, elem) in elements.enumerate() {
         s += elem
         if index < elements.count - 1 {
             s += separator
@@ -105,7 +105,7 @@ public func joinStrings(separator: String, elements: [String]) -> String {
 
 extension String {
     public func joinStrings(elements: [String]) -> String {
-        return Arciem.joinStrings(self, elements)
+        return Arciem.joinStrings(self, elements: elements)
     }
 }
 

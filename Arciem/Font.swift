@@ -15,7 +15,7 @@
 public extension OSFont {
     
     public func variantWithTraits(traits: UIFontDescriptorSymbolicTraits) -> OSFont {
-        let desc: UIFontDescriptor = fontDescriptor().fontDescriptorWithSymbolicTraits(traits)!
+        let desc: UIFontDescriptor = fontDescriptor().fontDescriptorWithSymbolicTraits(traits)
         return OSFont(descriptor: desc, size: 0.0)
     }
 
@@ -28,6 +28,6 @@ public extension OSFont {
     }
     
     public func boldItalicVariant() -> OSFont {
-        return variantWithTraits(.TraitBold | .TraitItalic)
+        return variantWithTraits([.TraitBold, .TraitItalic])
     }
 }

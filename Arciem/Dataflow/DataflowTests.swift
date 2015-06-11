@@ -55,7 +55,7 @@ public class DFNegJSONComponent<A>: DFTransform🎁Ⓒ<JSON, JSON> {
         super.init(nil, component, transform: { 🅥 in
             switch 🅥 {
             case .😄(let 📫):
-                if let n = 📫⬆️.numberValue {
+                if let n = 📫.numberValue {
                     return 🎁(JSON(-n))
                 } else {
                     return .😡(NSError("not a number: \(📫)"))
@@ -72,7 +72,7 @@ public class DFNegFloatComponent<A>: DFTransform🎁Ⓒ<Float, Float> {
         let transform: TransformⓉ = { 🅥 in
             switch 🅥 {
             case .😄(let 📫):
-                return 🎁(-📫⬆️)
+                return 🎁(-📫)
             default:
                 return 🅥
             }

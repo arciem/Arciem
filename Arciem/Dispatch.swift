@@ -44,7 +44,7 @@ public func dispatchTimeSinceNow(offsetInSeconds: NSTimeInterval) -> dispatch_ti
 // 1
 // 2
 // 3
-public func dispatchSyncOnQueue(queue: DispatchQueue, f: DispatchBlock) {
+public func dispatchSyncOnQueue(queue: DispatchQueue, _ f: DispatchBlock) {
     dispatch_sync(queue, f)
 }
 
@@ -53,16 +53,16 @@ public func dispatchSyncOnMain(f: DispatchBlock) {
     dispatchSyncOnQueue(mainQueue, f)
 }
 
-func _dispatchOnQueue(queue: DispatchQueue, c: Canceler, f: CancelableBlock) {
+func _dispatchOnQueue(queue: DispatchQueue, canceler: Canceler, _ f: CancelableBlock) {
     dispatch_async(queue) {
-        f(canceler: c)
+        f(canceler: canceler)
     }
 }
 
 // Dispatch a block asynchronously on the give queue. This method returns immediately. Blocks dispatched asynchronously will be executed at some time in the future.
-public func dispatchOnQueue(queue: DispatchQueue, f: DispatchBlock) -> Canceler {
+public func dispatchOnQueue(queue: DispatchQueue, _ f: DispatchBlock) -> Canceler {
     let canceler = Canceler()
-    _dispatchOnQueue(queue, canceler) { canceler in
+    _dispatchOnQueue(queue, canceler: canceler) { canceler in
         if !canceler.isCanceled {
             f()
         }
@@ -89,7 +89,7 @@ func _dispatchOnQueue(queue: DispatchQueue, afterDelay delay: NSTimeInterval, c:
 // After the given delay, dispatch a block asynchronously on the given queue. Returns a Canceler object that, if its <isCanceled> attribute is true when the dispatch time arrives, the block will not be executed.
 public func dispatchOnQueue(queue: DispatchQueue, afterDelay delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
     let canceler = Canceler()
-    _dispatchOnQueue(queue, afterDelay: delay, canceler) { canceler in
+    _dispatchOnQueue(queue, afterDelay: delay, c: canceler) { canceler in
         if !canceler.isCanceled {
             f()
         }
@@ -99,21 +99,21 @@ public func dispatchOnQueue(queue: DispatchQueue, afterDelay delay: NSTimeInterv
 
 // After the given delay, dispatch a block asynchronously on the main queue. Returns a Canceler object that, if its <isCanceled> attribute is true when the dispatch time arrives, the block will not be executed.
 public func dispatchOnMainAfterDelay(delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
-    return dispatchOnQueue(mainQueue, afterDelay: delay, f)
+    return dispatchOnQueue(mainQueue, afterDelay: delay, f: f)
 }
 
 // After the given delay, dispatch a block asynchronously on the background queue. Returns a Canceler object that, if its <isCanceled> attribute is true when the dispatch time arrives, the block will not be executed.
 public func dispatchOnBackgroundAfterDelay(delay: NSTimeInterval, f: DispatchBlock) -> Canceler {
-    return dispatchOnQueue(backgroundQueue, afterDelay: delay, f)
+    return dispatchOnQueue(backgroundQueue, afterDelay: delay, f: f)
 }
 
-func _dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: NSTimeInterval, canceler: Canceler, f:CancelableBlock) {
-    _dispatchOnQueue(queue, afterDelay: interval, canceler) { canceler in
+func _dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: NSTimeInterval, canceler: Canceler, _ f:CancelableBlock) {
+    _dispatchOnQueue(queue, afterDelay: interval, c: canceler) { canceler in
         if !canceler.isCanceled {
             f(canceler: canceler)
         }
         if !canceler.isCanceled {
-            _dispatchRepeatedOnQueue(queue, atInterval: interval, canceler, f)
+            _dispatchRepeatedOnQueue(queue, atInterval: interval, canceler: canceler, f)
         }
     }
 }
@@ -121,13 +121,13 @@ func _dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: NSTimeI
 // Dispatch the block immediately, and then again after each interval passes. An interval of 0.0 means dispatch the block only once.
 public func dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: NSTimeInterval, f:CancelableBlock) -> Canceler {
     let canceler = Canceler()
-    _dispatchOnQueue(queue, canceler) { canceler in
+    _dispatchOnQueue(queue, canceler: canceler) { canceler in
         if !canceler.isCanceled {
             f(canceler: canceler)
         }
         if interval > 0.0 {
             if !canceler.isCanceled {
-                _dispatchRepeatedOnQueue(queue, atInterval: interval, canceler, f)
+                _dispatchRepeatedOnQueue(queue, atInterval: interval, canceler: canceler, f)
             }
         }
     }
@@ -135,9 +135,9 @@ public func dispatchRepeatedOnQueue(queue: DispatchQueue, atInterval interval: N
 }
 
 public func dispatchRepeatedOnMain(atInterval interval: NSTimeInterval, f:CancelableBlock) -> Canceler {
-    return dispatchRepeatedOnQueue(mainQueue, atInterval: interval, f)
+    return dispatchRepeatedOnQueue(mainQueue, atInterval: interval, f: f)
 }
 
 public func dispatchRepeatedOnBackground(atInterval interval: NSTimeInterval, f:CancelableBlock) -> Canceler {
-    return dispatchRepeatedOnQueue(backgroundQueue, atInterval: interval, f)
+    return dispatchRepeatedOnQueue(backgroundQueue, atInterval: interval, f: f)
 }

@@ -91,7 +91,7 @@ public func testWorker() {
     let worker = DummyWorker()
 
     worker.state.addObserver(Observer(didChange: { newValue in
-        println("\(worker) \(newValue)")
+        print("\(worker) \(newValue)")
         }))
     workerManager.addWorker(worker)
     

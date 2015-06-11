@@ -85,7 +85,7 @@ public class PixelMatrix {
         blueF = vImage_Buffer(data: blueFData, height: UInt(height), width: UInt(width), rowBytes: planarBytesPerRow)
         
         let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.PremultipliedFirst.rawValue)
-        context = CGBitmapContextCreate(argb8PremultipliedData, width, height, chunkyBitsPerComponent, chunkyBytesPerRow, colorSpace, bitmapInfo)
+        context = CGBitmapContextCreate(argb8PremultipliedData, width, height, chunkyBitsPerComponent, chunkyBytesPerRow, colorSpace, bitmapInfo.rawValue)!
         
         //println("width:\(width) height:\(height) componentsPerPixel:\(componentsPerPixel) chunkyBytesPerComponent:\(chunkyBytesPerComponent) chunkyBitsPerComponent:\(chunkyBitsPerComponent) chunkyBytesPerPixel:\(chunkyBytesPerPixel) chunkyBytesPerRow:\(chunkyBytesPerRow) chunkyBytesCount:\(chunkyBytesCount)")
         
@@ -110,7 +110,7 @@ public class PixelMatrix {
                 assert(🚫 == kvImageNoError, "Error when converting canvas to chunky")
                 🚫 = vImagePremultiplyData_ARGB8888(&argb8, &argb8Premultiplied, UInt32(kvImageNoFlags))
                 assert(🚫 == kvImageNoError, "Error when premultiplying canvas")
-                let cgImage = CGBitmapContextCreateImage(self.context)
+                let cgImage = CGBitmapContextCreateImage(self.context)!
                 #if os(iOS)
                     self._image = UIImage(CGImage: cgImage)
                     #elseif os(OSX)

@@ -8,12 +8,12 @@
 
 import Foundation
 
-public func setAssociatedObject(#object: NSObject, #key: NSString, #value: NSObject?) {
-    setAssociatedObject_glue(object, key as! String, value)
+public func setAssociatedObject(object object: NSObject, key: NSString, value: NSObject?) {
+    setAssociatedObject_glue(object, key as String, value)
 }
 
-public func getAssociatedObject(#object: NSObject, #key: NSString) -> NSObject? {
-    return getAssociatedObject_glue(object, key as! String)
+public func getAssociatedObject(object object: NSObject, key: NSString) -> NSObject? {
+    return getAssociatedObject_glue(object, key as String)
 }
 
 public func toUnsafePointer<🍒>(inout t: 🍒) -> UnsafePointer<🍒> {
@@ -45,12 +45,12 @@ public func pointerStringOf(obj: AnyObject) -> String {
 }
 
 public func identifierOfType(value: Any) -> String {
-    var s = "\(typeNameOf(value))"
+    let s = "\(typeNameOf(value))"
     return s
 }
 
 public func identifierOfObject(obj: AnyObject) -> String {
-    var s = "\(typeNameOf(obj)) <\(pointerStringOf(obj))>"
+    let s = "\(typeNameOf(obj)) <\(pointerStringOf(obj))>"
     return s
 }
 

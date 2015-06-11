@@ -9,11 +9,11 @@
 import Foundation
 
 public enum 🎁<🍒> {
-    case 😄(📦<🍒>)
+    case 😄(🍒)
     case 😡(NSError)
     
     public init(_ 💌: 🍒) {
-        self = .😄(💌⬇️)
+        self = .😄(💌)
     }
     
     public init(🚫: NSError) {
@@ -21,12 +21,12 @@ public enum 🎁<🍒> {
     }
 }
 
-extension 🎁: Printable {
+extension 🎁: CustomStringConvertible {
     public var description: String {
         get {
             switch self {
             case .😄(let 📫):
-                return ".😄: \(📫⬆️)"
+                return ".😄: \(📫)"
             case .😡(let 🚫):
                 return ".😡: \(🚫.localizedDescription)"
             }
@@ -38,7 +38,7 @@ extension 🎁: Printable {
 public func →<🍒, 🍋>(🅛: 🎁<🍒>, 🅡:(🍒) -> 🍋) -> 🎁<🍋> {
     switch 🅛 {
     case .😄(let 📫):
-        return 🎁(🅡(📫⬆️))
+        return 🎁(🅡(📫))
     case .😡(let 🚫):
         return .😡(🚫)
     }
@@ -53,7 +53,7 @@ public func ¿<🍒>(🅛: 🎁<🍒>, 🅡:(🎁<🍒>) -> 🎁<🍒>) -> 🎁<
 public func ★<🍒>(🅛: 🎁<🍒>, 🅡:(🍒) -> Void) -> 🎁<🍒> {
     switch 🅛 {
     case .😄(let 📫):
-        🅡(📫⬆️)
+        🅡(📫)
     default:
         break
     }
@@ -78,12 +78,12 @@ public func ‡<🍒>(🅛: 🎁<🍒>, 🅡:() -> Void) -> Void {
 
 func testResult<🍒>(results: 🎁<🍒>) {
     switch results {
-    case .😄(let 📫) where 📫⬆️ is Void:
-        println("😄:Void")
+    case .😄(let 📫) where 📫 is Void:
+        print("😄:Void")
     case .😄(let 📫):
-        println("😄:\(📫⬆️)")
+        print("😄:\(📫)")
     case .😡(let 🚫):
-        println("Error:\(🚫.localizedDescription)")
+        print("Error:\(🚫.localizedDescription)")
     }
 }
 

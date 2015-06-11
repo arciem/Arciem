@@ -25,7 +25,7 @@ public class UILabelⒸ: Component {
                 if let slf = self, label = slf.label {
                     switch 🅥 {
                     case .😄(let 📫):
-                        label.text = 📫⬆️
+                        label.text = 📫
                         label.textColor = slf.textColor
                     case .😡(let 🚫):
                         label.text = "\(🚫.domain) \(🚫.code)"

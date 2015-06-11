@@ -7,18 +7,18 @@
 //
 
 // Used to work around some Swift compiler issues.
-public final class 📦<🍒> {
-    public let unbox: 🍒
-    public init(_ value: 🍒) { unbox = value }
-}
-
-extension 📦 : Printable {
-    public var description: String {
-        get {
-            return "📦(\(unbox))"
-        }
-    }
-}
-
-public postfix func ⬇️<🍒>(🅛: 🍒) -> 📦<🍒> { return 📦(🅛) }
-public postfix func ⬆️<🍒>(🅛: 📦<🍒>) -> 🍒 { return 🅛.unbox }
+//public final class 📦<🍒> {
+//    public let unbox: 🍒
+//    public init(_ value: 🍒) { unbox = value }
+//}
+//
+//extension 📦 : CustomStringConvertible {
+//    public var description: String {
+//        get {
+//            return "📦(\(unbox))"
+//        }
+//    }
+//}
+//
+//public postfix func ⬇️<🍒>(🅛: 🍒) -> 📦<🍒> { return 📦(🅛) }
+//public postfix func ⬆️<🍒>(🅛: 📦<🍒>) -> 🍒 { return 🅛.unbox }

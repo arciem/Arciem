@@ -20,7 +20,7 @@ public extension OSView {
     public func constrainToSuperview() -> [NSLayoutConstraint] {
         assert(superview != nil, "View must have a superview.")
         let sv = superview!
-        var constraints = [
+        let constraints = [
             layoutLeft ==⦿ sv.layoutLeft,
             layoutRight ==⦿ sv.layoutRight,
             layoutTop ==⦿ sv.layoutTop,
@@ -34,7 +34,7 @@ public extension OSView {
         assert(superview != nil, "View must have a superview.")
         assert(view.superview != nil, "View must have a superview.")
         assert(superview == view.superview, "Views must have same superview.")
-        var constraints = [
+        let constraints = [
             layoutCenterX ==⦿ view.layoutCenterX,
             layoutCenterY ==⦿ view.layoutCenterY,
             layoutWidth ==⦿ view.layoutWidth,
@@ -47,7 +47,7 @@ public extension OSView {
     public func constrainCenterToSuperviewCenter() -> [NSLayoutConstraint] {
         assert(superview != nil, "View must have a superview.")
         let sv = superview!
-        var constraints = [
+        let constraints = [
             layoutCenterX ==⦿ sv.layoutCenterX,
             layoutCenterY ==⦿ sv.layoutCenterY
         ]
@@ -84,13 +84,13 @@ public extension OSView {
         auxInfoStrings.append("alpha:\(view.osAlpha)")
         let debugName = view.debugName
         let debugNameString = debugName == nil ? "" : "\(debugName): "
-        let auxInfoString = joinStrings(" ", auxInfoStrings)
+        let auxInfoString = joinStrings(" ", elements: auxInfoStrings)
         let prefix = "\(scrollViewPrefix) \(translatesPrefix) \(ambiguousPrefix)"
         let s = NSString(format: "%@%@%3d %@%@ %@", prefix, indent, level, debugNameString, view, auxInfoString)
-        println(s)
+        print(s)
         
         let nextIndent = indent + "  |"
-        for subview in view.subviews as! [OSView] {
+        for subview in view.subviews as [OSView] {
             printViewHierarchy(subview, indent: nextIndent, level: level + 1)
         }
     }
@@ -108,15 +108,15 @@ public extension OSView {
         let viewString = NSString(format: "%@<%p>", NSStringFromClass(view.dynamicType), view)
         let frameString = NSString(format: "(%g %g; %g %g)", Float(view.frame.left), Float(view.frame.top), Float(view.frame.width), Float(view.frame.height))
         let s = NSString(format: "%@ ⬜️ %@%3d %@%@ %@", prefix, indent, level, debugNameString, viewString, frameString)
-        println(s)
+        print(s)
         for constraint in view.osConstraints as! [NSLayoutConstraint] {
             let layoutGroupName = constraint.layoutGroupName
             let layoutGroupNameString = layoutGroupName == nil ? "" : "\(layoutGroupName): "
-            println("⬜️ ⬜️ 🔵 \(indent)  │    \(layoutGroupNameString)\(constraint)")
+            print("⬜️ ⬜️ 🔵 \(indent)  │    \(layoutGroupNameString)\(constraint)")
         }
         
         let nextIndent = indent + "  |"
-        for subview in view.subviews as! [OSView] {
+        for subview in view.subviews as [OSView] {
             printConstraintsHierarchy(subview, indent: nextIndent, level: level + 1)
         }
     }
@@ -126,7 +126,7 @@ public extension OSView {
 
 public prefix func ~<V: OSView>(v: V) -> V {
     #if os(iOS)
-        v.setTranslatesAutoresizingMaskIntoConstraints(false)
+        v.translatesAutoresizingMaskIntoConstraints = false
         v.opaque = false
     #elseif os(OSX)
         v.translatesAutoresizingMaskIntoConstraints = false
@@ -230,12 +230,12 @@ public class CImageView : UIImageView {
         _setup()
     }
 
-    override init(image: UIImage!) {
+    override init(image: UIImage?) {
         super.init(image: image)
         _setup()
     }
 
-    override init(image: UIImage!, highlightedImage: UIImage!) {
+    override init(image: UIImage?, highlightedImage: UIImage!) {
         super.init(image: image, highlightedImage: highlightedImage)
         _setup()
     }

@@ -68,7 +68,7 @@ public class Serializer {
 public func testSerializer() {
     let ser = Serializer(name: "ser1")
     ser.dispatch() {
-        println("1")
+        print("1")
     }
-    println("2")
+    print("2")
 }

@@ -28,7 +28,7 @@ public struct TypedJSON {
     }
 }
 
-extension TypedJSON : Printable {
+extension TypedJSON : CustomStringConvertible {
     public var description: String {
         get {
             return "\(identifierOfType(self)) \(json.dictionary)"

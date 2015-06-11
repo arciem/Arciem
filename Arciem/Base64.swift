@@ -1,7 +1,7 @@
 import Foundation
 
 public func toBase64(data: NSData) -> String {
-    return data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(0))
+    return data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions(rawValue: 0))
 }
 
 public func toBase64(bytes: [UInt8]) -> String {
@@ -19,7 +19,7 @@ public func fromBase64(string: String) -> [UInt8]? {
 public func toBase64url(bytes: [UInt8]) -> String {
     let s = toBase64(bytes)
     var s2 = ""
-    for c in s {
+    for c in s.characters {
         switch c {
         case Character("+"):
             s2.append(Character("_"))

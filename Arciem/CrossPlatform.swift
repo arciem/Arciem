@@ -7,6 +7,7 @@
 //
 
 import QuartzCore
+import CoreGraphics
 
 #if os(iOS)
     import UIKit
@@ -32,7 +33,7 @@ extension OSView {
     public var osTranslatesAutoresizingMaskIntoConstraints: Bool {
         get {
             #if os(iOS)
-                return translatesAutoresizingMaskIntoConstraints()
+                return translatesAutoresizingMaskIntoConstraints
             #elseif os(OSX)
                 return translatesAutoresizingMaskIntoConstraints
             #endif
@@ -50,7 +51,7 @@ extension OSView {
     public var osConstraints: [AnyObject] {
         get {
             #if os(iOS)
-                return constraints()
+                return constraints
             #elseif os(OSX)
                 return constraints
             #endif
@@ -83,6 +84,20 @@ public func OSGraphicsGetCurrentContext() -> CGContextRef {
 }
 
 #if os(OSX)
+    extension NSColor {
+        public class func osColorWithCGColor(cgColor: CGColorRef) -> NSColor {
+            return NSColor(CGColor: cgColor)!
+        }
+    }
+#elseif os(iOS)
+    extension UIColor {
+        public class func osColorWithCGColor(cgColor: CGColorRef) -> UIColor {
+            return UIColor(CGColor: cgColor)
+        }
+    }
+#endif
+
+#if os(OSX)
     extension NSView {
         public var center: CGPoint {
             get {
@@ -90,6 +105,66 @@ public func OSGraphicsGetCurrentContext() -> CGContextRef {
             }
         }
     }
+#endif
+
+#if os(OSX)
+    public let OSBlendModeNormal = CGBlendMode.Normal
+    public let OSBlendModeMultiply = CGBlendMode.Multiply
+    public let OSBlendModeScreen = CGBlendMode.Screen
+    public let OSBlendModeOverlay = CGBlendMode.Overlay
+    public let OSBlendModeDarken = CGBlendMode.Darken
+    public let OSBlendModeLighten = CGBlendMode.Lighten
+    public let OSBlendModeColorDodge = CGBlendMode.ColorDodge
+    public let OSBlendModeColorBurn = CGBlendMode.ColorBurn
+    public let OSBlendModeSoftLight = CGBlendMode.SoftLight
+    public let OSBlendModeHardLight = CGBlendMode.HardLight
+    public let OSBlendModeDifference = CGBlendMode.Difference
+    public let OSBlendModeExclusion = CGBlendMode.Exclusion
+    public let OSBlendModeHue = CGBlendMode.Hue
+    public let OSBlendModeSaturation = CGBlendMode.Saturation
+    public let OSBlendModeColor = CGBlendMode.Color
+    public let OSBlendModeLuminosity = CGBlendMode.Luminosity
+    public let OSBlendModeClear = CGBlendMode.Clear
+    public let OSBlendModeCopy = CGBlendMode.Copy
+    public let OSBlendModeSourceIn = CGBlendMode.SourceIn
+    public let OSBlendModeSourceOut = CGBlendMode.SourceOut
+    public let OSBlendModeSourceAtop = CGBlendMode.SourceAtop
+    public let OSBlendModeDestinationOver = CGBlendMode.DestinationOver
+    public let OSBlendModeDestinationIn = CGBlendMode.DestinationIn
+    public let OSBlendModeDestinationOut = CGBlendMode.DestinationOut
+    public let OSBlendModeDestinationAtop = CGBlendMode.DestinationAtop
+    public let OSBlendModeXOR = CGBlendMode.XOR
+    public let OSBlendModePlusDarker = CGBlendMode.PlusDarker
+    public let OSBlendModePlusLighter = CGBlendMode.PlusLighter
+#elseif os(iOS)
+    public let OSBlendModeNormal = kCGBlendModeNormal
+    public let OSBlendModeMultiply = kCGBlendModeMultiply
+    public let OSBlendModeScreen = kCGBlendModeScreen
+    public let OSBlendModeOverlay = kCGBlendModeOverlay
+    public let OSBlendModeDarken = kCGBlendModeDarken
+    public let OSBlendModeLighten = kCGBlendModeLighten
+    public let OSBlendModeColorDodge = kCGBlendModeColorDodge
+    public let OSBlendModeColorBurn = kCGBlendModeColorBurn
+    public let OSBlendModeSoftLight = kCGBlendModeSoftLight
+    public let OSBlendModeHardLight = kCGBlendModeHardLight
+    public let OSBlendModeDifference = kCGBlendModeDifference
+    public let OSBlendModeExclusion = kCGBlendModeExclusion
+    public let OSBlendModeHue = kCGBlendModeHue
+    public let OSBlendModeSaturation = kCGBlendModeSaturation
+    public let OSBlendModeColor = kCGBlendModeColor
+    public let OSBlendModeLuminosity = kCGBlendModeLuminosity
+    public let OSBlendModeClear = kCGBlendModeClear
+    public let OSBlendModeCopy = kCGBlendModeCopy
+    public let OSBlendModeSourceIn = kCGBlendModeSourceIn
+    public let OSBlendModeSourceOut = kCGBlendModeSourceOut
+    public let OSBlendModeSourceAtop = kCGBlendModeSourceAtop
+    public let OSBlendModeDestinationOver = kCGBlendModeDestinationOver
+    public let OSBlendModeDestinationIn = kCGBlendModeDestinationIn
+    public let OSBlendModeDestinationOut = kCGBlendModeDestinationOut
+    public let OSBlendModeDestinationAtop = kCGBlendModeDestinationAtop
+    public let OSBlendModeXOR = kCGBlendModeXOR
+    public let OSBlendModePlusDarker = kCGBlendModePlusDarker
+    public let OSBlendModePlusLighter = kCGBlendModePlusLighter
 #endif
 
 #if os(OSX)
@@ -134,7 +209,7 @@ public func OSGraphicsGetCurrentContext() -> CGContextRef {
                         CGPathCloseSubpath(path)
                     }
                 }
-                return CGPathCreateCopy(path)
+                return CGPathCreateCopy(path)!
             }
         }
     }

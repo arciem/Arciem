@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-public func drawCrossedBoxInContext(context: CGContext, #rect: CGRect, #color: CGColor, lineWidth: CGFloat = 1, originIndicators: Bool = false) {
+public func drawCrossedBoxInContext(context: CGContext, rect: CGRect, color: CGColor, lineWidth: CGFloat = 1, originIndicators: Bool = false) {
     
     let minX = rect.minX
     let minY = rect.minY

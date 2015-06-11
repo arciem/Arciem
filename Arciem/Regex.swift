@@ -11,11 +11,11 @@ import Foundation
 // Regex matching operators
 
 public func ~= (pattern: NSRegularExpression, str: String) -> Bool {
-    return pattern.numberOfMatchesInString(str, options: nil, range: NSRange(location: 0,  length: count(str))) > 0
+    return pattern.numberOfMatchesInString(str, options: [], range: NSRange(location: 0,  length: str.characters.count)) > 0
 }
 
 public func ~= (str: String, pattern: NSRegularExpression) -> Bool {
-    return pattern.numberOfMatchesInString(str, options: nil, range: NSRange(location: 0,  length: count(str))) > 0
+    return pattern.numberOfMatchesInString(str, options: [], range: NSRange(location: 0,  length: str.characters.count)) > 0
 }
 
 // Regex creation operator
@@ -23,12 +23,16 @@ public func ~= (str: String, pattern: NSRegularExpression) -> Bool {
 prefix operator ~/ {}
 
 prefix func ~/ (pattern: String) -> NSRegularExpression? {
-    return NSRegularExpression(pattern: pattern, options: nil, error: nil)
+    do {
+        return try NSRegularExpression(pattern: pattern, options: [])
+    } catch _ {
+        return nil
+    }
 }
 
-public func testRegex() {
-    var regex = ~/"\\wpple"
-    var str = "Foo"
+public func testRegex() -> Bool {
+    let regex = ~/"\\wpple"
+    let str = "Foo"
     
-    var b: Bool = regex! ~= str
+    return regex! ~= str
 }

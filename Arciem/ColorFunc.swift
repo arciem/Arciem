@@ -8,16 +8,16 @@
 
 public typealias ColorFunc = (frac: Float) -> Color
 
-public func blend(color1: Color, color2: Color, #frac: Float) -> Color {
+public func blend(color1: Color, _ color2: Color, frac: Float) -> Color {
     let f = Math.clamp(frac)
     return color1 * (1 - f) + color2 * f
 }
 
-public func blend(color1: Color, color2: Color)(frac: Float) -> Color {
+public func blend(color1: Color, _ color2: Color)(frac: Float) -> Color {
     return blend(color1, color2, frac: frac)
 }
 
-public func blend(#colors: [Color])(frac: Float) -> Color {
+public func blend(colors colors: [Color])(frac: Float) -> Color {
     let colorsCount = colors.count
     switch colorsCount {
     case 0:
@@ -43,7 +43,7 @@ public func blend(#colors: [Color])(frac: Float) -> Color {
     }
 }
 
-public func blend(#colorFracs: [ColorFrac])(frac: Float) -> Color {
+public func blend(colorFracs colorFracs: [ColorFrac])(frac: Float) -> Color {
     let count = colorFracs.count
     switch count {
     case 0:
@@ -76,14 +76,14 @@ public func blend(#colorFracs: [ColorFrac])(frac: Float) -> Color {
     }
 }
 
-public func blend(#colorFracHandles: [ColorFracHandle])(frac: Float) -> Color {
+public func blend(colorFracHandles colorFracHandles: [ColorFracHandle])(frac: Float) -> Color {
     var colorFracs = [ColorFrac]()
     let count = colorFracHandles.count
     switch count {
     case 0:
         break
     case 1:
-        let (color, frac, handle) = colorFracHandles[0]
+        let (color, frac, _) = colorFracHandles[0]
         let colorFrac = (color: color, frac: frac)
         colorFracs.append(colorFrac)
     default:
@@ -112,22 +112,22 @@ public func reverse(f: ColorFunc) -> ColorFunc {
     }
 }
 
-public func tints(#hue: Float)(frac: Float) -> Color {
+public func tints(hue hue: Float)(frac: Float) -> Color {
     return Color(hue: hue, saturation: 1.0 - frac, brightness: 1)
 }
 
-public func shades(#hue: Float)(frac: Float) -> Color {
+public func shades(hue hue: Float)(frac: Float) -> Color {
     return Color(hue: hue, saturation: 1.0, brightness: 1.0 - frac)
 }
 
-public func tones(#hue: Float)(frac: Float) -> Color {
+public func tones(hue hue: Float)(frac: Float) -> Color {
     return Color(hue: hue, saturation: 1.0 - frac, brightness: Math.denormalize(frac, 1.0, 0.5))
 }
 
-public func twoColor(color1: Color, color2: Color)(frac: Float) -> Color {
+public func twoColor(color1: Color, _ color2: Color)(frac: Float) -> Color {
     return blend(color1, color2)(frac: frac)
 }
 
-public func threeColor(color1: Color, color2: Color, color3: Color)(frac: Float) -> Color {
+public func threeColor(color1: Color, _ color2: Color, _ color3: Color)(frac: Float) -> Color {
     return blend(colors: [color1, color2, color3])(frac: frac)
 }

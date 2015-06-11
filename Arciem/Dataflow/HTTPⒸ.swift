@@ -33,6 +33,8 @@ public class HTTPⒸ : Component {
     
     public var allowUntrustedCertificate = false
     
+    private var networkActivity: [NetworkActivityIndicator.Activity] = []
+    
     public init(_ name: String?, _ component: Component?) {
         super.init(name: name ?? "HTTP", component)
         
@@ -42,18 +44,18 @@ public class HTTPⒸ : Component {
             case .😡(let 🚫):
                 self.outResponse🅟.🅥 = 🎁(🚫: 🚫)
             case .😄(let 💌):
-                let request🅥 = 💌⬆️
+                let request🅥 = 💌
                 let request: NSURLRequest = request🅥.request
                 
                 let sessionDelegate = SessionDelegate()
                 sessionDelegate.allowUntrustedCertificate = self.allowUntrustedCertificate
                 
                 let session = NSURLSession(configuration: NSURLSessionConfiguration.ephemeralSessionConfiguration(), delegate: sessionDelegate, delegateQueue: nil)
-                var networkActivity: NetworkActivityIndicator.Activity? = NetworkActivityIndicator.instance().makeActivity()
+                self.networkActivity.append(NetworkActivityIndicator.instance().makeActivity())
                 
-                let sessionTask = session.dataTaskWithRequest(request) { (data: NSData!, response🅐: NSURLResponse!, 🚫: NSError!) -> Void in
+                let sessionTask = session.dataTaskWithRequest(request) { (data: NSData?, response🅐: NSURLResponse?, 🚫: NSError?) -> Void in
                     if 🚫 != nil {
-                        self.outResponse🅟.🅥 = 🎁(🚫: 🚫)
+                        self.outResponse🅟.🅥 = 🎁(🚫: 🚫!)
                     } else {
                         let response = response🅐 as! NSHTTPURLResponse
                         
@@ -65,9 +67,9 @@ public class HTTPⒸ : Component {
                         var 🚫: NSError?
                         
                         if response.MIMEType == JSONMIMEType {
-                            switch JSON.createWithData(data) {
+                            switch JSON.createWithData(data!) {
                             case .😄(let 📫):
-                                response🅥.json = 📫⬆️
+                                response🅥.json = 📫
                             case .😡(let 🚫2):
                                 🚫 = 🚫2
                             }
@@ -97,19 +99,19 @@ public class HTTPⒸ : Component {
                             self.outResponse🅟.🅥 = 🎁(response🅥)
                         }
                     }
-                    networkActivity = nil
+                    self.networkActivity.removeLast()
                 }
-                sessionTask.resume()
+                sessionTask!.resume()
             }
         }
     }
     
     private class SessionDelegate : NSObject, NSURLSessionDelegate {
         var allowUntrustedCertificate = false
-        func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential!) -> Void) {
+        @objc func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
             if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
                 if(allowUntrustedCertificate) {
-                    let credential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust)
+                    let credential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
                     completionHandler(.UseCredential, credential)
                 } else {
                     completionHandler(.PerformDefaultHandling, nil)

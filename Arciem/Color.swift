@@ -77,7 +77,7 @@ public struct Color {
     }
     
     public var cgColor: CGColor {
-        return CGColorCreate(sharedColorSpaceRGB, [CGFloat(red), CGFloat(green), CGFloat(blue), CGFloat(alpha)])
+        return CGColorCreate(sharedColorSpaceRGB, [CGFloat(red), CGFloat(green), CGFloat(blue), CGFloat(alpha)])!
     }
     
     public static func randomColor(random: Random = Random.sharedInstance, alpha: Float = 1.0) -> Color {
@@ -137,7 +137,7 @@ public struct Color {
     public static let DeepBlue = Color(redByte: 60, greenByte: 55, blueByte: 149)
 }
 
-extension Color : Printable {
+extension Color : CustomStringConvertible {
     public var description: String {
         get {
             return "Color(red:\(red) green:\(green) blue:\(blue) alpha:\(alpha))"

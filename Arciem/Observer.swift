@@ -31,7 +31,7 @@ public class Observer {
     }
 }
 
-extension Observer : Printable {
+extension Observer : CustomStringConvertible {
     public var description : String {
         return "\(identifierOfObject(self)) id:\(id)"
     }

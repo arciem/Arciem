@@ -81,7 +81,7 @@ public extension CGPoint {
         return CGPoint(x: ox - v1*v3 + v2*v4, y: oy + v2*v3 + v1*v4)
     }
     
-    public func scale(#sx: CGFloat, sy: CGFloat) -> CGPoint {
+    public func scale(sx sx: CGFloat, sy: CGFloat) -> CGPoint {
         let t = Geometry.scale(dx: x, dy: y, sx: sx, sy: sy)
         return CGPoint(x: t.dx, y: t.dy)
     }
@@ -124,17 +124,17 @@ extension CGVector {
     public func subtractQuarterRotation() -> CGVector { return CGVector(dx: dy, dy: -dx) }
     public func halfRotation() -> CGVector { return CGVector(dx: -dx, dy: -dy) }
     
-    public func rotate<A: Angle>(#angle: A) -> CGVector {
+    public func rotate<A: Angle>(angle angle: A) -> CGVector {
         let t = Geometry.rotate(x: dx, y: dy, angle: angle);
         return CGVector(dx: t.x, dy: t.y)
     }
     
-    public func fromPolar<A: Angle>(#radius: CGFloat, angle: A) -> CGVector {
+    public func fromPolar<A: Angle>(radius radius: CGFloat, angle: A) -> CGVector {
         let t = Geometry.fromPolar(radius: radius, angle: angle)
         return CGVector(dx: t.x, dy: t.y)
     }
     
-    public func scale(#sx: CGFloat, sy: CGFloat) -> CGVector {
+    public func scale(sx sx: CGFloat, sy: CGFloat) -> CGVector {
         let t = Geometry.scale(dx: dx, dy: dy, sx: sx, sy: sy)
         return CGVector(dx: t.dx, dy: t.dy)
     }
@@ -321,7 +321,7 @@ extension CGSize {
         return CGSize(width: t.dx, height: t.dy)
     }
     
-    public func scale(#sx: CGFloat, sy: CGFloat) -> CGSize {
+    public func scale(sx sx: CGFloat, sy: CGFloat) -> CGSize {
         let t = Geometry.scale(dx: width, dy: height, sx: sx, sy: sy);
         return CGSize(width: t.dx, height: t.dy)
     }
@@ -354,11 +354,11 @@ protocol CGRectLike {
     var integerRect: CGRect { get }
     mutating func integerize()
     
-    func rectByInsetting(#dx: CGFloat, dy: CGFloat) -> CGRect
-    mutating func inset(#dx: CGFloat, dy: CGFloat)
+    func rectByInsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect
+    mutating func inset(dx dx: CGFloat, dy: CGFloat)
     
-    func rectByOffsetting(#dx: CGFloat, dy: CGFloat) -> CGRect
-    mutating func offset(#dx: CGFloat, dy: CGFloat)
+    func rectByOffsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect
+    mutating func offset(dx dx: CGFloat, dy: CGFloat)
     
     func rectByUnion(withRect: CGRect) -> CGRect
     mutating func union(withRect: CGRect)
