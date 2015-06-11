@@ -99,6 +99,7 @@
 		038A27751AA446A7006F5DA9 /* IntPoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036208621A16C0EB009E8B5A /* IntPoint.swift */; };
 		038A27761AA446A7006F5DA9 /* IntSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 036208661A16C1D8009E8B5A /* IntSize.swift */; };
 		0394D05D1A85972200DD0D87 /* ArciemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0394D05C1A85972200DD0D87 /* ArciemTests.swift */; };
+		03AC8C681AD6FE09005ACE66 /* Pipe.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03AC8C671AD6FE09005ACE66 /* Pipe.swift */; };
 		03BA515F1AB675E9001544A7 /* Arciem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 036D8F5D1989BA70003FCB35 /* Arciem.framework */; };
 		03CFC74B1AB49FD3007C8D3B /* Arciem.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 03CFC7401AB49FD3007C8D3B /* Arciem.framework */; };
 		03CFC7521AB49FD3007C8D3B /* ArciemCocoaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03CFC7511AB49FD3007C8D3B /* ArciemCocoaTests.swift */; };
@@ -274,6 +275,7 @@
 		03A0737C1A85E8BE00C46C6B /* ReachabilityComponent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityComponent.swift; sourceTree = "<group>"; };
 		03A3D8B019A4006C002C67AF /* Autolayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Autolayout.swift; sourceTree = "<group>"; };
 		03A61A49199C42270090F57D /* BigNum.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BigNum.swift; sourceTree = "<group>"; };
+		03AC8C671AD6FE09005ACE66 /* Pipe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Pipe.swift; path = ../../arciem/Arciem/Pipe.swift; sourceTree = "<group>"; };
 		03B106B519D0E76A004EB814 /* CalculatedValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CalculatedValue.swift; sourceTree = "<group>"; };
 		03B7BA1B1A944697004FA43E /* TriggerPort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TriggerPort.swift; sourceTree = "<group>"; };
 		03C2250C1A91F5B3006463BD /* Port.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Port.swift; sourceTree = "<group>"; };
@@ -590,6 +592,8 @@
 				038BABED1A17E858002876C2 /* Graphics */,
 				036D8F571989B645003FCB35 /* Glue */,
 				03CFC7901AB4B35D007C8D3B /* iOS */,
+				0337F59F1A970A5900BFDB53 /* JSON */,
+				039D523B1A09975000B8653E /* Values */,
 				039FC4231992E83400C5211A /* Angles.swift */,
 				031063431945897800FDA79E /* Array.swift */,
 				03A3D8B019A4006C002C67AF /* Autolayout.swift */,
@@ -609,7 +613,6 @@
 				030091E819F0EF04000E5A3A /* HTTPWorker.swift */,
 				033DBD6E19F9B65300BE9AB7 /* Hysteresis.swift */,
 				0323D23E1944E23B00B49FD3 /* Image.swift */,
-				0337F59F1A970A5900BFDB53 /* JSON */,
 				03D9CC5B19470F03006463F7 /* KVOObserver.swift */,
 				0375F83B19F0AF4400783B1C /* Log.swift */,
 				03EC33D11942897F0074BFFA /* Math.swift */,
@@ -620,6 +623,7 @@
 				03EF74471A98088B0008D68A /* OID.swift */,
 				039D52391A09854D00B8653E /* Operators.swift */,
 				036789B01A877B0F00D4BB00 /* OrderedDictionary.swift */,
+				03AC8C671AD6FE09005ACE66 /* Pipe.swift */,
 				03EC33D31942A1DE0074BFFA /* Random.swift */,
 				030836C01A6F0D1B00952B21 /* Range.swift */,
 				03D9CC5919470CD9006463F7 /* RectSetter.swift */,
@@ -634,7 +638,6 @@
 				0323D23C1944E21200B49FD3 /* UIColor.swift */,
 				03D9CC511946A9CB006463F7 /* UserDefaults.swift */,
 				0344ECEC19524C1600C40ACC /* SCNGeometry.swift */,
-				039D523B1A09975000B8653E /* Values */,
 				031063451945A0A000FDA79E /* View.swift */,
 				03EDC163194AA137008AAFFA /* Worker.swift */,
 				03D79CD419F04B76002AFF01 /* WorkerManager.swift */,
@@ -851,6 +854,7 @@
 				038A274C1AA43929006F5DA9 /* Runtime.swift in Sources */,
 				038A27641AA44592006F5DA9 /* Device.swift in Sources */,
 				038A275D1AA44576006F5DA9 /* Reachability.swift in Sources */,
+				03AC8C681AD6FE09005ACE66 /* Pipe.swift in Sources */,
 				038A271D1AA437A8006F5DA9 /* SerializerGlue.m in Sources */,
 				038A27121AA436E3006F5DA9 /* Observer.swift in Sources */,
 				038A27501AA439FB006F5DA9 /* Port.swift in Sources */,
@@ -1230,6 +1234,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				ONLY_ACTIVE_ARCH = YES;
 				STRIP_INSTALLED_PRODUCT = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = "1,2";
