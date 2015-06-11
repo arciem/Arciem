@@ -40,7 +40,7 @@ public struct HTTPRequestⓋ {
             if let data = body {
                 switch JSON.createWithData(data) {
                 case .😄(let 📫):
-                    return 📫⬆️
+                    return 📫
                 case .😡(let 🚫):
                     fatalError("Unable to convert body to JSON: \(🚫.localizedDescription)")
                 }
@@ -51,7 +51,7 @@ public struct HTTPRequestⓋ {
         set {
             switch newValue.rawData() {
             case .😄(let 📫):
-                body = 📫⬆️
+                body = 📫
             case .😡(let 🚫):
                 fatalError("Unable to convert JSON to data: \(🚫.localizedDescription)")
             }

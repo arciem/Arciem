@@ -41,7 +41,7 @@ public func jsonTypeForObject(object: AnyObject) -> JSONType? {
     var type: JSONType?
     
     switch object {
-    case let _ as NSNumber:
+    case _ as NSNumber:
         if let s = String.fromCString(object.objCType), objCType = JSONObjCType(rawValue: s) {
             switch objCType {
             case .Bool:
@@ -50,13 +50,13 @@ public func jsonTypeForObject(object: AnyObject) -> JSONType? {
                 type = .Number
             }
         }
-    case let _ as NSString:
+    case _ as NSString:
         type = .String
-    case let _ as NSArray:
+    case _ as NSArray:
         type = .Array
-    case let _ as NSDictionary:
+    case _ as NSDictionary:
         type = .Dictionary
-    case let _ as NSNull:
+    case _ as NSNull:
         type = .Null
     default:
         break
@@ -92,7 +92,13 @@ let JSONDefaultReadingOptions: NSJSONReadingOptions = .AllowFragments
 extension JSON {
     public static func createWithData(data: NSData, options: NSJSONReadingOptions = JSONDefaultReadingOptions) -> 🎁<JSON> {
         var 🚫: NSError?
-        var object: AnyObject? = NSJSONSerialization.JSONObjectWithData(data, options: options, error: &🚫)
+        var object: AnyObject?
+        do {
+            object = try NSJSONSerialization.JSONObjectWithData(data, options: options)
+        } catch let error as NSError {
+            🚫 = error
+            object = nil
+        }
         if let 🚫 = 🚫 {
             return .😡(🚫)
         } else {
@@ -124,20 +130,26 @@ extension JSON {
     }
     
     public func rawData(prettyPrinted: Bool = false) -> 🎁<NSData> {
-        let options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : NSJSONWritingOptions(0)
+        let options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : NSJSONWritingOptions(rawValue: 0)
         var 🚫: NSError?
-        let jsonData = NSJSONSerialization.dataWithJSONObject(object, options: options, error: &🚫)
+        let jsonData: NSData?
+        do {
+            jsonData = try NSJSONSerialization.dataWithJSONObject(object, options: options)
+        } catch let error as NSError {
+            🚫 = error
+            jsonData = nil
+        }
         if let 🚫 = 🚫 {
             return .😡(🚫)
         }
         return 🎁(jsonData!)
     }
     
-    public func rawBytes(prettyPrinted: Bool = false) -> 🎁<[UInt8]> {
-        return rawData(prettyPrinted: prettyPrinted) → { data in data.toByteArray() }
+    public func rawBytes(prettyPrinted prettyPrinted: Bool = false) -> 🎁<[UInt8]> {
+        return rawData(prettyPrinted) → { data in data.toByteArray() }
     }
     
-    public func rawString(prettyPrinted: Bool = false) -> 🎁<String> {
+    public func rawString(prettyPrinted prettyPrinted: Bool = false) -> 🎁<String> {
         var result: 🎁<String>!
         rawBytes(prettyPrinted: prettyPrinted)
             ★ { bytes in
@@ -199,7 +211,7 @@ extension JSON {
         get {
             switch JSON.createWithString(string) {
             case .😄(let 📫):
-                return 📫⬆️
+                return 📫
             case .😡(let 🚫):
                 fatalError("parsing JSON: \(🚫.localizedDescription)")
             }
@@ -208,7 +220,7 @@ extension JSON {
         mutating set {
             switch newValue.rawString() {
             case .😄(let 📫):
-                object = 📫⬆️
+                object = 📫
             case .😡(let 🚫):
                 fatalError("creating JSON: \(🚫.localizedDescription)")
             }
@@ -220,7 +232,7 @@ extension JSON {
             if isString {
                 switch JSON.createWithString(string) {
                 case .😄(let 📫):
-                    return 📫⬆️
+                    return 📫
                 case .😡:
                     return nil
                 }
@@ -264,13 +276,13 @@ extension JSON : SequenceType {
         }
     }
     
-    public func generate() -> GeneratorOf<(String, JSON)> {
-        var answer = GeneratorOf<(String, JSON)> { return nil }
+    public func generate() -> AnyGenerator<(String, JSON)> {
+        var answer: AnyGenerator<(String, JSON)>
         switch type {
         case .Array:
             var g = self.array.generate()
             var i = 0
-            answer = GeneratorOf<(String, JSON)> {
+            answer = anyGenerator {
                 if let element: AnyObject = g.next() {
                     return ("\(i++)", JSON(element))
                 } else {
@@ -279,15 +291,15 @@ extension JSON : SequenceType {
             }
         case .Dictionary:
             var g = self.dictionary.generate()
-            answer = GeneratorOf<(String, JSON)> {
-                if let(k: String, v: JSONObject) = g.next() {
+            answer = anyGenerator {
+                if let(k, v): (String, JSONObject) = g.next() {
                     return (k, JSON(v))
                 } else {
                     return nil
                 }
             }
         default:
-            break
+            answer = anyGenerator { return nil }
         }
         return answer
     }
@@ -301,7 +313,7 @@ extension String: JSONSubscriptType {}
 public typealias JSONPath = [JSONSubscriptType]
 
 extension JSON {
-    private subscript(#index: Int) -> JSON {
+    private subscript(index index: Int) -> JSON {
         get {
             let array_ = self.object as! [AnyObject]
             return JSON(array_[index])
@@ -313,7 +325,7 @@ extension JSON {
         }
     }
     
-    private subscript(#key: String) -> JSON {
+    private subscript(key key: String) -> JSON {
         get {
             if let object_: AnyObject = self.object[key] {
                 return JSON(object_)
@@ -328,7 +340,7 @@ extension JSON {
         }
     }
 
-    private subscript(#sub: JSONSubscriptType) -> JSON {
+    private subscript(sub sub: JSONSubscriptType) -> JSON {
         get {
             if sub is String {
                 return self[key:sub as! String]
@@ -347,7 +359,7 @@ extension JSON {
     /**
     Find a json in the complex data structuresby using the Int/String's array.
     
-    :param: path The target json's path. Example:
+    - parameter path: The target json's path. Example:
     
     let json = JSON[data]
     let path = [9,"list","person","name"]
@@ -355,7 +367,7 @@ extension JSON {
     
     The same as: let name = json[9]["list"]["person"]["name"]
     
-    :returns: Return a json found by the path or a null json with error
+    - returns: Return a json found by the path or a null json with error
     */
     public subscript(path: [JSONSubscriptType]) -> JSON {
         get {
@@ -377,7 +389,7 @@ extension JSON {
                 var last = newValue
                 var newPath = path
                 newPath.removeLast()
-                for sub in path.reverse() {
+                for sub in Array(path.reverse()) {
                     var previousLast = self[newPath]
                     previousLast[sub:sub] = last
                     last = previousLast
@@ -394,13 +406,13 @@ extension JSON {
     /**
     Find a json in the complex data structuresby using the Int/String's array.
     
-    :param: path The target json's path. Example:
+    - parameter path: The target json's path. Example:
     
     let name = json[9,"list","person","name"]
     
     The same as: let name = json[9]["list"]["person"]["name"]
     
-    :returns: Return a json found by the path or a null json with error
+    - returns: Return a json found by the path or a null json with error
     */
     public subscript(path: JSONSubscriptType...) -> JSON {
         get {
@@ -660,11 +672,11 @@ public func ==(🅛: JSON, 🅡: JSON) -> Bool {
 
 // MARK: - Printable
 
-extension JSON: Printable {
+extension JSON: CustomStringConvertible {
     public var description: String {
         switch rawString(prettyPrinted: true) {
         case .😄(let 📫):
-            return "JSON: \(📫⬆️)"
+            return "JSON: \(📫)"
         case .😡(let 🚫):
             return "Converting JSON to string: \(🚫.localizedDescription)"
         }

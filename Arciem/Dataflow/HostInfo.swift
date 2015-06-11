@@ -36,7 +36,7 @@ public struct URLComposer {
             
             let query: String
             if queryElements.count > 0 {
-                query = "?" + "&".joinStrings(joinKeysToValues("=", queryElements))
+                query = "?" + "&".joinStrings(joinKeysToValues("=", dict: queryElements))
             } else {
                 query = ""
             }

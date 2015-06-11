@@ -18,7 +18,7 @@ public func randomElement<🍒>(array: Array<🍒>, random: Random = Random.shar
 // http://datagenetics.com/blog/november42014/index.html
 public func shuffled<🍒>(array: Array<🍒>, random: Random = Random.sharedInstance) -> Array<🍒> {
     var result = array
-    var hi = result.count - 1
+    let hi = result.count - 1
     for var a = 0; a < hi; ++a {
         let b = random.randomInt((a+1)..<array.count)
         swap(&result[a], &result[b])
@@ -36,7 +36,7 @@ public func shuffledTest() {
         }
     }
     let shuffledDeck = shuffled(deck)
-    println(shuffledDeck)
+    print(shuffledDeck)
 }
 
 public func hasElement<🍒: Equatable>(array: Array<🍒>, obj: 🍒) -> Bool {

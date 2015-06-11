@@ -50,7 +50,7 @@ public class HTTPWorker : Worker {
         self.allowUntrustedCertificate = allowUntrustedCertificate
         self.task = { [unowned self] (unowned manager: WorkerManager) -> Void in
             self.networkActivity = NetworkActivityIndicator.instance().makeActivity()
-            self.sessionTask = self.session.dataTaskWithRequest(self.request, completionHandler: { (data: NSData!, responseOpt: NSURLResponse!, 🚫: NSError!) -> Void in
+            self.sessionTask = self.session.dataTaskWithRequest(self.request, completionHandler: { (data: NSData?, responseOpt: NSURLResponse?, 🚫: NSError?) -> Void in
                 self.data = data
                 self.httpResponse = responseOpt as? NSHTTPURLResponse
                 if 🚫 != nil {
@@ -58,7 +58,14 @@ public class HTTPWorker : Worker {
                 } else {
                     if self.httpResponse.MIMEType == JSONMIMEType {
                         var jsonError: NSError?
-                        self.json = NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(0), error: &jsonError)
+                        do {
+                            self.json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
+                        } catch let error as NSError {
+                            jsonError = error
+                            self.json = nil
+                        } catch {
+                            fatalError()
+                        }
                         if jsonError != nil {
                             self.🚫 = jsonError!
                         }
@@ -81,10 +88,10 @@ public class HTTPWorker : Worker {
     
     class SessionDelegate : NSObject, NSURLSessionDelegate {
         var allowUntrustedCertificate = false
-        func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential!) -> Void) {
+        func URLSession(session: NSURLSession, didReceiveChallenge challenge: NSURLAuthenticationChallenge, completionHandler: (NSURLSessionAuthChallengeDisposition, NSURLCredential?) -> Void) {
             if challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust {
                 if(allowUntrustedCertificate) {
-                    let credential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust)
+                    let credential = NSURLCredential(forTrust: challenge.protectionSpace.serverTrust!)
                     completionHandler(.UseCredential, credential)
                 } else {
                     completionHandler(.PerformDefaultHandling, nil)

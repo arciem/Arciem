@@ -39,8 +39,8 @@ public class Port<🍒: DataflowⓋ>: PortⒶ {
                 
                 switch (self._🅥, newValue) {
                 case (.😄(let 📫1), .😄(let 📫2)):
-                    let 💌1 = 📫1⬆️
-                    let 💌2 = 📫2⬆️
+                    let 💌1 = 📫1
+                    let 💌2 = 📫2
                     equals = 💌1 == 💌2
                 case (.😡(let 🚫1), .😡(let 🚫2)):
                     equals = 🚫1.code == 🚫2.code && 🚫1.domain == 🚫2.domain
@@ -69,7 +69,7 @@ public class Port<🍒: DataflowⓋ>: PortⒶ {
     }
 }
 
-extension Port: Printable {
+extension Port: CustomStringConvertible {
     public var description: String {
         get {
             return "\(oid): Port '\(name)' in '\(component?.name)'"

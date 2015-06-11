@@ -20,7 +20,7 @@ public enum WorkerState : String {
     case Failure = "Failure"
 }
 
-extension WorkerState : Printable {
+extension WorkerState : CustomStringConvertible {
     public var description: String {
         get {
             return self.rawValue
@@ -50,7 +50,7 @@ public class Worker {
     }
 }
 
-extension Worker : Printable {
+extension Worker : CustomStringConvertible {
     public var description: String {
         get {
             return "\(typeNameOf(self)) <id:\(id)>"

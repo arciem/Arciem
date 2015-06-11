@@ -15,20 +15,20 @@ public struct IntSize {
         self.height = height
     }
     
-    public func randomX(_ random: Random = Random.sharedInstance) -> Int {
+    public func randomX(random: Random = Random.sharedInstance) -> Int {
         return random.randomInt(0..<width)
     }
     
-    public func randomY(_ random: Random = Random.sharedInstance) -> Int {
+    public func randomY(random: Random = Random.sharedInstance) -> Int {
         return random.randomInt(0..<height)
     }
     
-    public func randomPoint(_ random: Random = Random.sharedInstance) -> IntPoint {
+    public func randomPoint(random: Random = Random.sharedInstance) -> IntPoint {
         return IntPoint(x: randomX(random), y: randomY(random))
     }
 }
 
-extension IntSize : Printable {
+extension IntSize : CustomStringConvertible {
     public var description: String {
         get {
             return "IntSize(width:\(width) height:\(height))"

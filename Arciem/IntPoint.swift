@@ -16,7 +16,7 @@ public struct IntPoint {
     }
 }
 
-extension IntPoint : Printable {
+extension IntPoint : CustomStringConvertible {
     public var description: String {
         get {
             return "IntPoint(x:\(x) y:\(y))"

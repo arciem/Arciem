@@ -17,7 +17,7 @@ public enum LogLevel: Int {
     case Fatal
 }
 
-extension LogLevel : Printable {
+extension LogLevel : CustomStringConvertible {
     public var description : String {
         get {
             switch self {
@@ -57,7 +57,7 @@ public func log(message: String, _ level: LogLevel? = .Info, _ tag: String? = ni
                     }
                     s += "]"
                     dispatchOnMain {
-                        println("\(s) \(message)")
+                        print("\(s) \(message)")
                     }
                 }
             }
@@ -72,9 +72,7 @@ public class Logger {
         if logLevel == nil || !enabled {
             return nil
         }
-        if let t = tag {
-            self.tag = tag
-        }
+        self.tag = tag
     }
     
     public func trace(message: String) {

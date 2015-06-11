@@ -13,7 +13,7 @@
 #endif
 import CoreGraphics
 
-public func drawImage(#size: CGSize, #opaque: Bool, scale: CGFloat = 0.0, drawing: (CGContext) -> ()) -> OSImage! {
+public func drawImage(size size: CGSize, opaque: Bool, scale: CGFloat = 0.0, drawing: (CGContext) -> ()) -> OSImage! {
     #if os(iOS)
         UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
         drawing(UIGraphicsGetCurrentContext())
@@ -44,7 +44,7 @@ extension OSImage {
     
     public func scaledAspectFillToSize(size: CGSize) -> OSImage {
         let inSize = self.size.aspectFillWithinSize(size)
-        println("size:\(size) inSize:\(inSize)")
+        print("size:\(size) inSize:\(inSize)")
         return scaledToSize(inSize)
     }
 }

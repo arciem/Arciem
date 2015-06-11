@@ -17,9 +17,9 @@ public class JSONToStringⒸ : Component {
         inJSON🅟 = InPort("inJSON", self) { [unowned self] 🅥 in
             switch 🅥 {
             case .😄(let 📫):
-                switch 📫⬆️.rawString(prettyPrinted: self.prettyPrint) {
+                switch 📫.rawString(prettyPrinted: self.prettyPrint) {
                 case .😄(let 📫):
-                    self.outString🅟.🅥 = 🎁(📫⬆️)
+                    self.outString🅟.🅥 = 🎁(📫)
                 case .😡(let 🚫):
                     self.outString🅟.🅥 = 🎁(🚫: 🚫)
                 }

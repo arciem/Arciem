@@ -58,11 +58,11 @@ public class RectSetter : CGRectLike {
     public var integerRect: CGRect { get { return r.integerRect } }
     public func integerize() { r.integerize() }
     
-    public func rectByInsetting(#dx: CGFloat, dy: CGFloat) -> CGRect { return r.rectByInsetting(dx: dx, dy: dy) }
-    public func inset(#dx: CGFloat, dy: CGFloat) { r.inset(dx: dx, dy: dy) }
+    public func rectByInsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect { return r.rectByInsetting(dx: dx, dy: dy) }
+    public func inset(dx dx: CGFloat, dy: CGFloat) { r.inset(dx: dx, dy: dy) }
     
-    public func rectByOffsetting(#dx: CGFloat, dy: CGFloat) -> CGRect { return r.rectByOffsetting(dx: dx, dy: dy) }
-    public func offset(#dx: CGFloat, dy: CGFloat) { r.offset(dx: dx, dy: dy) }
+    public func rectByOffsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect { return r.rectByOffsetting(dx: dx, dy: dy) }
+    public func offset(dx dx: CGFloat, dy: CGFloat) { r.offset(dx: dx, dy: dy) }
     
     public func rectByUnion(withRect: CGRect) -> CGRect { return r.rectByUnion(withRect) }
     public func union(withRect: CGRect) { r.union(withRect) }

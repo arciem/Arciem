@@ -14,14 +14,14 @@ private var _instance = Random()
 public class Random {
     let m: UInt64 = 1 << 32
     
-    class var sharedInstance: Random {
+    public class var sharedInstance: Random {
         get {
             return _instance
         }
     }
     
     public func cryptoRandom() -> Int32 {
-        var a: UnsafeMutablePointer<Int32>! = .alloc(1)
+        let a: UnsafeMutablePointer<Int32>! = .alloc(1)
         SecRandomCopyBytes(kSecRandomDefault, 4, UnsafeMutablePointer<UInt8>(a))
         let n = a.memory
         a.dealloc(1)

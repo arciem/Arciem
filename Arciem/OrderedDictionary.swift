@@ -53,15 +53,15 @@ public struct OrderedDictionary<K: Hashable, V> {
     }
 }
 
-extension OrderedDictionary: Printable {
+extension OrderedDictionary: CustomStringConvertible {
     public var description: String {
         get {
             var a = [String]()
-            for (i, k) in enumerate(array) {
+            for (i, k) in array.enumerate() {
                 let t = dict[k]
                 a.append("\(i): \(k): \(t!.v)")
             }
-            let aa = joinStrings(", ", a)
+            let aa = joinStrings(", ", elements: a)
             let s = "[\(aa)]"
             return s
         }

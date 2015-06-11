@@ -40,13 +40,13 @@ public class KeyboardAvoidantView : CView {
     
     func keyboardWillMove(notification: NSNotification) {
         assert(bottomConstraint != nil, "bottomConstraint not set")
-        if let superview = superview {
+        if superview != nil {
             let endKeyboardRectangle = endKeyboardRectangleFromNotification(notification)
             updateBottomConstraintForKeyboardRectangle(endKeyboardRectangle)
             
             let duration = NSTimeInterval((notification.userInfo?[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber)?.floatValue ?? 0.0)
             let animationCurveValue = (notification.userInfo?[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber)?.integerValue ?? UIViewAnimationCurve.Linear.rawValue
-            let animationCurve = UIViewAnimationCurve(rawValue: animationCurveValue & 3)!
+            //let animationCurve = UIViewAnimationCurve(rawValue: animationCurveValue & 3)!
             let options = UIViewAnimationOptions(rawValue: UInt(animationCurveValue) << 16)
             
             UIView.animateWithDuration(duration, delay: 0.0, options: options, animations: {
@@ -82,7 +82,7 @@ public class KeyboardAvoidantView : CView {
         keyboardView = nil
     }
     
-    public override func observeValueForKeyPath(keyPath: String, ofObject object: AnyObject, change: [NSObject : AnyObject], context: UnsafeMutablePointer<Void>) {
+    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [NSObject : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if let keyboardRectangle = keyboardView?.frame {
             updateBottomConstraintForKeyboardRectangle(keyboardRectangle)
         }
@@ -91,12 +91,12 @@ public class KeyboardAvoidantView : CView {
     func findKeyboardView() -> UIView? {
         var result: UIView? = nil
         
-        let windows = UIApplication.sharedApplication().windows as! [UIWindow]
+        let windows = UIApplication.sharedApplication().windows as [UIWindow]
         for window in windows {
             if window.description.hasPrefix("<UITextEffectsWindow") {
-                for subview in window.subviews as! [UIView] {
+                for subview in window.subviews as [UIView] {
                     if subview.description.hasPrefix("<UIInputSetContainerView") {
-                        for sv in subview.subviews as! [UIView] {
+                        for sv in subview.subviews as [UIView] {
                             if sv.description.hasPrefix("<UIInputSetHostView") {
                                 result = sv
                                 break
