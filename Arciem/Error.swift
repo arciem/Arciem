@@ -40,6 +40,6 @@ public struct Error {
     }
 }
 
-extension Error : Printable {
+extension Error : CustomStringConvertible {
     public var description: String { return error.description }
 }

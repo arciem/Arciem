@@ -42,7 +42,7 @@ public struct Packet {
     }
 }
 
-extension Packet : Printable {
+extension Packet : CustomStringConvertible {
     public var description: String {
         let s: String = error?.localizedDescription ?? "ok"
         return "{\"\(s)\", \(state)}"
@@ -162,7 +162,7 @@ public func testPipe() {
                 |> log
             
             let(cat, dog, giraffe) = packet |> ["cat", "dog", "giraffe"]
-            println("cat: \(cat), dog: \(dog), giraffe: \(giraffe)")
+            print("cat: \(cat), dog: \(dog), giraffe: \(giraffe)")
         } |> onBackground {
             pipeLog?.info("BACKGROUND")
             $0
