@@ -39,10 +39,10 @@ public func shuffledTest() {
     print(shuffledDeck)
 }
 
-public func hasElement<🍒: Equatable>(array: Array<🍒>, obj: 🍒) -> Bool {
+public func hasElement<🍒: Equatable>(array: Array<🍒>, _ obj: 🍒) -> Bool {
     return array.filter { $0 == obj }.count > 0
 }
 
-public func hasObject<🍒: AnyObject>(array: Array<🍒>, obj: 🍒) -> Bool {
+public func hasObject<🍒: AnyObject>(array: Array<🍒>, _ obj: 🍒) -> Bool {
     return array.filter { $0 === obj }.count > 0
 }

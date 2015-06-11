@@ -84,7 +84,7 @@ public extension OSView {
         auxInfoStrings.append("alpha:\(view.osAlpha)")
         let debugName = view.debugName
         let debugNameString = debugName == nil ? "" : "\(debugName): "
-        let auxInfoString = joinStrings(" ", elements: auxInfoStrings)
+        let auxInfoString = joinStrings(" ", auxInfoStrings)
         let prefix = "\(scrollViewPrefix) \(translatesPrefix) \(ambiguousPrefix)"
         let s = NSString(format: "%@%@%3d %@%@ %@", prefix, indent, level, debugNameString, view, auxInfoString)
         print(s)
