@@ -64,7 +64,7 @@ public class HTTPⒸ : Component {
                         response🅥.body = data
                         response🅥.response = response
                         
-                        var 🚫: NSError?
+                        var 🚫: ErrorType?
                         
                         if response.MIMEType == JSONMIMEType {
                             switch JSON.createWithData(data!) {

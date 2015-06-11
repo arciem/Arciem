@@ -19,10 +19,10 @@ public typealias State = [Key:Value]
 public typealias Transform = (Packet) -> Packet
 
 public struct Packet {
-    public let error: Error?
+    public let error: ErrorType?
     public let state: State
     
-    public init(error: Error? = nil, state: State = [:]) {
+    public init(error: ErrorType? = nil, state: State = [:]) {
         self.error = error
         self.state = state
     }
@@ -37,14 +37,19 @@ public struct Packet {
     public func delete(key: Key) -> Packet {
         var s = state; s.removeValueForKey(key); return Packet(error: error, state: s)
     }
-    public func error(error: Error) -> Packet {
+    public func error(error: ErrorType) -> Packet {
         return Packet(error: error, state: state)
     }
 }
 
 extension Packet : CustomStringConvertible {
     public var description: String {
-        let s: String = error?.localizedDescription ?? "ok"
+        let s: String
+        if let error = error {
+            s = "\(error)"
+        } else {
+            s = "ok"
+        }
         return "{\"\(s)\", \(state)}"
     }
 }
@@ -112,17 +117,17 @@ public func |><A>(🅛: Packet, 🅡: (Packet) -> A) -> A {
 // P |> log -> P // Printed to log.
 public func log(p: Packet) -> Packet { pipeLog?.info("\(p)"); return p }
 
-// P |> error(Error) -> P2 // "error" set and stopped.
-public func error(error: Error)(_ p: Packet) -> Packet { return p.error(error) }
+// P |> error(ErrorType) -> P2 // "error" set and stopped.
+public func error(error: ErrorType)(_ p: Packet) -> Packet { return p.error(error) }
 
 // P |> error(String) -> P2 // "error" set to Error(String).
-public func error(reason: String)(_ p: Packet) -> Packet { return p |> error(Error(reason)) }
+public func error(reason: String)(_ p: Packet) -> Packet { return p |> error(NSError(reason)) }
 
 // P |> getError -> Error
-public func getError(p: Packet) -> Error { return p |> "error" as! Error }
+public func getError(p: Packet) -> ErrorType { return p |> "error" as! ErrorType }
 
 // P |> getReason -> Error.localizedDescription
-public func getReason(p: Packet) -> String { return (p |> getError).localizedDescription }
+public func getReason(p: Packet) -> String { return "\(p |> getError)" }
 
 // P |> notImplemented -> P2 // "error" set to Error("Not implemented.")
 public func notImplemented(p: Packet) -> Packet { return p |> error("Not implemented.") }

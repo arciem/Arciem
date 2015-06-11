@@ -18,11 +18,12 @@ public class LoggerⒸ: Component {
         
         super.init(name: name ?? "Logger", component)
         
-        inString🅟 = InStringPortⓉ("inString", self) { 📫 in
+        inString🅟 = InStringPortⓉ("inString", self, inPlug: { 📫 in
             📫
                 ★ { 💌 in logger?.info(💌) }
                 † { 🚫 in logger?.error(🚫) }
-                ‡ { }
-        }
+                ‡ { };
+            return
+        })
     }
 }

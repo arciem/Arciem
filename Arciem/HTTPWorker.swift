@@ -57,14 +57,12 @@ public class HTTPWorker : Worker {
                     self.🚫 = 🚫
                 } else {
                     if self.httpResponse.MIMEType == JSONMIMEType {
-                        var jsonError: NSError?
+                        var jsonError: ErrorType?
                         do {
                             self.json = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions())
-                        } catch let error as NSError {
+                        } catch {
                             jsonError = error
                             self.json = nil
-                        } catch {
-                            fatalError()
                         }
                         if jsonError != nil {
                             self.🚫 = jsonError!

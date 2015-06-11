@@ -90,7 +90,7 @@ public extension OSView {
         print(s)
         
         let nextIndent = indent + "  |"
-        for subview in view.subviews as [OSView] {
+        for subview in view.subviews {
             printViewHierarchy(subview, indent: nextIndent, level: level + 1)
         }
     }
@@ -109,14 +109,14 @@ public extension OSView {
         let frameString = NSString(format: "(%g %g; %g %g)", Float(view.frame.left), Float(view.frame.top), Float(view.frame.width), Float(view.frame.height))
         let s = NSString(format: "%@ ⬜️ %@%3d %@%@ %@", prefix, indent, level, debugNameString, viewString, frameString)
         print(s)
-        for constraint in view.osConstraints as! [NSLayoutConstraint] {
+        for constraint in view.constraints {
             let layoutGroupName = constraint.layoutGroupName
             let layoutGroupNameString = layoutGroupName == nil ? "" : "\(layoutGroupName): "
             print("⬜️ ⬜️ 🔵 \(indent)  │    \(layoutGroupNameString)\(constraint)")
         }
         
         let nextIndent = indent + "  |"
-        for subview in view.subviews as [OSView] {
+        for subview in view.subviews {
             printConstraintsHierarchy(subview, indent: nextIndent, level: level + 1)
         }
     }

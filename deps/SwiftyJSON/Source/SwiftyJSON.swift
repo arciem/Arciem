@@ -88,7 +88,7 @@ public struct JSON {
     /// Private type
     private var _type: Type = .Null
     /// prviate error
-    private var _error: NSError?
+    private var _error: ErrorType?
 
     /// Object in JSON
     public var object: AnyObject {
@@ -124,7 +124,7 @@ public struct JSON {
     public var type: Type { get { return _type } }
 
     /// Error in JSON
-    public var error: NSError? { get { return self._error } }
+    public var error: ErrorType? { get { return self._error } }
     
     /// The static null json
     public static var nullJSON: JSON { get { return JSON(NSNull()) } }
@@ -243,7 +243,7 @@ extension JSON {
     }
 
     /// If `type` is `.Dictionary`, return json which's object is `dictionary[key]` , otherwise return null json with error.
-    private subscript(#key: String) -> JSON {
+    private subscript(key: String) -> JSON {
         get {
             var returnJSON = JSON.nullJSON
             if self.type == .Dictionary {
@@ -267,7 +267,7 @@ extension JSON {
     }
     
     /// If `sub` is `Int`, return `subscript(index:)`; If `sub` is `String`,  return `subscript(key:)`.
-    private subscript(#sub: SubscriptType) -> JSON {
+    private subscript(sub: SubscriptType) -> JSON {
         get {
             if sub is String {
                 return self[key:sub as String]

@@ -91,11 +91,11 @@ let JSONDefaultReadingOptions: NSJSONReadingOptions = .AllowFragments
 
 extension JSON {
     public static func createWithData(data: NSData, options: NSJSONReadingOptions = JSONDefaultReadingOptions) -> 🎁<JSON> {
-        var 🚫: NSError?
+        var 🚫: ErrorType?
         var object: AnyObject?
         do {
             object = try NSJSONSerialization.JSONObjectWithData(data, options: options)
-        } catch let error as NSError {
+        } catch {
             🚫 = error
             object = nil
         }
@@ -131,11 +131,11 @@ extension JSON {
     
     public func rawData(prettyPrinted: Bool = false) -> 🎁<NSData> {
         let options = prettyPrinted ? NSJSONWritingOptions.PrettyPrinted : NSJSONWritingOptions(rawValue: 0)
-        var 🚫: NSError?
+        var 🚫: ErrorType?
         let jsonData: NSData?
         do {
             jsonData = try NSJSONSerialization.dataWithJSONObject(object, options: options)
-        } catch let error as NSError {
+        } catch {
             🚫 = error
             jsonData = nil
         }
@@ -213,7 +213,7 @@ extension JSON {
             case .😄(let 📫):
                 return 📫
             case .😡(let 🚫):
-                fatalError("parsing JSON: \(🚫.localizedDescription)")
+                fatalError("parsing JSON: \(🚫)")
             }
         }
         
@@ -222,7 +222,7 @@ extension JSON {
             case .😄(let 📫):
                 object = 📫
             case .😡(let 🚫):
-                fatalError("creating JSON: \(🚫.localizedDescription)")
+                fatalError("creating JSON: \(🚫)")
             }
         }
     }
@@ -678,7 +678,7 @@ extension JSON: CustomStringConvertible {
         case .😄(let 📫):
             return "JSON: \(📫)"
         case .😡(let 🚫):
-            return "Converting JSON to string: \(🚫.localizedDescription)"
+            return "Converting JSON to string: \(🚫)"
         }
     }
 }

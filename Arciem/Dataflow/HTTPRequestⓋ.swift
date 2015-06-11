@@ -42,7 +42,7 @@ public struct HTTPRequestⓋ {
                 case .😄(let 📫):
                     return 📫
                 case .😡(let 🚫):
-                    fatalError("Unable to convert body to JSON: \(🚫.localizedDescription)")
+                    fatalError("Unable to convert body to JSON: \(🚫)")
                 }
             } else {
                 fatalError("No body to convert to JSON.")
@@ -53,7 +53,7 @@ public struct HTTPRequestⓋ {
             case .😄(let 📫):
                 body = 📫
             case .😡(let 🚫):
-                fatalError("Unable to convert JSON to data: \(🚫.localizedDescription)")
+                fatalError("Unable to convert JSON to data: \(🚫)")
             }
         }
     }

@@ -36,7 +36,7 @@ public class Worker {
     public var 😎: DispatchBlock?   // "finally"
 
     public var state = ObservableValue(WorkerState.Ready)
-    public var 🚫: NSError?
+    public var 🚫: ErrorType?
 
     var log: Logger? { get { return workerLogger } }
 

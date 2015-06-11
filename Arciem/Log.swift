@@ -95,12 +95,20 @@ public class Logger {
         log(message, .Error, tag)
     }
     
+    public func error(🚫: ErrorType) {
+        error("\(🚫)")
+    }
+    
     public func error(🚫: NSError) {
         error(🚫.localizedDescription)
     }
     
     public func fatal(message: String) {
         log(message, .Fatal, tag)
+    }
+    
+    public func fatal(🚫: ErrorType) {
+        error("\(🚫)")
     }
     
     public func fatal(🚫: NSError) {

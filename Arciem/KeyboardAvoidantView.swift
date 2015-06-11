@@ -91,12 +91,12 @@ public class KeyboardAvoidantView : CView {
     func findKeyboardView() -> UIView? {
         var result: UIView? = nil
         
-        let windows = UIApplication.sharedApplication().windows as [UIWindow]
+        let windows = UIApplication.sharedApplication().windows
         for window in windows {
             if window.description.hasPrefix("<UITextEffectsWindow") {
-                for subview in window.subviews as [UIView] {
+                for subview in window.subviews {
                     if subview.description.hasPrefix("<UIInputSetContainerView") {
-                        for sv in subview.subviews as [UIView] {
+                        for sv in subview.subviews {
                             if sv.description.hasPrefix("<UIInputSetHostView") {
                                 result = sv
                                 break

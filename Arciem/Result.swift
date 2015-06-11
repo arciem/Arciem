@@ -10,13 +10,13 @@ import Foundation
 
 public enum 🎁<🍒> {
     case 😄(🍒)
-    case 😡(NSError)
+    case 😡(ErrorType)
     
     public init(_ 💌: 🍒) {
         self = .😄(💌)
     }
     
-    public init(🚫: NSError) {
+    public init(🚫: ErrorType) {
         self = .😡(🚫)
     }
 }
@@ -28,7 +28,7 @@ extension 🎁: CustomStringConvertible {
             case .😄(let 📫):
                 return ".😄: \(📫)"
             case .😡(let 🚫):
-                return ".😡: \(🚫.localizedDescription)"
+                return ".😡: \(🚫)"
             }
         }
     }
@@ -61,7 +61,7 @@ public func ★<🍒>(🅛: 🎁<🍒>, 🅡:(🍒) -> Void) -> 🎁<🍒> {
 }
 
 // "failure"
-public func †<🍒>(🅛: 🎁<🍒>, 🅡:(NSError) -> Void) -> 🎁<🍒> {
+public func †<🍒>(🅛: 🎁<🍒>, 🅡:(ErrorType) -> Void) -> 🎁<🍒> {
     switch 🅛 {
     case .😡(let 🚫):
         🅡(🚫)
@@ -83,7 +83,7 @@ func testResult<🍒>(results: 🎁<🍒>) {
     case .😄(let 📫):
         print("😄:\(📫)")
     case .😡(let 🚫):
-        print("Error:\(🚫.localizedDescription)")
+        print("Error:\(🚫)")
     }
 }
 

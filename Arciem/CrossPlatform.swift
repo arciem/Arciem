@@ -48,15 +48,6 @@ extension OSView {
             #endif
         }
     }
-    public var osConstraints: [AnyObject] {
-        get {
-            #if os(iOS)
-                return constraints
-            #elseif os(OSX)
-                return constraints
-            #endif
-        }
-    }
     public var osAlpha: CGFloat {
         get {
             #if os(iOS)

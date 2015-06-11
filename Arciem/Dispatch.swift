@@ -18,7 +18,7 @@ public class Canceler {
 // Convenience types for symmetry with Swift naming conventions
 public typealias DispatchBlock = dispatch_block_t
 public typealias DispatchQueue = dispatch_queue_t
-public typealias ErrorBlock = (🚫: NSError) -> Void
+public typealias ErrorBlock = (🚫: ErrorType) -> Void
 
 // A block that takes a Canceler. The block will not be called again if it sets the <isCanceled> variable of the Canceler to true.
 public typealias CancelableBlock = (canceler: Canceler) -> Void

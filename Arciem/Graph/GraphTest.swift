@@ -112,7 +112,7 @@ func graphTest4() {
         var result: Result<Double>?
         if let f = value as? Double {
             result = Result(f)
-        } else if let 🚫 = value as? NSError {
+        } else if let 🚫 = value as? ErrorType {
             result = Result(error: 🚫)
         }
         if let result = result {

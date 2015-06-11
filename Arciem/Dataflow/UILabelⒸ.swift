@@ -28,7 +28,7 @@ public class UILabelⒸ: Component {
                         label.text = 📫
                         label.textColor = slf.textColor
                     case .😡(let 🚫):
-                        label.text = "\(🚫.domain) \(🚫.code)"
+                        label.text = "\(🚫)"
                         label.textColor = .redColor()
                     }
                 }

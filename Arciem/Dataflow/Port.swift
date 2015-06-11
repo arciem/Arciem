@@ -42,7 +42,7 @@ public class Port<🍒: DataflowⓋ>: PortⒶ {
                     let 💌1 = 📫1
                     let 💌2 = 📫2
                     equals = 💌1 == 💌2
-                case (.😡(let 🚫1), .😡(let 🚫2)):
+                case (.😡(let 🚫1 as NSError), .😡(let 🚫2 as NSError)):
                     equals = 🚫1.code == 🚫2.code && 🚫1.domain == 🚫2.domain
                 default:
                     equals = false
