@@ -87,12 +87,12 @@ public func hexStringFromBytes(bytes: [UInt8]) -> String {
     for byte in bytes {
         strings.append(hexStringFromByte(byte))
     }
-    let s = joinStrings(", ", elements: strings)
+    let s = joinStrings(", ", strings)
     return "[\(s)]"
 }
 
 // KLUDGE: The Swift standard library "join" function should work, and did until Swift beta 1.2. But then it started messing up Emoji, breaking 4-byte characters into two, 2-byte characters.
-public func joinStrings(separator: String, elements: [String]) -> String {
+public func joinStrings(separator: String, _ elements: [String]) -> String {
     var s = String()
     for (index, elem) in elements.enumerate() {
         s += elem
@@ -105,7 +105,7 @@ public func joinStrings(separator: String, elements: [String]) -> String {
 
 extension String {
     public func joinStrings(elements: [String]) -> String {
-        return Arciem.joinStrings(self, elements: elements)
+        return Arciem.joinStrings(self, elements)
     }
 }
 

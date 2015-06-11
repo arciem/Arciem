@@ -13,7 +13,7 @@
 #endif
 import CoreGraphics
 
-public func drawImage(size size: CGSize, opaque: Bool, scale: CGFloat = 0.0, drawing: (CGContext) -> ()) -> OSImage! {
+public func drawImage(size size: CGSize, opaque: Bool, scale: CGFloat = 0.0, _ drawing: (CGContext) -> ()) -> OSImage {
     #if os(iOS)
         UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
         drawing(UIGraphicsGetCurrentContext())
