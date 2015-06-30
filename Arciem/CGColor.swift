@@ -12,17 +12,6 @@
     import UIKit
 #endif
 
-#if os(OSX)
-    public let OSColorSpaceModelMonochrome = CGColorSpaceModel.Monochrome
-    public let OSColorSpaceModelRGB = CGColorSpaceModel.RGB
-#elseif os(iOS)
-    public let OSColorSpaceModelMonochrome: CGColorSpaceModel = kCGColorSpaceModelMonochrome
-    public let OSColorSpaceModelRGB: CGColorSpaceModel = kCGColorSpaceModelRGB
-    func ~=(pattern: CGColorSpaceModel, value: CGColorSpaceModel) -> Bool {
-        return pattern == value
-    }
-#endif
-
 import CoreGraphics
 
 public var sharedColorSpaceRGB = CGColorSpaceCreateDeviceRGB()
@@ -37,11 +26,11 @@ public func CGColorCreateByDarkening(color color: CGColor, fraction: CGFloat) ->
     let oldc = CGColorGetComponents(color)
 
     switch CGColorSpaceGetModel(CGColorGetColorSpace(color)) {
-    case OSColorSpaceModelMonochrome:
+    case .Monochrome:
         let gray = Math.denormalize(fraction, oldc[0], 0)
         let a = oldc[1]
         result = CGColorCreate(sharedColorSpaceGray, [gray, a])
-    case OSColorSpaceModelRGB:
+    case .RGB:
         let r = Math.denormalize(fraction, oldc[0], 0)
         let g = Math.denormalize(fraction, oldc[1], 0)
         let b = Math.denormalize(fraction, oldc[2], 0)
@@ -60,11 +49,11 @@ public func CGColorCreateByLightening(color color: CGColor, fraction: CGFloat) -
     let oldc = CGColorGetComponents(color)
     
     switch CGColorSpaceGetModel(CGColorGetColorSpace(color)) {
-    case OSColorSpaceModelMonochrome:
+    case .Monochrome:
         let gray = Math.denormalize(fraction, oldc[0], 1)
         let a = oldc[1]
         result = CGColorCreate(sharedColorSpaceGray, [gray, a])
-    case OSColorSpaceModelRGB:
+    case .RGB:
         let r = Math.denormalize(fraction, oldc[0], 1)
         let g = Math.denormalize(fraction, oldc[1], 1)
         let b = Math.denormalize(fraction, oldc[2], 1)
@@ -84,11 +73,11 @@ public func CGColorCreateByDodging(color color: CGColor, fraction: CGFloat) -> C
     let oldc = CGColorGetComponents(color)
 
     switch CGColorSpaceGetModel(CGColorGetColorSpace(color)) {
-    case OSColorSpaceModelMonochrome:
+    case .Monochrome:
         let gray = Math.denormalize(fraction, oldc[0], 1)
         let a = oldc[1]
         result = CGColorCreate(sharedColorSpaceGray, [gray, a])
-    case OSColorSpaceModelRGB:
+    case .RGB:
         let f = fmax(1.0 - fraction, 1.0e-7)
         let r = fmin(oldc[0] / f, 1.0)
         let g = fmin(oldc[1] / f, 1.0)
@@ -109,11 +98,11 @@ public func CGColorCreateByBurning(color color: CGColor, fraction: CGFloat) -> C
     let oldc = CGColorGetComponents(color)
     
     switch CGColorSpaceGetModel(CGColorGetColorSpace(color)) {
-    case OSColorSpaceModelMonochrome:
+    case .Monochrome:
         let gray = Math.denormalize(fraction, oldc[0], 0)
         let a = oldc[1]
         result = CGColorCreate(sharedColorSpaceGray, [gray, a])
-    case OSColorSpaceModelRGB:
+    case .RGB:
         let f = fmax(1.0 - fraction, 1.0e-7)
         let r = fmin(1.0 - (1.0 - oldc[0]) / f, 1.0)
         let g = fmin(1.0 - (1.0 - oldc[1]) / f, 1.0)
@@ -138,11 +127,11 @@ public func CGColorCreateByInterpolating(color1 color1: CGColor, color2: CGColor
     
     if colorSpaceModel1 == colorSpaceModel2 {
         switch colorSpaceModel1 {
-        case OSColorSpaceModelMonochrome:
+        case .Monochrome:
             let gray = Math.interpolate(fraction, oldc1[0], oldc2[0])
             let a = oldc1[1]
             result = CGColorCreate(sharedColorSpaceGray, [gray, a])
-        case OSColorSpaceModelRGB:
+        case .RGB:
             let r = Math.interpolate(fraction, oldc1[0], oldc2[0])
             let g = Math.interpolate(fraction, oldc1[1], oldc2[1])
             let b = Math.interpolate(fraction, oldc1[2], oldc2[2])
@@ -181,11 +170,11 @@ public func CGColorConvertToRGB(color: CGColor) -> CGColor! {
     let oldc = CGColorGetComponents(color)
     
     switch CGColorSpaceGetModel(CGColorGetColorSpace(color)) {
-    case OSColorSpaceModelMonochrome:
+    case .Monochrome:
         let gray = oldc[0]
         let a = oldc[1]
         result = CGColorCreate(sharedColorSpaceRGB, [gray, gray, gray, a])
-    case OSColorSpaceModelRGB:
+    case .RGB:
         break
     default:
         fatalError("unsupported color model")
