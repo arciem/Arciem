@@ -136,16 +136,12 @@ public prefix func ~<V: OSView>(v: V) -> V {
 }
 
 public class CView : OSView {
-    #if os(iOS)
-    required public init(coder aDecoder: NSCoder)  {
+    required public init?(coder aDecoder: NSCoder)  {
         super.init(coder: aDecoder)
         _setup()
     }
-    #elseif os(OSX)
-    public required init?(coder: NSCoder)  {
-        super.init(coder: coder)
-        _setup()
-    }
+
+    #if os(OSX)
     public override var flipped: Bool {
         get {
             return true
@@ -154,7 +150,7 @@ public class CView : OSView {
     #endif
     
     public convenience init() {
-        self.init(frame: CGRect.zeroRect)
+        self.init(frame: CGRect.zero)
     }
     
     override public init(frame: CGRect) {
@@ -220,7 +216,7 @@ public class CView : OSView {
 #if os(iOS)
 
 public class CImageView : UIImageView {
-    public required init(coder aDecoder: NSCoder)  {
+    public required init?(coder aDecoder: NSCoder)  {
         super.init(coder: aDecoder)
         _setup()
     }

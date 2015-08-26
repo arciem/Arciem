@@ -82,7 +82,7 @@ public class KeyboardAvoidantView : CView {
         keyboardView = nil
     }
     
-    public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [NSObject : AnyObject]?, context: UnsafeMutablePointer<Void>) {
+   public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if let keyboardRectangle = keyboardView?.frame {
             updateBottomConstraintForKeyboardRectangle(keyboardRectangle)
         }

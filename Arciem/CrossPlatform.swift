@@ -68,7 +68,7 @@ extension OSView {
 
 public func OSGraphicsGetCurrentContext() -> CGContextRef {
     #if os(iOS)
-        return UIGraphicsGetCurrentContext()
+        return UIGraphicsGetCurrentContext()!
     #elseif os(OSX)
         return NSGraphicsContext.currentContext()!.CGContext
     #endif

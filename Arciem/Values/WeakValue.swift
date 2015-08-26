@@ -7,7 +7,7 @@
 //
 
 public struct WeakValue<🍒: AnyObject> /*: Valuable*/ {
-    typealias 🍋 = 🍒?
+    public typealias 🍋 = 🍒?
     weak public var value: 🍋
     
     init(_ value: 🍋) {

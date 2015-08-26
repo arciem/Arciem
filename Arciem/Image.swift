@@ -16,7 +16,7 @@ import CoreGraphics
 public func drawImage(size size: CGSize, opaque: Bool, scale: CGFloat = 0.0, _ drawing: (CGContext) -> ()) -> OSImage {
     #if os(iOS)
         UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
-        drawing(UIGraphicsGetCurrentContext())
+        drawing(UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
@@ -33,7 +33,7 @@ public func drawImage(size size: CGSize, opaque: Bool, scale: CGFloat = 0.0, _ d
 extension OSImage {
     public func scaledToSize(size: CGSize) -> OSImage {
         return drawImage(size: size, opaque: false, scale: 1.0) { context in
-            self.drawInRect(CGRect(origin: CGPoint.zeroPoint, size: size))
+            self.drawInRect(CGRect(origin: CGPoint.zero, size: size))
         }
     }
     

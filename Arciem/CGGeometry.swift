@@ -348,25 +348,25 @@ protocol CGRectLike {
     var isEmpty: Bool { get }
     var isInfinite: Bool { get }
 
-    var standardizedRect: CGRect { get }
-    mutating func standardize()
+    var standardized: CGRect { get }
+    mutating func standardizeInPlace()
     
-    var integerRect: CGRect { get }
-    mutating func integerize()
+    var integral: CGRect { get }
+    mutating func makeIntegralInPlace()
     
-    func rectByInsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect
-    mutating func inset(dx dx: CGFloat, dy: CGFloat)
+    func insetBy(dx dx: CGFloat, dy: CGFloat) -> CGRect
+    mutating func insetInPlace(dx dx: CGFloat, dy: CGFloat)
     
-    func rectByOffsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect
-    mutating func offset(dx dx: CGFloat, dy: CGFloat)
+    func offsetBy(dx dx: CGFloat, dy: CGFloat) -> CGRect
+    mutating func offsetInPlace(dx dx: CGFloat, dy: CGFloat)
     
-    func rectByUnion(withRect: CGRect) -> CGRect
-    mutating func union(withRect: CGRect)
+    func union(withRect: CGRect) -> CGRect
+    mutating func unionInPlace(withRect: CGRect)
     
-    func rectByIntersecting(withRect: CGRect) -> CGRect
-    mutating func intersect(withRect: CGRect)
+    func intersect(withRect: CGRect) -> CGRect
+    mutating func intersectInPlace(withRect: CGRect)
     
-    func rectsByDividing(atDistance: CGFloat, fromEdge: CGRectEdge) -> (slice: CGRect, remainder: CGRect)
+    func divide(atDistance: CGFloat, fromEdge: CGRectEdge) -> (slice: CGRect, remainder: CGRect)
     
     func contains(rect: CGRect) -> Bool
     func contains(point: CGPoint) -> Bool
@@ -582,15 +582,15 @@ extension CGRect : CGRectLike {
     public func rectBySettingWidth(newValue: CGFloat) -> CGRect { var r = self; r.setWidth(newValue); return r }
     public func rectBySettingHeight(newValue: CGFloat) -> CGRect { var r = self; r.setHeight(newValue); return r }
     
-    public func rectByInsettingMinX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x + dx, y: origin.y, width: size.width - dx, height: size.height).standardizedRect }
+    public func rectByInsettingMinX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x + dx, y: origin.y, width: size.width - dx, height: size.height).standardized }
     public func rectByInsettingLeft(dx: CGFloat) -> CGRect { return rectByInsettingMinX(dx) }
     public func rectByInsettingLeading(dx: CGFloat) -> CGRect { return rectByInsettingMinX(dx) }
-    public func rectByInsettingMaxX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width - dx, height: size.height).standardizedRect }
+    public func rectByInsettingMaxX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width - dx, height: size.height).standardized }
     public func rectByInsettingRight(dx: CGFloat) -> CGRect { return rectByInsettingMaxX(dx) }
     public func rectByInsettingTrailing(dx: CGFloat) -> CGRect { return rectByInsettingMaxX(dx) }
-    public func rectByInsettingMinY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y + dy, width: size.width, height: size.height - dy).standardizedRect }
+    public func rectByInsettingMinY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y + dy, width: size.width, height: size.height - dy).standardized }
     public func rectByInsettingTop(dy: CGFloat) -> CGRect { return rectByInsettingMinY(dy) }
-    public func rectByInsettingMaxY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height - dy).standardizedRect }
+    public func rectByInsettingMaxY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height - dy).standardized }
     public func rectByInsettingBottom(dy: CGFloat) -> CGRect { return rectByInsettingMaxY(dy) }
 
     public mutating func insetMinX(dx: CGFloat) { self = rectByInsettingMinX(dx) }

@@ -101,7 +101,7 @@ public class HTTPⒸ : Component {
                     }
                     self.networkActivity.removeLast()
                 }
-                sessionTask!.resume()
+                sessionTask.resume()
             }
         }
     }

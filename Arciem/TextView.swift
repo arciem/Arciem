@@ -16,7 +16,7 @@ public extension UITextView {
         textStorage.addLayoutManager(layoutManager)
         let textContainer = NSTextContainer()
         layoutManager.addTextContainer(textContainer)
-        let textView = ~UITextView(frame: .zeroRect, textContainer: textContainer)
+        let textView = ~UITextView(frame: .zero, textContainer: textContainer)
         return textView
     }
 }
