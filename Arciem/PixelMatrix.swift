@@ -7,7 +7,7 @@
 
 #if os(OSX)
     import Cocoa
-    #elseif os(iOS)
+#elseif os(iOS) || os(tvOS)
     import UIKit
 #endif
 import Accelerate
@@ -111,7 +111,7 @@ public class PixelMatrix {
                 🚫 = vImagePremultiplyData_ARGB8888(&argb8, &argb8Premultiplied, UInt32(kvImageNoFlags))
                 assert(🚫 == kvImageNoError, "Error when premultiplying canvas")
                 let cgImage = CGBitmapContextCreateImage(self.context)!
-                #if os(iOS)
+                #if os(iOS) || os(tvOS)
                     self._image = UIImage(CGImage: cgImage)
                     #elseif os(OSX)
                     self._image = NSImage(CGImage: cgImage, size: NSZeroSize)

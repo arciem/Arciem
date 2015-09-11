@@ -44,7 +44,7 @@ public class Edge<ResultType> : AbstractEdge {
     }
 }
 
-extension Edge : Printable {
+extension Edge : CustomStringConvertible {
     public var description: String {
         get {
             var items = [typeNameOf(self), "eid:\(eid)"]
@@ -52,7 +52,7 @@ extension Edge : Printable {
                 items.append("name:\(name)")
             }
             items.append("tail:\(tail) ➡️ head:\(head)")
-            let s = joinStrings(" ", items)
+            let s = items.joinWithSeparator(" ")
             return "(\(s))"
         }
     }

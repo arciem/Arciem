@@ -670,7 +670,7 @@ public func ==(🅛: JSON, 🅡: JSON) -> Bool {
     }
 }
 
-// MARK: - Printable
+// MARK: - CustomStringConvertible
 
 extension JSON: CustomStringConvertible {
     public var description: String {

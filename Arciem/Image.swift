@@ -8,19 +8,19 @@
 
 #if os(OSX)
     import Cocoa
-    #elseif os(iOS)
+#elseif os(iOS) || os(tvOS)
     import UIKit
 #endif
 import CoreGraphics
 
 public func drawImage(size size: CGSize, opaque: Bool, scale: CGFloat = 0.0, _ drawing: (CGContext) -> ()) -> OSImage {
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
         UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
         drawing(UIGraphicsGetCurrentContext()!)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()
         
-        #elseif os(OSX)
+    #elseif os(OSX)
         
         let image = NSImage(size: size)
         image.lockFocus()

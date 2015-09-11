@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0700"
+   LastUpgradeVersion = "0710"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "03CFC73F1AB49FD3007C8D3B"
+               BlueprintIdentifier = "038787411BA297E300B8DA6C"
                BuildableName = "Arciem.framework"
-               BlueprintName = "ArciemCocoa"
+               BlueprintName = "ArciemTV"
                ReferencedContainer = "container:Arciem.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,9 +32,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03CFC73F1AB49FD3007C8D3B"
+            BlueprintIdentifier = "038787411BA297E300B8DA6C"
             BuildableName = "Arciem.framework"
-            BlueprintName = "ArciemCocoa"
+            BlueprintName = "ArciemTV"
             ReferencedContainer = "container:Arciem.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -54,9 +54,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03CFC73F1AB49FD3007C8D3B"
+            BlueprintIdentifier = "038787411BA297E300B8DA6C"
             BuildableName = "Arciem.framework"
-            BlueprintName = "ArciemCocoa"
+            BlueprintName = "ArciemTV"
             ReferencedContainer = "container:Arciem.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -72,9 +72,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "03CFC73F1AB49FD3007C8D3B"
+            BlueprintIdentifier = "038787411BA297E300B8DA6C"
             BuildableName = "Arciem.framework"
-            BlueprintName = "ArciemCocoa"
+            BlueprintName = "ArciemTV"
             ReferencedContainer = "container:Arciem.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

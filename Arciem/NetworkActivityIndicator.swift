@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
     import UIKit
-    #elseif os(OSX)
+#elseif os(OSX)
     import Cocoa
 #endif
 

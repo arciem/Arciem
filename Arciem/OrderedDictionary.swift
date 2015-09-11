@@ -61,7 +61,7 @@ extension OrderedDictionary: CustomStringConvertible {
                 let t = dict[k]
                 a.append("\(i): \(k): \(t!.v)")
             }
-            let aa = joinStrings(", ", a)
+            let aa = a.joinWithSeparator(", ")
             let s = "[\(aa)]"
             return s
         }

@@ -29,14 +29,14 @@ public struct URLComposer {
         get {
             let path: String
             if pathComponents.count > 0 {
-                path = "/" + "/".joinStrings(pathComponents)
+                path = "/" + pathComponents.joinWithSeparator("/")
             } else {
                 path = "/"
             }
             
             let query: String
             if queryElements.count > 0 {
-                query = "?" + "&".joinStrings(joinKeysToValues("=", dict: queryElements))
+                query = "?" + joinKeysToValues("=", dict: queryElements).joinWithSeparator("&")
             } else {
                 query = ""
             }

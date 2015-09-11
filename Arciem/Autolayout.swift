@@ -13,7 +13,7 @@
 
 #if os(OSX)
     import Cocoa
-    #elseif os(iOS)
+#elseif os(iOS) || os(tvOS)
     import UIKit
 #endif
 

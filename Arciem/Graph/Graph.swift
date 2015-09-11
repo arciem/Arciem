@@ -69,7 +69,7 @@ extension Graph {
         for (key, value) in attrs {
             strings.append("\(key)=\"\(value)\"")
         }
-        let s = joinStrings(",", strings)
+        let s = strings.joinWithSeparator(",")
         return "[\(s)]"
     }
     
@@ -94,7 +94,7 @@ extension Graph {
             }
             
             lines.append("}")
-            return joinStrings("\n", lines)
+            return lines.joinWithSeparator("\n")
         }
     }
 

@@ -9,7 +9,7 @@
 import QuartzCore
 import CoreGraphics
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
     import UIKit
     public typealias OSView = UIView
     public typealias OSLayoutPriority = UILayoutPriority
@@ -18,7 +18,7 @@ import CoreGraphics
     public typealias OSBezierPath = UIBezierPath
     public typealias OSImage = UIImage
     public typealias OSFont = UIFont
-    #elseif os(OSX)
+#elseif os(OSX)
     import Cocoa
     public typealias OSView = NSView
     public typealias OSLayoutPriority = NSLayoutPriority
@@ -32,7 +32,7 @@ import CoreGraphics
 extension OSView {
     public var osTranslatesAutoresizingMaskIntoConstraints: Bool {
         get {
-            #if os(iOS)
+            #if os(iOS) || os(tvOS)
                 return translatesAutoresizingMaskIntoConstraints
             #elseif os(OSX)
                 return translatesAutoresizingMaskIntoConstraints
@@ -41,7 +41,7 @@ extension OSView {
     }
     public var osHasAmbiguousLayout: Bool {
         get {
-            #if os(iOS)
+            #if os(iOS) || os(tvOS)
                 return hasAmbiguousLayout()
             #elseif os(OSX)
                 return hasAmbiguousLayout
@@ -50,14 +50,14 @@ extension OSView {
     }
     public var osAlpha: CGFloat {
         get {
-            #if os(iOS)
+            #if os(iOS) || os(tvOS)
                 return alpha
             #elseif os(OSX)
                 return alphaValue
             #endif
         }
         set {
-            #if os(iOS)
+            #if os(iOS) || os(tvOS)
                 alpha = newValue
             #elseif os(OSX)
                 alphaValue = newValue
@@ -67,7 +67,7 @@ extension OSView {
 }
 
 public func OSGraphicsGetCurrentContext() -> CGContextRef {
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
         return UIGraphicsGetCurrentContext()!
     #elseif os(OSX)
         return NSGraphicsContext.currentContext()!.CGContext
@@ -80,7 +80,7 @@ public func OSGraphicsGetCurrentContext() -> CGContextRef {
             return NSColor(CGColor: cgColor)!
         }
     }
-#elseif os(iOS)
+#elseif os(iOS) || os(tvOS)
     extension UIColor {
         public class func osColorWithCGColor(cgColor: CGColorRef) -> UIColor {
             return UIColor(CGColor: cgColor)
@@ -111,7 +111,7 @@ public func OSGraphicsGetCurrentContext() -> CGContextRef {
 
                 let numElements = elementCount
                 if numElements > 0 {
-                    var points = [NSPoint](count:3, repeatedValue:NSPoint.zeroPoint)
+                    var points = [NSPoint](count:3, repeatedValue:NSPoint.zero)
                     var didClosePath = true
                     
                     for var i: Int = 0; i < numElements; i++ {

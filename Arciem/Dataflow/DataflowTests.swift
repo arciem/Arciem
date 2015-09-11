@@ -25,7 +25,7 @@ class DataflowTests: XCTestCase {
         super.tearDown()
     }
 
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
     func test1() {
         var expectations = SafeQueue<XCTestExpectation>()
 

@@ -30,7 +30,7 @@ public class Element {
         get {
             var attrs = [String : String]()
             let labels = dotLabels
-            let labelString = joinStrings("\\n", labels)
+            let labelString = labels.joinWithSeparator("\\n")
             if labelString != "" {
                 attrs["label"] = labelString
             }

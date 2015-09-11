@@ -458,9 +458,9 @@ extension JSON: RawRepresentable {
     }
 }
 
-// MARK: - Printable, DebugPrintable
+// MARK: - CustomStringConvertible, CustomDebugStringConvertible
 
-extension JSON: Printable, DebugPrintable {
+extension JSON: CustomStringConvertible, CustomDebugStringConvertible {
     
     public var description: String {
         if let string = self.rawString(options:.PrettyPrinted) {

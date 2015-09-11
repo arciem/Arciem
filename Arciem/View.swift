@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
     import UIKit
-    #elseif os(OSX)
+#elseif os(OSX)
     import Cocoa
 #endif
 
@@ -61,12 +61,14 @@ public extension OSView {
     
     private func printViewHierarchy(view: OSView, indent: String, level: Int) {
         var scrollViewPrefix = "⬜️"
-        #if os(iOS)
+        #if os(iOS) || os(tvOS)
             if let scrollView = view as? UIScrollView {
                 scrollViewPrefix = "🔃"
+                #if os(iOS)
                 if scrollView.scrollsToTop {
                     scrollViewPrefix = "🔝"
                 }
+                #endif
             }
         #endif
         let translatesPrefix = view.osTranslatesAutoresizingMaskIntoConstraints ? "⬜️" : "✅"
@@ -74,7 +76,7 @@ public extension OSView {
         var auxInfoStrings = [String]()
         
         auxInfoStrings.append("opaque:\(view.opaque)")
-        #if os(iOS)
+        #if os(iOS) || os(tvOS)
             auxInfoStrings.append("backgroundColor:\(view.backgroundColor)")
             if let label = view as? UILabel {
                 auxInfoStrings.append("textColor:\(label.textColor)")
@@ -84,10 +86,10 @@ public extension OSView {
         auxInfoStrings.append("alpha:\(view.osAlpha)")
         let debugName = view.debugName
         let debugNameString = debugName == nil ? "" : "\(debugName): "
-        let auxInfoString = joinStrings(" ", auxInfoStrings)
+        let auxInfoString = auxInfoStrings.joinWithSeparator(" ")
         let prefix = "\(scrollViewPrefix) \(translatesPrefix) \(ambiguousPrefix)"
         let s = NSString(format: "%@%@%3d %@%@ %@", prefix, indent, level, debugNameString, view, auxInfoString)
-        print(s)
+        Swift.print(s)
         
         let nextIndent = indent + "  |"
         for subview in view.subviews {
@@ -108,11 +110,11 @@ public extension OSView {
         let viewString = NSString(format: "%@<%p>", NSStringFromClass(view.dynamicType), view)
         let frameString = NSString(format: "(%g %g; %g %g)", Float(view.frame.left), Float(view.frame.top), Float(view.frame.width), Float(view.frame.height))
         let s = NSString(format: "%@ ⬜️ %@%3d %@%@ %@", prefix, indent, level, debugNameString, viewString, frameString)
-        print(s)
+        Swift.print(s)
         for constraint in view.constraints {
             let layoutGroupName = constraint.layoutGroupName
             let layoutGroupNameString = layoutGroupName == nil ? "" : "\(layoutGroupName): "
-            print("⬜️ ⬜️ 🔵 \(indent)  │    \(layoutGroupNameString)\(constraint)")
+            Swift.print("⬜️ ⬜️ 🔵 \(indent)  │    \(layoutGroupNameString)\(constraint)")
         }
         
         let nextIndent = indent + "  |"
@@ -125,7 +127,7 @@ public extension OSView {
 //prefix operator ~ { }
 
 public prefix func ~<V: OSView>(v: V) -> V {
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
         v.translatesAutoresizingMaskIntoConstraints = false
         v.opaque = false
     #elseif os(OSX)
@@ -169,7 +171,7 @@ public class CView : OSView {
     public func osDidSetNeedsDisplay() {
     }
     
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
     override public func setNeedsDisplay() {
         super.setNeedsDisplay()
         osDidSetNeedsDisplay()
@@ -197,7 +199,7 @@ public class CView : OSView {
     }
     #endif
     
-    #if os(iOS)
+    #if os(iOS) || os(tvOS)
     public var backgroundColorLocked = false
     public override var backgroundColor: UIColor? {
         get {
@@ -213,7 +215,7 @@ public class CView : OSView {
     #endif
 }
 
-#if os(iOS)
+#if os(iOS) || os(tvOS)
 
 public class CImageView : UIImageView {
     public required init?(coder aDecoder: NSCoder)  {

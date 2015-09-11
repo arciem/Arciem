@@ -128,7 +128,7 @@ public class Node<🍒> : AbstractNode {
 }
 
 
-extension Node : Printable {
+extension Node : CustomStringConvertible {
     public var description: String {
         get {
             var items = [typeNameOf(self), "eid:\(eid)"]
@@ -136,7 +136,7 @@ extension Node : Printable {
                 items.append("name:\(name)")
             }
             items.append("result:\(result)")
-            let s = joinStrings(" ", items)
+            let s = items.joinWithSeparator(" ")
             return "[\(s)]"
         }
     }
