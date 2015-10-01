@@ -11,24 +11,23 @@
 // Copyright (c) 2014 Indragie Karunaratne. All rights reserved.
 // Licensed under the MIT license, see LICENSE file for more info.
 
-import UIKit
+#if os(OSX)
+    import Cocoa
+#elseif os(iOS) || os(tvOS)
+    import UIKit
+#endif
 
 public struct ProtoLayoutConstraint {
-    public let view: UIView
+    public let view: OSView
     public let attribute: NSLayoutAttribute
-    public let multiplier: CGFloat = 1.0
-    public let constant: CGFloat = 0.0
+    public let multiplier: CGFloat
+    public let constant: CGFloat
     
-    public init(view: UIView, attribute: NSLayoutAttribute, multiplier: CGFloat, constant: CGFloat) {
+    public init(view: OSView, attribute: NSLayoutAttribute, multiplier: CGFloat = 1.0, constant: CGFloat = 0.0) {
         self.view = view
         self.attribute = attribute
         self.multiplier = multiplier
         self.constant = constant
-    }
-    
-    public init(view: UIView, attribute: NSLayoutAttribute) {
-        self.view = view
-        self.attribute = attribute
     }
     
     // relateTo(), equalTo(), greaterThanOrEqualTo(), and lessThanOrEqualTo() used to be overloaded functions
@@ -45,7 +44,7 @@ public struct ProtoLayoutConstraint {
     
     // Builds a constraint by relating the item to a constant value.
     public func relateTo(right: CGFloat, relation: NSLayoutRelation) -> NSLayoutConstraint {
-        return NSLayoutConstraint(item: view, attribute: attribute, relatedBy: relation, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: right)
+        return  NSLayoutConstraint(item: view, attribute: attribute, relatedBy: relation, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1.0, constant: right)
     }
     
     // Equivalent to NSLayoutRelation.Equal
@@ -103,9 +102,10 @@ public func - (left: ProtoLayoutConstraint, right: CGFloat) -> ProtoLayoutConstr
 // CIRCLED BULLET
 // Unicode: U+29BF, UTF-8: E2 A6 BF
 
-infix operator ==⦿ { }
-infix operator >=⦿ { }
-infix operator <=⦿ { }
+// Declared in Operators.swift
+//infix operator ==⦿ { }
+//infix operator >=⦿ { }
+//infix operator <=⦿ { }
 
 // Equivalent to NSLayoutRelation.Equal
 public func ==⦿ (left: ProtoLayoutConstraint, right: ProtoLayoutConstraint) -> NSLayoutConstraint {
@@ -137,19 +137,23 @@ public func <=⦿ (left: ProtoLayoutConstraint, right: CGFloat) -> NSLayoutConst
     return left.lessThanOrEqualTo(right)
 }
 
+public func =⦿= (left: NSLayoutConstraint, right: OSLayoutPriority) -> NSLayoutConstraint {
+    left.priority = right
+    return left
+}
+
 public extension NSLayoutConstraint {
-    public class func activateConstraintsGlue(constraints: [NSLayoutConstraint], targetView: UIView) {
-        if isOSVersionAtLeast8 {
-            NSLayoutConstraint.activateConstraints(constraints)
-        } else {
-            for constraint in constraints {
-                targetView.addConstraint(constraint)
-            }
+    public var layoutGroupName: String? {
+        get {
+            return getAssociatedObject(object: self, key: "layoutGroupName") as! String?
+        }
+        set {
+            setAssociatedObject(object: self, key: "layoutGroupName", value: newValue!)
         }
     }
 }
 
-public extension UIView {
+public extension OSView {
 
     func layoutAttribute(attribute: NSLayoutAttribute) -> ProtoLayoutConstraint {
         return ProtoLayoutConstraint(view: self, attribute: attribute)
@@ -211,3 +215,10 @@ public extension UIView {
     }
 
 }
+
+// Current SDK gives a linker error when using UILayoutPriorityRequired and similar, so these are duplicate constants.
+
+public let LayoutPriorityDefaultRequired: OSLayoutPriority = 1000 // A required constraint.  Do not exceed this.
+public let LayoutPriorityDefaultHigh: OSLayoutPriority = 750 // This is the priority level with which a button resists compressing its content.
+public let LayoutPriorityDefaultLow: OSLayoutPriority = 250 // This is the priority level at which a button hugs its contents horizontally.
+public let LayoutPriorityFittingSizeLevel: OSLayoutPriority = 50 // When you send -[UIView systemLayoutSizeFittingSize:], the size fitting most closely to the target size (the argument) is computed.  UILayoutPriorityFittingSizeLevel is the priority level with which the view wants to conform to the target size in that computation.  It's quite low.  It is generally not appropriate to make a constraint at exactly this priority.  You want to be higher or lower.

@@ -9,24 +9,24 @@
 import Foundation
 
 public typealias KVOChangeDictionary = [NSObject : AnyObject]
-public typealias KVOObserverCallback = (value: AnyObject?, object: AnyObject, change: KVOChangeDictionary) -> ()
+public typealias KVOObserverCallback = (value: AnyObject?, object: AnyObject?, change: KVOChangeDictionary?) -> ()
 
 public extension NSKeyValueChange {
-    public static func kindForChange(changeDict: KVOChangeDictionary) -> NSKeyValueChange {
+    public static func kindForChange(changeDict: KVOChangeDictionary!) -> NSKeyValueChange {
         let raw = UInt(changeDict[NSKeyValueChangeKindKey]!.integerValue)
         return NSKeyValueChange(rawValue: raw)!
     }
     
-    public static func isPriorForChange(changeDict: KVOChangeDictionary) -> Bool {
+    public static func isPriorForChange(changeDict: KVOChangeDictionary!) -> Bool {
         let n: NSNumber? = changeDict[NSKeyValueChangeNotificationIsPriorKey] as? NSNumber
         return n?.boolValue == true
     }
     
-    public static func newValueForChange(changeDict: KVOChangeDictionary) -> AnyObject? {
+    public static func newValueForChange(changeDict: KVOChangeDictionary!) -> AnyObject? {
         return changeDict[NSKeyValueChangeNewKey]
     }
     
-    public static func oldValueForChange(changeDict: KVOChangeDictionary) -> AnyObject? {
+    public static func oldValueForChange(changeDict: KVOChangeDictionary!) -> AnyObject? {
         return changeDict[NSKeyValueChangeOldKey]
     }
 }
@@ -48,9 +48,9 @@ public class KVOObserver : NSObject {
         super.init()
 
         var options = NSKeyValueObservingOptions(rawValue: 0)
-        if didChange != nil { options = options.union(.New) }
-        if willChange != nil { options = options.union(.Prior); options = options.union(.Old) }
-        if initial != nil { options = options.union(.Initial); options = options.union(.New) }
+        if didChange != nil { options.insert(.New) }
+        if willChange != nil { options.insert(.Prior); options.insert(.Old) }
+        if initial != nil { options.insert(.Initial); options.insert(.New) }
 
         object.addObserver(self, forKeyPath: keyPath, options: options, context: nil)
     }
@@ -63,9 +63,9 @@ public class KVOObserver : NSObject {
         return changeDict[NSKeyValueChangeIndexesKey] as? NSIndexSet
     }
 
-    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: KVOChangeDictionary?, context: UnsafeMutablePointer<()>) {
+    override public func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if NSKeyValueChange.isPriorForChange(change) {
-            willChange?(value: change[NSKeyValueChangeOldKey], object: object, change: change)
+            willChange?(value: change?[NSKeyValueChangeOldKey], object: object, change: change)
         } else if NSKeyValueChange.oldValueForChange(change) != nil && NSKeyValueChange.kindForChange(change) == .Setting {
             initial?(value: NSKeyValueChange.newValueForChange(change), object: object, change: change)
         } else {
@@ -74,7 +74,7 @@ public class KVOObserver : NSObject {
     }
 }
 
-public class KVOTestObj : NSObject, CustomStringConvertible {
+public class KVOTestObj : NSObject {
     var s: NSString!
     var observer: KVOObserver!
     

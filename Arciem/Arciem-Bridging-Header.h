@@ -14,7 +14,7 @@ FOUNDATION_EXPORT double ArciemVersionNumber;
 //! Project version string for Arciem.
 FOUNDATION_EXPORT const unsigned char ArciemVersionString[];
 
-#import "CGColorGlue.h"
 #import "DeviceGlue.h"
+#import "CGColorGlue.h"
 #import "SerializerGlue.h"
 #import "RuntimeGlue.h"

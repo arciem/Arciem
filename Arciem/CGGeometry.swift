@@ -6,7 +6,12 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import UIKit
+#if os(OSX)
+    import Cocoa
+#elseif os(iOS) || os(tvOS)
+    import UIKit
+#endif
+import CoreGraphics
 
 public extension NSString {
 //    var cgFloatValue: CGFloat {
@@ -29,7 +34,7 @@ public extension CGPoint {
     get { return Geometry.distance(x: x, y: y) }
     }
     
-    public var radians: CGRadians {
+    public var radians: CGFloat {
     get { return Geometry.radians(x: x, y: y) }
     }
     
@@ -65,12 +70,12 @@ public extension CGPoint {
         return CGPoint(x: x, y: r.height - y + 2 * r.minY)
     }
     
-    public func rotateRelativeToPoint(p: CGPoint, radians: CGRadians) -> CGPoint {
+    public func rotateRelativeToPoint(p: CGPoint, radians: CGFloat) -> CGPoint {
         let ox = p.x
         let oy = p.y
         
-        let v1 = radians.sin
-        let v2 = radians.cos
+        let v1 = sin(radians)
+        let v2 = cos(radians)
         let v3 = -oy + y
         let v4 = -ox + x
         return CGPoint(x: ox - v1*v3 + v2*v4, y: oy + v2*v3 + v1*v4)
@@ -98,7 +103,7 @@ extension CGVector {
     get { return Geometry.distance(x: dx, y: dy) }
     }
     
-    public var radians: CGRadians {
+    public var radians: CGFloat {
     get { return Geometry.radians(x: dx, y: dy) }
     }
     
@@ -119,13 +124,13 @@ extension CGVector {
     public func subtractQuarterRotation() -> CGVector { return CGVector(dx: dy, dy: -dx) }
     public func halfRotation() -> CGVector { return CGVector(dx: -dx, dy: -dy) }
     
-    public func rotate(radians radians: CGRadians) -> CGVector {
-        let t = Geometry.rotate(x: dx, y: dy, angle: radians);
+    public func rotate<A: Angle>(angle angle: A) -> CGVector {
+        let t = Geometry.rotate(x: dx, y: dy, angle: angle);
         return CGVector(dx: t.x, dy: t.y)
     }
     
-    public func fromPolar(radius radius: CGFloat, radians: CGRadians) -> CGVector {
-        let t = Geometry.fromPolar(radius: radius, angle: radians)
+    public func fromPolar<A: Angle>(radius radius: CGFloat, angle: A) -> CGVector {
+        let t = Geometry.fromPolar(radius: radius, angle: angle)
         return CGVector(dx: t.x, dy: t.y)
     }
     
@@ -298,20 +303,20 @@ public func /= (inout left: CGVector, right: CGFloat) {
 }
 
 extension CGSize {
-    public func scaleForAspectFitWithin(size size:CGSize) -> CGFloat {
+    public func scaleForAspectFitWithinSize(size:CGSize) -> CGFloat {
         return Geometry.scaleForAspectFit(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
     }
 
-    public func scaleForAspectFillWithin(size size:CGSize) -> CGFloat {
+    public func scaleForAspectFillWithinSize(size:CGSize) -> CGFloat {
         return Geometry.scaleForAspectFill(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
     }
     
-    public func aspectFitWithin(size size:CGSize) -> CGSize {
+    public func aspectFitWithinSize(size:CGSize) -> CGSize {
         let t = Geometry.aspectFit(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
         return CGSize(width: t.dx, height: t.dy)
     }
     
-    public func aspectFillWithin(size size:CGSize) -> CGSize {
+    public func aspectFillWithinSize(size:CGSize) -> CGSize {
         let t = Geometry.aspectFill(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
         return CGSize(width: t.dx, height: t.dy)
     }
@@ -343,25 +348,25 @@ protocol CGRectLike {
     var isEmpty: Bool { get }
     var isInfinite: Bool { get }
 
-    var standardizedRect: CGRect { get }
-    mutating func standardize()
+    var standardized: CGRect { get }
+    mutating func standardizeInPlace()
     
-    var integerRect: CGRect { get }
-    mutating func integerize()
+    var integral: CGRect { get }
+    mutating func makeIntegralInPlace()
     
-    func rectByInsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect
-    mutating func inset(dx dx: CGFloat, dy: CGFloat)
+    func insetBy(dx dx: CGFloat, dy: CGFloat) -> CGRect
+    mutating func insetInPlace(dx dx: CGFloat, dy: CGFloat)
     
-    func rectByOffsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect
-    mutating func offset(dx dx: CGFloat, dy: CGFloat)
+    func offsetBy(dx dx: CGFloat, dy: CGFloat) -> CGRect
+    mutating func offsetInPlace(dx dx: CGFloat, dy: CGFloat)
     
-    func rectByUnion(withRect: CGRect) -> CGRect
-    mutating func union(withRect: CGRect)
+    func union(withRect: CGRect) -> CGRect
+    mutating func unionInPlace(withRect: CGRect)
     
-    func rectByIntersecting(withRect: CGRect) -> CGRect
-    mutating func intersect(withRect: CGRect)
+    func intersect(withRect: CGRect) -> CGRect
+    mutating func intersectInPlace(withRect: CGRect)
     
-    func rectsByDividing(atDistance: CGFloat, fromEdge: CGRectEdge) -> (slice: CGRect, remainder: CGRect)
+    func divide(atDistance: CGFloat, fromEdge: CGRectEdge) -> (slice: CGRect, remainder: CGRect)
     
     func contains(rect: CGRect) -> Bool
     func contains(point: CGPoint) -> Bool

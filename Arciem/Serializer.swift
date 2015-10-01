@@ -11,14 +11,12 @@ import Foundation
 let serializerKey:String = "Serializer"
 var nextQueueContext: Int = 1
 
-public typealias SerializerBlock = (Void) -> Any?
-
 public class Serializer {
     let queue: DispatchQueue
     let queueContext: NSNumber
     
-    public init(name: String) {
-        self.queue = dispatch_queue_create((name as NSString).UTF8String, DISPATCH_QUEUE_SERIAL)
+    public init(name: NSString? = nil) {
+        self.queue = dispatch_queue_create(name?.UTF8String ?? nil, DISPATCH_QUEUE_SERIAL)
         self.queueContext = NSNumber(integer: ++nextQueueContext)
         dispatch_queue_set_specific_glue(self.queue, serializerKey, self.queueContext)
     }
@@ -34,36 +32,36 @@ public class Serializer {
         if(isExecutingOnMyQueue) {
             f()
         } else {
-            dispatchSyncOn(queue: queue, f: f)
+            dispatchSyncOnQueue(queue, f)
         }
     }
     
-    public func dispatchWithReturn(f: SerializerBlock) -> Any? {
-        var result: Any?
+    public func dispatchWithReturn<🍒>(f: () -> 🍒) -> 🍒 {
+        var result: 🍒!
         
         if(self.isExecutingOnMyQueue) {
             result = f()
         } else {
-            dispatchSyncOn(queue: self.queue) {
+            dispatchSyncOnQueue(self.queue) {
                 result = f()
             }
         }
         
-        return result
+        return result!
     }
     
     public func dispatchOnMain(f: DispatchBlock) {
         dispatchSyncOnMain(f)
     }
     
-    public func dispatchOnMainWithReturn(f: SerializerBlock) -> Any? {
-        var result: Any?
+    public func dispatchOnMainWithReturn<🍒>(f: () -> 🍒) -> 🍒 {
+        var result: 🍒!
         
         dispatchSyncOnMain() {
             result = f()
         }
         
-        return result
+        return result!
     }
 }
 

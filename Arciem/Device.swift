@@ -8,38 +8,27 @@
 
 import UIKit
 
-public let isPhone = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone
-public let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
-
-public var isPortrait: Bool {
-get { return UIApplication.sharedApplication().statusBarOrientation.isPortrait }
-}
-
-public var isLandscape: Bool {
-get { return UIApplication.sharedApplication().statusBarOrientation.isLandscape }
-}
-
-var _screenScale: CGFloat = 0.0
-public var screenScale: CGFloat {
-get {
-    if _screenScale == 0.0 {
-        _screenScale = UIScreen.mainScreen().scale
+public class Device {
+    public static let isPhone =  UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Phone
+    public static let isPad = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.Pad
+#if os(tvOS)
+    public static let isTV = UIDevice.currentDevice().userInterfaceIdiom == UIUserInterfaceIdiom.TV
+#else
+    public static let isTV = false
+#endif
+#if os(iOS)
+    public static let isPortrait = UIApplication.sharedApplication().statusBarOrientation.isPortrait
+    public static let isLandscape = UIApplication.sharedApplication().statusBarOrientation.isLandscape
+#endif
+    public static let screenScale = UIScreen.mainScreen().scale
+    public static let isHiDPI = screenScale > 1.0
+    public static func isOSVersionAtLeast(minVerStr: String) -> Bool {
+        let currSysVer = UIDevice.currentDevice().systemVersion
+        return currSysVer.compare(minVerStr, options: NSStringCompareOptions.NumericSearch) != NSComparisonResult.OrderedAscending
     }
-    return _screenScale
+    public static let documentDirectoryPath = (NSFileManager.defaultManager().URLsForDirectory(NSSearchPathDirectory.DocumentDirectory, inDomains: NSSearchPathDomainMask.UserDomainMask) as [NSURL]).last!
+#if os(iOS)
+    public static let orientationsPadAllPhonePortrait = Int(interfaceOrientationMaskValue_glue(isPad ? UIInterfaceOrientationMask.All : UIInterfaceOrientationMask.Portrait))
+    public static let orientationsPadAllPhoneAllButUpsideDown = Int(interfaceOrientationMaskValue_glue(isPad ? UIInterfaceOrientationMask.All : UIInterfaceOrientationMask.AllButUpsideDown))
+#endif
 }
-}
-
-public func isHiDPI() -> Bool {
-    return screenScale > 1.0
-}
-
-public func isOSVersionAtLeast(minVerStr: String) -> Bool {
-    let currSysVer = UIDevice.currentDevice().systemVersion
-    return currSysVer.compare(minVerStr, options: NSStringCompareOptions.NumericSearch) != NSComparisonResult.OrderedAscending
-}
-
-public let isOSVersionAtLeast8 = isOSVersionAtLeast("8.0")
-
-// suitable for returning from UIViewController.supportedInterfaceOrientations()
-public let orientationsPadAllPhonePortrait = Int(interfaceOrientationMaskValue_glue(isPad ? UIInterfaceOrientationMask.All : UIInterfaceOrientationMask.Portrait))
-public let orientationsPadAllPhoneAllButUpsideDown = Int(interfaceOrientationMaskValue_glue(isPad ? UIInterfaceOrientationMask.All : UIInterfaceOrientationMask.AllButUpsideDown))

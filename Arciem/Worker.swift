@@ -6,118 +6,67 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
-
-public typealias ErrorBlock = (error: NSError) -> Void
 public typealias WorkerBlock = (manager: WorkerManager) -> Void
 
-public enum WorkerState : String, CustomStringConvertible {
+private var _Worker_nextID = 0
+var workerLogger : Logger? = Logger(tag: "WORKER", enabled: true)
+
+public enum WorkerState : String {
     case Ready = "Ready"
     case Queueing = "Queueing"
     case Canceled = "Canceled"
     case Executing = "Executing"
     case Success = "Success"
     case Failure = "Failure"
-    
+}
+
+extension WorkerState : CustomStringConvertible {
     public var description: String {
-    get {
-        return self.rawValue
-    }
+        get {
+            return self.rawValue
+        }
     }
 }
 
-var _Worker_nextID: Int = 0
+public class Worker {
+    public let id: Int
+    public var task: WorkerBlock?
+    public var 😄: DispatchBlock?   // "success"
+    public var 😡: ErrorBlock?      // "failure"
+    public var 😎: DispatchBlock?   // "finally"
 
-public class Worker : CustomStringConvertible {
-    var task: WorkerBlock?
-    var success: DispatchBlock?
-    var failure: ErrorBlock?
-    var finally: DispatchBlock?
+    public var state = ObservableValue(WorkerState.Ready)
+    public var 🚫: ErrorType?
 
-    var state = Observable<WorkerState>(.Ready)
-    var id: Int
-    var error: NSError?
-    
+    var log: Logger? { get { return workerLogger } }
+
     public init() {
         self.id = _Worker_nextID++
-    }
-
-    public var description: String {
-    get {
-        return "Worker \(id)"
-    }
-    }
-}
-
-public class WorkerManager {
-    let queue: DispatchQueue
-    var workers = NSMutableSet()
-    let serializer = Serializer(name: "WorkerManager Serializer")
-    
-    public init(queue: DispatchQueue) {
-        self.queue = queue
-        print("\(self) init")
+        log?.trace("\(self) init")
     }
     
     deinit {
-        print("\(self) deinit")
+        log?.trace("\(self) deinit")
     }
-    
-    public func addWorker(worker: Worker) {
-        serializer.dispatch { [weak self] in
-            assert(worker.state^ == .Ready, "worker is not ready")
-            self?.workers.addObject(worker)
-            worker.state =^ .Queueing
-            dispatchOn(queue: self!.queue) {
-                if(worker.state^ != .Canceled) {
-                    worker.state =^ .Executing
-                    worker.task?(manager: self!)
-                }
-            }
-        }
-    }
-    
-    func done(worker: Worker, error: NSError? = nil) {
-        serializer.dispatch { [unowned self] in
-            if let err = error {
-                worker.state =^ .Failure
-                worker.error = err
-                worker.failure?(error: err)
-            } else {
-                worker.state =^ .Success
-                worker.success?()
-            }
-            worker.finally?()
-            self.workers.removeObject(worker)
+}
+
+extension Worker : CustomStringConvertible {
+    public var description: String {
+        get {
+            return "\(typeNameOf(self)) <id:\(id)>"
         }
     }
 }
 
-public class DummyWorker : Worker {
-//    let delay: NSTimeInterval
-    
-    public override init() {
-        super.init()
-        task = { [unowned self] (unowned manager) in
-            _ = dispatchOnBackground(afterDelay: 1.0) {
-                manager.done(self, error: nil)
-            }
-        }
-    }
+extension Worker : Equatable {
 }
 
-var workerManager: WorkerManager!
-public func testWorker() {
-    workerManager = WorkerManager(queue: backgroundQueue)
-    
-    let worker = DummyWorker()
-    
-    worker.state.addObservance(Observer(didChange: { newValue in
-        print("\(worker) \(newValue)")
-        }, willChange: nil, didInitialize: nil))
-    workerManager.addWorker(worker)
-    
-    dispatchOnMain(afterDelay: 5) {
-        workerManager = nil
-    }
+public func ==(🅛: Worker, 🅡: Worker) -> Bool {
+    return 🅛 === 🅡
+}
+
+extension Worker : Hashable {
+    public var hashValue: Int { get {
+        return id
+    }}
 }

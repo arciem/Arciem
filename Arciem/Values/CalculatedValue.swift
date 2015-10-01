@@ -6,24 +6,25 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-import Foundation
-import CoreGraphics
-
-public class CalculatedValue<T> {
-    var _value : T? = nil
-    var i : () -> T
+public class CalculatedValue<🍒> : Valuable {
+    var _value : 🍒? = nil
+    var i : () -> 🍒
     
-    public init(i: () -> T) {
+    public init(i: () -> 🍒) {
         self.i = i
     }
     
-    public var value : T {
+    // conformance to Valuable
+    public var value : 🍒 {
         get {
             if _value == nil {
                 _value = i()
             }
 
             return _value!
+        }
+        set {
+            _value = newValue
         }
     }
     

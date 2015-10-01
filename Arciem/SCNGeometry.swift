@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Arciem LLC. All rights reserved.
 //
 
-
 import SceneKit
 
 public extension SCNVector3 {
