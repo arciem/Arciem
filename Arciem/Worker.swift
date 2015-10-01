@@ -11,7 +11,7 @@ import Foundation
 public typealias ErrorBlock = (error: NSError) -> Void
 public typealias WorkerBlock = (manager: WorkerManager) -> Void
 
-public enum WorkerState : String, Printable {
+public enum WorkerState : String, CustomStringConvertible {
     case Ready = "Ready"
     case Queueing = "Queueing"
     case Canceled = "Canceled"
@@ -28,7 +28,7 @@ public enum WorkerState : String, Printable {
 
 var _Worker_nextID: Int = 0
 
-public class Worker : Printable {
+public class Worker : CustomStringConvertible {
     var task: WorkerBlock?
     var success: DispatchBlock?
     var failure: ErrorBlock?
@@ -56,11 +56,11 @@ public class WorkerManager {
     
     public init(queue: DispatchQueue) {
         self.queue = queue
-        println("\(self) init")
+        print("\(self) init")
     }
     
     deinit {
-        println("\(self) deinit")
+        print("\(self) deinit")
     }
     
     public func addWorker(worker: Worker) {
@@ -113,7 +113,7 @@ public func testWorker() {
     let worker = DummyWorker()
     
     worker.state.addObservance(Observer(didChange: { newValue in
-        println("\(worker) \(newValue)")
+        print("\(worker) \(newValue)")
         }, willChange: nil, didInitialize: nil))
     workerManager.addWorker(worker)
     

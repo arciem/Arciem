@@ -9,7 +9,7 @@
 import CoreGraphics
 import UIKit
 
-public func drawImage(#size: CGSize, #opaque: Bool, scale: CGFloat = 0.0, drawing: (CGContext) -> ()) -> UIImage! {
+public func drawImage(size size: CGSize, opaque: Bool, scale: CGFloat = 0.0, drawing: (CGContext) -> ()) -> UIImage! {
     UIGraphicsBeginImageContextWithOptions(size, opaque, scale)
     drawing(UIGraphicsGetCurrentContext())
     let image = UIGraphicsGetImageFromCurrentImageContext()

@@ -44,17 +44,17 @@ extension Double : Arithmeticable { }
 extension CGFloat : Arithmeticable { }
 
 public protocol Mathable {
-    class func floor(v: Self) -> Self
-    class func abs(v: Self) -> Self
+    static func floor(v: Self) -> Self
+    static func abs(v: Self) -> Self
 
-    class func fmin(a: Self, _ b: Self) -> Self
-    class func fmax(a: Self, _ b: Self) -> Self
+    static func fmin(a: Self, _ b: Self) -> Self
+    static func fmax(a: Self, _ b: Self) -> Self
 
-    class func sqrt(v: Self) -> Self
-    class func sin(v: Self) -> Self
-    class func cos(v: Self) -> Self
-    class func hypot(x: Self, _ y:Self) -> Self
-    class func atan2(x: Self, _ y:Self) -> Self
+    static func sqrt(v: Self) -> Self
+    static func sin(v: Self) -> Self
+    static func cos(v: Self) -> Self
+    static func hypot(x: Self, _ y:Self) -> Self
+    static func atan2(x: Self, _ y:Self) -> Self
 }
 
 extension Float : Mathable {

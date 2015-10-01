@@ -16,7 +16,7 @@ public extension UIView {
     public func constrainToSuperview() {
         assert(self.superview != nil, "View must have a superview.")
         let superview = self.superview!
-        var constraints = [
+        let constraints = [
             self.layoutLeft ==⦿ superview.layoutLeft,
             self.layoutRight ==⦿ superview.layoutRight,
             self.layoutTop ==⦿ superview.layoutTop,
@@ -27,7 +27,7 @@ public extension UIView {
 }
 
 public class CView : UIView {
-    public required init(coder aDecoder: NSCoder)  {
+    public required init?(coder aDecoder: NSCoder)  {
         super.init(coder: aDecoder)
         _setup()
     }
@@ -38,7 +38,7 @@ public class CView : UIView {
     }
     
     func _setup() {
-        self.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.opaque = false
         setup()
     }
@@ -48,7 +48,7 @@ public class CView : UIView {
 }
 
 public class CImageView : UIImageView {
-    public required init(coder aDecoder: NSCoder)  {
+    public required init?(coder aDecoder: NSCoder)  {
         super.init(coder: aDecoder)
         _setup()
     }
@@ -58,18 +58,18 @@ public class CImageView : UIImageView {
         _setup()
     }
 
-    override init(image: UIImage!) {
+    override init(image: UIImage?) {
         super.init(image: image)
         _setup()
     }
     
-    override init(image: UIImage!, highlightedImage: UIImage!) {
+    override init(image: UIImage?, highlightedImage: UIImage!) {
         super.init(image: image, highlightedImage: highlightedImage)
         _setup()
     }
     
     func _setup() {
-        self.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.translatesAutoresizingMaskIntoConstraints = false
         self.opaque = false
         setup()
     }

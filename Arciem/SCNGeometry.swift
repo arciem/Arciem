@@ -44,7 +44,7 @@ public extension SCNVector3 {
         return SCNVector3(x: t.x, y: t.y, z: t.z)
     }
 
-    public func scale(#sx: Float, sy: Float, sz: Float) -> SCNVector3 {
+    public func scale(sx sx: Float, sy: Float, sz: Float) -> SCNVector3 {
         let t = Geometry.scale(dx: x, dy: y, dz: z, sx: sx, sy: sy, sz: sz)
         return SCNVector3(x: t.dx, y: t.dy, z: t.dz)
     }

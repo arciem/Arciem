@@ -48,25 +48,25 @@ public class RectSetter : CGRectLike {
     public var isEmpty: Bool { get { return r.isEmpty } }
     public var isInfinite: Bool { get { return r.isInfinite } }
     
-    public var standardizedRect: CGRect { get { return r.standardizedRect } }
+    public var standardizedRect: CGRect { get { return r.standardized } }
     public func standardize() { return r.standardize() }
     
-    public var integerRect: CGRect { get { return r.integerRect } }
-    public func integerize() { r.integerize() }
+    public var integerRect: CGRect { get { return r.integral } }
+    public func integerize() { r.makeIntegralInPlace() }
     
-    public func rectByInsetting(#dx: CGFloat, dy: CGFloat) -> CGRect { return r.rectByInsetting(dx: dx, dy: dy) }
-    public func inset(#dx: CGFloat, dy: CGFloat) { r.inset(dx: dx, dy: dy) }
+    public func rectByInsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect { return r.insetBy(dx: dx, dy: dy) }
+    public func inset(dx dx: CGFloat, dy: CGFloat) { r.insetInPlace(dx: dx, dy: dy) }
     
-    public func rectByOffsetting(#dx: CGFloat, dy: CGFloat) -> CGRect { return r.rectByOffsetting(dx: dx, dy: dy) }
-    public func offset(#dx: CGFloat, dy: CGFloat) { r.offset(dx: dx, dy: dy) }
+    public func rectByOffsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect { return r.offsetBy(dx: dx, dy: dy) }
+    public func offset(dx dx: CGFloat, dy: CGFloat) { r.offsetInPlace(dx: dx, dy: dy) }
     
-    public func rectByUnion(withRect: CGRect) -> CGRect { return r.rectByUnion(withRect) }
+    public func rectByUnion(withRect: CGRect) -> CGRect { return r.union(withRect) }
     public func union(withRect: CGRect) { r.union(withRect) }
     
-    public func rectByIntersecting(withRect: CGRect) -> CGRect { return r.rectByIntersecting(withRect) }
+    public func rectByIntersecting(withRect: CGRect) -> CGRect { return r.intersect(withRect) }
     public func intersect(withRect: CGRect) { r.intersect(withRect) }
     
-    public func rectsByDividing(atDistance: CGFloat, fromEdge: CGRectEdge) -> (slice: CGRect, remainder: CGRect) { return r.rectsByDividing(atDistance, fromEdge: fromEdge) }
+    public func rectsByDividing(atDistance: CGFloat, fromEdge: CGRectEdge) -> (slice: CGRect, remainder: CGRect) { return r.divide(atDistance, fromEdge: fromEdge) }
     
     public func contains(rect: CGRect) -> Bool { return r.contains(rect) }
     public func contains(point: CGPoint) -> Bool { return r.contains(point) }

@@ -76,7 +76,7 @@ public extension CGPoint {
         return CGPoint(x: ox - v1*v3 + v2*v4, y: oy + v2*v3 + v1*v4)
     }
     
-    public func scale(#sx: CGFloat, sy: CGFloat) -> CGPoint {
+    public func scale(sx sx: CGFloat, sy: CGFloat) -> CGPoint {
         let t = Geometry.scale(dx: x, dy: y, sx: sx, sy: sy)
         return CGPoint(x: t.dx, y: t.dy)
     }
@@ -119,17 +119,17 @@ extension CGVector {
     public func subtractQuarterRotation() -> CGVector { return CGVector(dx: dy, dy: -dx) }
     public func halfRotation() -> CGVector { return CGVector(dx: -dx, dy: -dy) }
     
-    public func rotate(#radians: CGRadians) -> CGVector {
+    public func rotate(radians radians: CGRadians) -> CGVector {
         let t = Geometry.rotate(x: dx, y: dy, angle: radians);
         return CGVector(dx: t.x, dy: t.y)
     }
     
-    public func fromPolar(#radius: CGFloat, radians: CGRadians) -> CGVector {
+    public func fromPolar(radius radius: CGFloat, radians: CGRadians) -> CGVector {
         let t = Geometry.fromPolar(radius: radius, angle: radians)
         return CGVector(dx: t.x, dy: t.y)
     }
     
-    public func scale(#sx: CGFloat, sy: CGFloat) -> CGVector {
+    public func scale(sx sx: CGFloat, sy: CGFloat) -> CGVector {
         let t = Geometry.scale(dx: dx, dy: dy, sx: sx, sy: sy)
         return CGVector(dx: t.dx, dy: t.dy)
     }
@@ -298,25 +298,25 @@ public func /= (inout left: CGVector, right: CGFloat) {
 }
 
 extension CGSize {
-    public func scaleForAspectFitWithin(#size:CGSize) -> CGFloat {
+    public func scaleForAspectFitWithin(size size:CGSize) -> CGFloat {
         return Geometry.scaleForAspectFit(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
     }
 
-    public func scaleForAspectFillWithin(#size:CGSize) -> CGFloat {
+    public func scaleForAspectFillWithin(size size:CGSize) -> CGFloat {
         return Geometry.scaleForAspectFill(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
     }
     
-    public func aspectFitWithin(#size:CGSize) -> CGSize {
+    public func aspectFitWithin(size size:CGSize) -> CGSize {
         let t = Geometry.aspectFit(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
         return CGSize(width: t.dx, height: t.dy)
     }
     
-    public func aspectFillWithin(#size:CGSize) -> CGSize {
+    public func aspectFillWithin(size size:CGSize) -> CGSize {
         let t = Geometry.aspectFill(dxContent: width, dyContent: height, dxArea: size.width, dyArea: size.height)
         return CGSize(width: t.dx, height: t.dy)
     }
     
-    public func scale(#sx: CGFloat, sy: CGFloat) -> CGSize {
+    public func scale(sx sx: CGFloat, sy: CGFloat) -> CGSize {
         let t = Geometry.scale(dx: width, dy: height, sx: sx, sy: sy);
         return CGSize(width: t.dx, height: t.dy)
     }
@@ -349,11 +349,11 @@ protocol CGRectLike {
     var integerRect: CGRect { get }
     mutating func integerize()
     
-    func rectByInsetting(#dx: CGFloat, dy: CGFloat) -> CGRect
-    mutating func inset(#dx: CGFloat, dy: CGFloat)
+    func rectByInsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect
+    mutating func inset(dx dx: CGFloat, dy: CGFloat)
     
-    func rectByOffsetting(#dx: CGFloat, dy: CGFloat) -> CGRect
-    mutating func offset(#dx: CGFloat, dy: CGFloat)
+    func rectByOffsetting(dx dx: CGFloat, dy: CGFloat) -> CGRect
+    mutating func offset(dx dx: CGFloat, dy: CGFloat)
     
     func rectByUnion(withRect: CGRect) -> CGRect
     mutating func union(withRect: CGRect)
@@ -577,15 +577,15 @@ extension CGRect : CGRectLike {
     public func rectBySettingWidth(newValue: CGFloat) -> CGRect { var r = self; r.setWidth(newValue); return r }
     public func rectBySettingHeight(newValue: CGFloat) -> CGRect { var r = self; r.setHeight(newValue); return r }
     
-    public func rectByInsettingMinX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x + dx, y: origin.y, width: size.width - dx, height: size.height).standardizedRect }
+    public func rectByInsettingMinX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x + dx, y: origin.y, width: size.width - dx, height: size.height).standardized }
     public func rectByInsettingLeft(dx: CGFloat) -> CGRect { return rectByInsettingMinX(dx) }
     public func rectByInsettingLeading(dx: CGFloat) -> CGRect { return rectByInsettingMinX(dx) }
-    public func rectByInsettingMaxX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width - dx, height: size.height).standardizedRect }
+    public func rectByInsettingMaxX(dx: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width - dx, height: size.height).standardized }
     public func rectByInsettingRight(dx: CGFloat) -> CGRect { return rectByInsettingMaxX(dx) }
     public func rectByInsettingTrailing(dx: CGFloat) -> CGRect { return rectByInsettingMaxX(dx) }
-    public func rectByInsettingMinY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y + dy, width: size.width, height: size.height - dy).standardizedRect }
+    public func rectByInsettingMinY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y + dy, width: size.width, height: size.height - dy).standardized }
     public func rectByInsettingTop(dy: CGFloat) -> CGRect { return rectByInsettingMinY(dy) }
-    public func rectByInsettingMaxY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height - dy).standardizedRect }
+    public func rectByInsettingMaxY(dy: CGFloat) -> CGRect { return CGRect(x: origin.x, y: origin.y, width: size.width, height: size.height - dy).standardized }
     public func rectByInsettingBottom(dy: CGFloat) -> CGRect { return rectByInsettingMaxY(dy) }
 
     public mutating func insetMinX(dx: CGFloat) { self = rectByInsettingMinX(dx) }

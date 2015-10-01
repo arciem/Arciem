@@ -9,7 +9,7 @@
 import Foundation
 
 // Should be class constant, not yet supported in Swift
-private let digitChars = Array("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ")
+private let digitChars = Array("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ".characters)
 
 public struct BigNum {
     public let radix: Int // 2 for binary, 10 for decimal, 16 for hexadecimal, etc.
@@ -77,7 +77,7 @@ public struct BigNum {
         return result
     }
     
-    public static func add(#lhs: BigNum, rhs: BigNum) -> BigNum {
+    public static func add(lhs lhs: BigNum, rhs: BigNum) -> BigNum {
         assert(lhs.radix == rhs.radix, "Radices must be the same.")
         
         let radix = lhs.radix
@@ -89,21 +89,21 @@ public struct BigNum {
         var carry = 0
         for position in lsp...msp {
             let lhsDigit = lhs.digitAtPosition(position)
-            println("\nlhsDigit:\(lhsDigit)")
+            print("\nlhsDigit:\(lhsDigit)")
             let rhsDigit = rhs.digitAtPosition(position)
-            println("rhsDigit:\(rhsDigit)")
+            print("rhsDigit:\(rhsDigit)")
             let lhsSignedDigit = lhs.negative ? -lhsDigit : lhsDigit
-            println("lhsSignedDigit:\(lhsSignedDigit)")
+            print("lhsSignedDigit:\(lhsSignedDigit)")
             let rhsSignedDigit = rhs.negative ? -rhsDigit : rhsDigit
-            println("rhsSignedDigit:\(rhsSignedDigit)")
+            print("rhsSignedDigit:\(rhsSignedDigit)")
             let accum = lhsSignedDigit + rhsSignedDigit + carry
-            println("accum:\(accum)")
+            print("accum:\(accum)")
             let resultDigit = carry % radix
-            println("resultDigit:\(resultDigit)")
+            print("resultDigit:\(resultDigit)")
             resultDigits.append(resultDigit)
-            println("resultDigits:\(resultDigits)")
+            print("resultDigits:\(resultDigits)")
             carry = accum / radix
-            println("carry:\(carry)")
+            print("carry:\(carry)")
         }
         if(carry > 0) {
             resultDigits.append(carry)
@@ -111,7 +111,7 @@ public struct BigNum {
         return BigNum(digits: resultDigits, decimalIndex: -lsp, negative: lhs.negative, radix: radix)
     }
     
-    public static func negate(#rhs: BigNum) -> BigNum {
+    public static func negate(rhs rhs: BigNum) -> BigNum {
         return BigNum(digits: rhs.digits, decimalIndex: rhs.decimalIndex, negative: !rhs.negative, radix: rhs.radix)
     }
     
@@ -139,28 +139,28 @@ public struct BigNum {
             chars.append(s)
         }
 
-        chars = reverse(chars)
+        chars = Array(chars.reverse())
         if negative {
             chars.insert("-", atIndex: 0)
         } else if blankMinusSign {
             chars.insert(" ", atIndex: 0)
         }
         
-        return join("", chars)
+        return chars.joinWithSeparator("")
     }
 }
 
-extension BigNum : Printable {
+extension BigNum : CustomStringConvertible {
     public var description: String {
         get {
-            var digitStrings: [String] = map(digits, { return "\($0)" } )
+            var digitStrings: [String] = digits.map({ return "\($0)" } )
             digitStrings.insert(".", atIndex: decimalIndex)
-            digitStrings = reverse(digitStrings)
+            digitStrings = Array(digitStrings.reverse())
             digitStrings.append("(\(radix))")
             if(negative) {
                 digitStrings.insert("-", atIndex: 0)
             }
-            let s = join(" ", digitStrings)
+            let s = digitStrings.joinWithSeparator(" ")
             return "BigNum:[\(s)]"
         }
     }
@@ -191,8 +191,8 @@ public func testBigNum() {
     
     let leadingPlaces: Int? = 7
     let trailingPlaces: Int? = 2
-    println("a:\(a.toString(leadingPlaces: leadingPlaces, trailingPlaces: trailingPlaces))")
-    println("b:\(b.toString(leadingPlaces: leadingPlaces, trailingPlaces: trailingPlaces))")
-    println("c:\(c.toString(leadingPlaces: leadingPlaces, trailingPlaces: trailingPlaces))")
-    println("d:\(d.toString(leadingPlaces: leadingPlaces, trailingPlaces: trailingPlaces))")
+    print("a:\(a.toString(leadingPlaces, trailingPlaces: trailingPlaces))")
+    print("b:\(b.toString(leadingPlaces, trailingPlaces: trailingPlaces))")
+    print("c:\(c.toString(leadingPlaces, trailingPlaces: trailingPlaces))")
+    print("d:\(d.toString(leadingPlaces, trailingPlaces: trailingPlaces))")
 }

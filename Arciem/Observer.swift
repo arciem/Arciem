@@ -20,11 +20,11 @@ public class Observer<T> {
         self.didChange = didChange
         self.willChange = willChange
         self.didInitialize = didInitialize
-        println("\(self) init")
+        print("\(self) init")
     }
     
     deinit {
-        println("\(self) deinit")
+        print("\(self) deinit")
     }
 }
 
@@ -64,24 +64,24 @@ public class Observable<T> {
     
     public init(_ value: T) {
         self._value = [value]
-        println("\(self) init")
+        print("\(self) init")
     }
     
     deinit {
-        println("\(self) deinit")
+        print("\(self) deinit")
     }
 
     func beforeSet() {
         let v = value
         for observance : AnyObject in observances {
-            (observance as Observer<T>).willChange?(oldValue: v)
+            (observance as! Observer<T>).willChange?(oldValue: v)
         }
     }
     
     func afterSet() {
         let v = value
         for observance : AnyObject in observances {
-            (observance as Observer<T>).didChange?(newValue: v)
+            (observance as! Observer<T>).didChange?(newValue: v)
         }
     }
 
@@ -123,17 +123,17 @@ public class ObserverTestObject {
     
     public init(_ s: String) {
         self.s =^ s
-        println("\(self) \(self.s.value) init")
+        print("\(self) \(self.s.value) init")
         
         let observance = Observer<String?>(
             didChange: { newValue in
-                println("did change to \(newValue)")
+                print("did change to \(newValue)")
             },
             willChange: { oldValue in
-                println("will change from \(oldValue)")
+                print("will change from \(oldValue)")
             },
             didInitialize: { initialValue in
-                println("initialized with value \(initialValue)")
+                print("initialized with value \(initialValue)")
             })
         
         self.s.addObservance(observance)
@@ -147,27 +147,27 @@ public class ObserverTestObject {
     }
     
     deinit {
-        println("\(self) \(s.value) deinit")
+        print("\(self) \(s.value) deinit")
     }
 }
 
 public func testObserver() {
     var obj: ObserverTestObject! = ObserverTestObject("A")
 
-    var observance = Observer<String?>(
+    let observance = Observer<String?>(
         didChange: { newValue in
-            println("s did change to \(newValue)")
+            print("s did change to \(newValue)")
         },
         willChange: { oldValue in
-            println("s will change from \(oldValue)")
+            print("s will change from \(oldValue)")
         },
         didInitialize: { initialValue in
-            println("s initialized with value \(initialValue)")
+            print("s initialized with value \(initialValue)")
         })
     obj.s.addObservance(observance)
     
     obj.s =^ "A2"
     obj.s =^ "A3"
     obj = nil
-    println("done")
+    print("done")
 }

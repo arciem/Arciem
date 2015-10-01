@@ -22,19 +22,19 @@ hue: .1 saturation: 0.512 brightness: 0.9 alpha: 1
 let _colorParsingRegex: NSRegularExpression! = ~/"^\\s*(?:(r|h)(?:ed|ue)?:\\s*)?(\\d*(?:\\.\\d*)?)\\s+(?:(?:g|s)(?:reen|aturation)?:\\s*)?(\\d*(?:\\.\\d*)?)\\s+(?:(?:b)(?:lue|rightness)?:\\s*)?(\\d*(?:\\.\\d*)?)(?:\\s+(?:a(?:lpha)?:\\s*)?(\\d*(?:\\.\\d*)?))?\\s*$"
 
 public extension UIColor {
-    public func colorByDarkening(#fraction: CGFloat) -> UIColor {
+    public func colorByDarkening(fraction fraction: CGFloat) -> UIColor {
         return UIColor(CGColor: CGColorCreateByDarkening(color: self.CGColor, fraction: fraction))
     }
 
-    public func colorByLightening(#fraction: CGFloat) -> UIColor {
+    public func colorByLightening(fraction fraction: CGFloat) -> UIColor {
         return UIColor(CGColor: CGColorCreateByLightening(color: self.CGColor, fraction: fraction))
     }
     
-    public func colorByDodging(#fraction: CGFloat) -> UIColor {
+    public func colorByDodging(fraction fraction: CGFloat) -> UIColor {
         return UIColor(CGColor: CGColorCreateByDodging(color: self.CGColor, fraction: fraction))
     }
     
-    public func colorByBurning(#fraction: CGFloat) -> UIColor {
+    public func colorByBurning(fraction fraction: CGFloat) -> UIColor {
         return UIColor(CGColor: CGColorCreateByBurning(color: self.CGColor, fraction: fraction))
     }
     
@@ -56,7 +56,7 @@ public func colorFromString(s: NSString) -> UIColor {
     var components = [CGFloat]()
     var type = "r"
     
-    var textCheckingResult: NSTextCheckingResult? = _colorParsingRegex.firstMatchInString(s, options: nil, range: NSRange(0..<s.length))
+    var textCheckingResult: NSTextCheckingResult? = _colorParsingRegex.firstMatchInString(s as String, options: nil, range: NSRange(0..<s.length))
     if let tcr = textCheckingResult {
         for var i = 1; i < tcr.numberOfRanges; ++i {
             let range = tcr.rangeAtIndex(i)
@@ -64,7 +64,7 @@ public func colorFromString(s: NSString) -> UIColor {
                 let matchText: NSString = s.substringWithRange(range)
                 if matchText.length > 0 {
                     if i == 1 {
-                        type = matchText
+                        type = matchText as String
                     } else if i > 1 {
                         components.append(matchText.cgFloatValue())
                     }
