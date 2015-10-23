@@ -16,6 +16,20 @@ public extension OSView {
     public func frameSetter() -> RectSetter {
         return RectSetter(rect: frame) { [unowned self] (r) in self.frame = r }
     }
+
+    public func tranparentPointInside(point: CGPoint, withEvent event: UIEvent?) -> Bool {
+        for subview in subviews {
+            if !subview.hidden && subview.alpha > 0 && subview.userInteractionEnabled && subview.pointInside(convertPoint(point, toView: subview), withEvent: event) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    public func makeTransparent(debugColor: UIColor = UIColor.clearColor(), debug: Bool = false) {
+        opaque = false
+        backgroundColor = debug ? debugColor.colorWithAlphaComponent(0.25) : UIColor.clearColor()
+    }
     
     public func constrainToSuperview() -> [NSLayoutConstraint] {
         assert(superview != nil, "View must have a superview.")
