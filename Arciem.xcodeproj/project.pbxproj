@@ -364,7 +364,6 @@
 		038BABE71A1704A0002876C2 /* Stopwatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stopwatch.swift; sourceTree = "<group>"; };
 		038BABE91A17E5AE002876C2 /* Gradient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Gradient.swift; sourceTree = "<group>"; };
 		038BABEB1A17E7AE002876C2 /* ColorFunc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ColorFunc.swift; sourceTree = "<group>"; };
-		0394A6751AB6BE6700E40F7F /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS8.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		0394D0581A85972200DD0D87 /* ArciemTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ArciemTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0394D05B1A85972200DD0D87 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0394D05C1A85972200DD0D87 /* ArciemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArciemTests.swift; sourceTree = "<group>"; };
@@ -389,7 +388,6 @@
 		03CFC7501AB49FD3007C8D3B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		03CFC7511AB49FD3007C8D3B /* ArciemCocoaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArciemCocoaTests.swift; sourceTree = "<group>"; };
 		03CFC7A71AB4C1B0007C8D3B /* CrossPlatform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CrossPlatform.swift; sourceTree = "<group>"; };
-		03CFC7CD1AB564BC007C8D3B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Platforms/MacOSX.platform/Developer/SDKs/MacOSX10.10.sdk/System/Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		03CFC7D01AB568B6007C8D3B /* Arciem-Cocoa-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Arciem-Cocoa-Bridging-Header.h"; sourceTree = "<group>"; };
 		03D093141949857C0015313C /* Regex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Regex.swift; sourceTree = "<group>"; };
 		03D09328194A6B720015313C /* Dispatch.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Dispatch.swift; sourceTree = "<group>"; };
@@ -510,8 +508,6 @@
 		036D8F561989B0FD003FCB35 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				0394A6751AB6BE6700E40F7F /* UIKit.framework */,
-				03CFC7CD1AB564BC007C8D3B /* Cocoa.framework */,
 				03D3753A1A935D72003181A1 /* GLKit.framework */,
 				03D375371A935D45003181A1 /* SceneKit.framework */,
 				036208601A16BF94009E8B5A /* Accelerate.framework */,
