@@ -116,8 +116,8 @@ public extension OSView {
     }
     
     private func printConstraintsHierarchy(view: OSView, indent: String, level: Int) {
-        let translatesPrefix = view.osTranslatesAutoresizingMaskIntoConstraints ? "⬜️" : "✅"
-        let ambiguousPrefix = view.osHasAmbiguousLayout ? "❓" : "⬜️"
+        let translatesPrefix = view.osTranslatesAutoresizingMaskIntoConstraints ? "⛔️" : "✅"
+        let ambiguousPrefix = view.osHasAmbiguousLayout ? "❓" : "✅"
         let prefix = "\(translatesPrefix) \(ambiguousPrefix)"
         let debugName = view.debugName
         let debugNameString = debugName == nil ? "" : "\(debugName): "
