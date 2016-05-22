@@ -33,7 +33,8 @@ public class Observer {
 
 extension Observer : CustomStringConvertible {
     public var description : String {
-        return "\(identifierOfObject(self)) id:\(id)"
+        return ""
+//        return "\(identifierOfObject(self)) id:\(id)"
     }
 }
 

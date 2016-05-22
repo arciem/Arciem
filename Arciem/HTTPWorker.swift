@@ -48,7 +48,7 @@ public class HTTPWorker : Worker {
         self.session = NSURLSession(configuration: NSURLSessionConfiguration.ephemeralSessionConfiguration(), delegate: self.sessionDelegate, delegateQueue: nil)
         super.init()
         self.allowUntrustedCertificate = allowUntrustedCertificate
-        self.task = { [unowned self] (unowned manager: WorkerManager) -> Void in
+        self.task = { [unowned self] (manager: WorkerManager) -> Void in
             self.networkActivity = NetworkActivityIndicator.instance().makeActivity()
             self.sessionTask = self.session.dataTaskWithRequest(self.request, completionHandler: { (data: NSData?, responseOpt: NSURLResponse?, 🚫: NSError?) -> Void in
                 self.data = data

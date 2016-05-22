@@ -31,7 +31,8 @@ public struct TypedJSON {
 extension TypedJSON : CustomStringConvertible {
     public var description: String {
         get {
-            return "\(identifierOfType(self)) \(json.dictionary)"
+            return ""
+//            return "\(identifierOfType(self)) \(json.dictionary)"
         }
     }
 }

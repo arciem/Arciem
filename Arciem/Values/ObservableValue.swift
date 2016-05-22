@@ -78,7 +78,8 @@ public class ObservableValue /*: Valuable*/ {
 
 extension ObservableValue : CustomStringConvertible {
     public var description : String {
-        return identifierOfObject(self)
+        return ""
+//        return identifierOfObject(self)
     }
 }
 

@@ -53,7 +53,8 @@ public class Worker {
 extension Worker : CustomStringConvertible {
     public var description: String {
         get {
-            return "\(typeNameOf(self)) <id:\(id)>"
+            return ""
+//            return "\(typeNameOf(self)) <id:\(id)>"
         }
     }
 }

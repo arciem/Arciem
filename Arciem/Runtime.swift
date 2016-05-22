@@ -28,15 +28,15 @@ public func toUnsafeMutablePointer<🍒>(inout t: 🍒) -> UnsafeMutablePointer<
     }
 }
 
-public func typeNameOf(value: Any) -> String {
-    let typeLongName = _stdlib_getDemangledTypeName(value)
-    return typeLongName
-}
-
-public func typeNameOf(value: AnyObject) -> String {
-    let typeLongName = _stdlib_getDemangledTypeName(value)
-    return typeLongName
-}
+//public func typeNameOf(value: Any) -> String {
+//    let typeLongName = _stdlib_getDemangledTypeName(value)
+//    return typeLongName
+//}
+//
+//public func typeNameOf(value: AnyObject) -> String {
+//    let typeLongName = _stdlib_getDemangledTypeName(value)
+//    return typeLongName
+//}
 
 public func pointerStringOf(obj: AnyObject) -> String {
     let ptr: COpaquePointer =
@@ -44,15 +44,15 @@ public func pointerStringOf(obj: AnyObject) -> String {
     return "\(ptr)"
 }
 
-public func identifierOfType(value: Any) -> String {
-    let s = "\(typeNameOf(value))"
-    return s
-}
-
-public func identifierOfObject(obj: AnyObject) -> String {
-    let s = "\(typeNameOf(obj)) <\(pointerStringOf(obj))>"
-    return s
-}
+//public func identifierOfType(value: Any) -> String {
+//    let s = "\(typeNameOf(value))"
+//    return s
+//}
+//
+//public func identifierOfObject(obj: AnyObject) -> String {
+//    let s = "\(typeNameOf(obj)) <\(pointerStringOf(obj))>"
+//    return s
+//}
 
 public extension NSObject {
     public var debugName: String? {

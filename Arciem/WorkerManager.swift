@@ -19,7 +19,7 @@ public class WorkerManager {
     public init(workQueue: DispatchQueue, callbackQueue: DispatchQueue) {
         self.workQueue = workQueue
         self.callbackQueue = callbackQueue
-        log?.trace("\(identifierOfObject(self)) init")
+//        log?.trace("\(identifierOfObject(self)) init")
     }
     
     public convenience init() {
@@ -27,7 +27,7 @@ public class WorkerManager {
     }
     
     deinit {
-        log?.trace("\(identifierOfObject(self)) deinit")
+//        log?.trace("\(identifierOfObject(self)) deinit")
     }
     
     public func addWorker(worker: Worker) {
@@ -76,7 +76,7 @@ public class DummyWorker : Worker {
 
     public override init() {
         super.init()
-        task = { [unowned self] (unowned manager) in
+        task = { [unowned self] (manager) in
             _ = dispatchOnBackgroundAfterDelay(1.0) {
                 manager.workerDone(self)
             }
